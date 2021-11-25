@@ -9,6 +9,15 @@ const createActivity = catchAsync(async (request,response)=> {
 
 })
 
+const getActivity = catchAsync(async (request,response)=> {
+    const activity = await activityService.getActivity(request,response)
+    return response.status(200).send(activity)
+
+})
+
+
 module.exports = {
-    createActivity
+    createActivity,
+    getActivity,
+    
 }
