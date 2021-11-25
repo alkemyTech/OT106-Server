@@ -13,12 +13,34 @@ async function createActivity(request){
             content: request.body.content,
             image: request.file.filename 
         }
-        
     )   
     return newActivity
 }
+
+
 async function getActivity(request){
-    const activity = findOne({
+    const activity = Activity.findOne({
+        where: {
+          id: request.params.id
+        },
+        paranoid: false
+
+        })
+    return activity
+}
+
+async function getActivities(){
+    const activities = Activity.findAll({
+        paranoid: false
+
+    })
+
+    return activities
+}
+
+
+async function deleteActivity(request){
+    const activity = Activity.destroy({
         where: {
           id: request.params.id
         }
@@ -29,5 +51,8 @@ async function getActivity(request){
     
 
 module.exports = {
-    createActivity
+    createActivity,
+    getActivity,
+    getActivities,
+    deleteActivity
 }

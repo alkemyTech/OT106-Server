@@ -8,7 +8,14 @@ const upload = require('../functions/uploadEngine')
 
 router.route('/')
     .post(validate(activitiesValidation.createActivity),upload.single('image'), activitiesController.createActivity)
+    .get(activitiesController.getActivities)
+    
 
 router.route('/:id')
-    .get(activitiesController.getActivity)
+    .get(validate(activitiesController.getActivity), activitiesController.getActivity )
+    .delete(validate(activitiesController.deleteActivity), activitiesController.deleteActivity)
+
+router.route('/image/:id')
+    .get(validate(activitiesController.getActivity), activitiesController.getActivityimage)
+
 module.exports =  router
