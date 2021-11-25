@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   Role.init({
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    deletedAt: DataTypes.DATE
+    description: DataTypes.STRING/*,
+    deletedAt: DataTypes.DATE*/
   }, {
     sequelize,
-    modelName: 'Role',
-    paranoid: true
+    modelName: 'Role'/*,
+    paranoid: true*/
   });
   return Role;
 };
