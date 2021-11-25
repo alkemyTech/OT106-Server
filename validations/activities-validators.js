@@ -9,6 +9,7 @@ const createActivity = {
 
     }) 
 }
+
 const getActivity={
     params: Joi.object(),
         id: Joi.number().min(1).required()
@@ -18,7 +19,7 @@ const editActivity = {
     params: Joi.object().keys({
       id: Joi.number().min(1).required()
     }),
-    body: Joi.object()
+    FormData: Joi.object()
       .keys({
         title: Joi.string(),
         content: Joi.string(),

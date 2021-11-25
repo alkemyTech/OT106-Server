@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "82f9197e-6545-46d4-a60e-fd345ec61497",
+		"name": "activities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createActivity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "name",
+							"value": "pruebaImagen",
+							"type": "text"
+						},
+						{
+							"key": "content",
+							"value": "asd",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/activities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities"
+					]
+				},
+				"description": "create a new activity"
+			},
+			"response": []
+		},
+		{
+			"name": "getActivity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/activities/60",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities",
+						"60"
+					]
+				},
+				"description": "trae una actividad en particular , pasar el id por parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "delete activity",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/activities/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities",
+						"4"
+					]
+				},
+				"description": "soft delete de una actividad, pasar el id por parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "allactivities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/activities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities"
+					]
+				},
+				"description": "trae todas las actividades, inclusive las soft deleted"
+			},
+			"response": []
+		},
+		{
+			"name": "get activity image",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/activities/image/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities",
+						"image",
+						"11"
+					]
+				},
+				"description": "trae la imagen correspondiente a una actividad, pasar el id por parametro"
+			},
+			"response": []
+		},
+		{
+			"name": "editAcitivity",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/nbaka/Pictures/Screenshot from 2020-04-28 17-55-06.png"
+						},
+						{
+							"key": "name",
+							"value": "pruebaUPdate",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/activities/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"activities",
+						"10"
+					]
+				},
+				"description": "edita una actividad, en cualquier campo\n\nimage\n\nname\n\ncontent"
+			},
+			"response": []
+		}
+	]
+}

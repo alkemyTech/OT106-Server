@@ -14,7 +14,7 @@ router.route('/')
 router.route('/:id')
     .get(validate(activitiesController.getActivity), activitiesController.getActivity )
     .delete(validate(activitiesController.deleteActivity), activitiesController.deleteActivity)
-    .patch(upload.single('image'),activitiesController.editActivity)
+    .patch(validate(activitiesValidation.editActivity),upload.single('image'),activitiesController.editActivity)
 
 router.route('/image/:id')
     .get(validate(activitiesController.getActivity), activitiesController.getActivityimage)
