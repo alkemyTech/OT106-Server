@@ -32,13 +32,18 @@ const deleteActivity = catchAsync(async (request,response)=> {
 
 })
 
+const editActivity = catchAsync(async (request,response)=> {
+    const activity = await activityService.editActivity(request,response)
+    return response.status(200).send({activity})
 
+})
 
 module.exports = {
     createActivity,
     getActivity,
     getActivityimage,
     getActivities,
-    deleteActivity
+    deleteActivity,
+    editActivity
 
 }

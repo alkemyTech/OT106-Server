@@ -34,8 +34,10 @@ async function getActivities(request,response){
 }
    
 async function editActivity(request, response){
-
+    const activity = await activitiesRepository.editActivity(request)
+    return activity
 }
+
 
 async function deleteActivity(request, response){
     const getActivity = await activitiesRepository.getActivity(request)

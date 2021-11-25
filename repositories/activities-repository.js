@@ -1,7 +1,6 @@
 'use strict'
 require('dotenv').config()
 
-const { response } = require('express');
 const { sequelize } = require('../models');
 const Activities = require('../models/activities-model');
 const Activity = Activities(sequelize)
@@ -37,6 +36,27 @@ async function getActivities(){
 
     return activities
 }
+async function editActivity(request){
+  if (request.file !== undefined){
+    const activityImage = await Activity.update({
+        image:request.file.filename,
+      },
+
+            {where:{
+                id : request.params.id } 
+            }
+        )
+    } 
+    const activity = await Activity.update(
+        request.body,
+        {where:{
+            id : request.params.id } 
+        }
+        
+    )
+    
+    return activity
+}
 
 
 async function deleteActivity(request){
@@ -54,5 +74,6 @@ module.exports = {
     createActivity,
     getActivity,
     getActivities,
+    editActivity,
     deleteActivity
 }
