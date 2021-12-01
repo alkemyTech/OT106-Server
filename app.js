@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/activities', activitiesRouter)
+app.use('/news',require('./routes/news-routes'))//TODO (roleValidations ready) agregar el middleware para validar si es admin
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
