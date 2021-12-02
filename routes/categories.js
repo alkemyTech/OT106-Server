@@ -5,6 +5,8 @@ const categoryController = require('../controllers/category-controller');
 
 // /categories
 router.get('/',categoryController.list)
+router.get('/:id',categoryController.detail)
+
 
 
 

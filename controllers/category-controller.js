@@ -16,4 +16,25 @@ module.exports = {
     }
   },
 
+  detail: async (req, res) => {
+    let id  = req.params.id;
+
+    try {
+
+      const category = await detail(id);
+      if (category) {
+        return res.status(httpStatus.OK).json(category);
+        
+      } else {
+        return res.status(httpStatus.NOT_FOUND).json(message.NO_CONTENT);
+        
+      }
+
+    } catch (error) {
+      console.log(error);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+
+    }
+  },
+
 }
