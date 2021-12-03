@@ -5,27 +5,25 @@ const {
   BAD_CREATE_TESTIMONIAL_REQUEST,
   BAD_UPDATE_TESTIMONIAL_REQUEST,
   TESTIMONIAL_EXISTS,
-  MISSING_TESTIMONIAL_ID,
   TESTIMONIAL_NOT_FOUND,
-} = require("../constants/testimonials-constants");
+} = require("../constants/testimonial-constants");
 
 //http status
-const httpStatus = require("../constants/httpStatus");
-const { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } = httpStatus;
+const code = require("../constants/httpStatus");
 
 const createTestimonials = async (req, res) => {
   //Incomplete request body
   //TODO: create a middleware for this logic
   let { name, image, content } = req.body;
   if (![name, image, content].every(Boolean)) {
-    return res.status(BAD_REQUEST.code).send(BAD_CREATE_TESTIMONIAL_REQUEST);
+    return res.status(code.BAD_REQUEST).json(BAD_CREATE_TESTIMONIAL_REQUEST);
   }
 
   const create = await testimonialRepository.createTestimonial(req);
 
   //Testimonial already exists
   if (create === false) {
-    return res.status(INTERNAL_SERVER_ERROR).send(TESTIMONIAL_EXISTS);
+    return res.status(code.INTERNAL_SERVER_ERROR).json(TESTIMONIAL_EXISTS);
   }
 
   //Success?
@@ -37,7 +35,7 @@ const getTestimonials = async () => {
 
   //Couldn't find testimonial
   if (!testimonials[0]) {
-    return res.status(NOT_FOUND.code).send(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
@@ -45,18 +43,12 @@ const getTestimonials = async () => {
 };
 
 const getTestimonialById = async (req, res) => {
-  //Missing Id
-  //TODO: create a middleware for this logic
   let { id } = req.params;
-  if (!id) {
-    return res.status(BAD_REQUEST.code).send(MISSING_TESTIMONIAL_ID);
-  }
-
   const testimonial = await testimonialRepository.getTestimonialById(id);
 
   //Couldn't find testimonial
   if (!testimonial) {
-    return res.status(NOT_FOUND.code).send(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
@@ -64,24 +56,19 @@ const getTestimonialById = async (req, res) => {
 };
 
 const updateTestimonial = async (req, res) => {
-  //Missing Id
-  //TODO: create a middleware for this logic
   let { id } = req.params;
-  if (!id) {
-    return res.status(BAD_REQUEST.code).send(MISSING_TESTIMONIAL_ID);
-  }
 
   //Incomplete request body
   //TODO: create a middleware for this logic
   let { name, image, content } = req.body;
   if (![name, image, content].some(Boolean)) {
-    return res.status(BAD_REQUEST.code).send(BAD_UPDATE_TESTIMONIAL_REQUEST);
+    return res.status(code.BAD_REQUEST).json(BAD_UPDATE_TESTIMONIAL_REQUEST);
   }
 
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(NOT_FOUND.code).send(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
@@ -90,17 +77,12 @@ const updateTestimonial = async (req, res) => {
 };
 
 const deleteTestimonial = async (req, res) => {
-  //Missing Id
-  //TODO: create a middleware for this logic
   let { id } = req.params;
-  if (!id) {
-    return res.status(BAD_REQUEST.code).send(MISSING_TESTIMONIAL_ID);
-  }
 
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(NOT_FOUND.code).send(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
