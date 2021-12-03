@@ -20,7 +20,6 @@ async function findOne(id) {
 }
 
 async function findAll() {
-  console.log('llego al repo');
   const allOrganizations = await organization.findAll();
 
   return allOrganizations;

@@ -34,8 +34,8 @@ async function updateOrganization(body, id) {
     throw error;
   }
 
-  const activity = await organizationRepository.update(body, id);
-  return activity;
+  const updatedOrganization = await organizationRepository.update(body, id);
+  return updatedOrganization;
 }
 
 
