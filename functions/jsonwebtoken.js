@@ -7,7 +7,7 @@ module.exports = {
     if (!user.roleId || !user.id || !user.email) return null; // access denied, it returns null
 
     const userForToken = {
-      username: user.email,
+      email: user.email,
       role: user.roleId,
       id: user.id
     };
