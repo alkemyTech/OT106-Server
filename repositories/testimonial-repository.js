@@ -42,14 +42,17 @@ const updateTestimonial = async (req) => {
   let { body } = req;
   let updateBodyObject = pick(body, Object.keys(body));
 
-  const update = await db.sequelize.transaction(async (t) => {
+  await db.sequelize.transaction(async (t) => {
     const testimonial = await db.Testimonial.update(updateBodyObject, {
       where: { id },
       transaction: t,
-    });
+    })
     return testimonial;
   });
 
+  const update = await db.Testimonial.findOne({
+    where: {id}
+  });
   return update;
 };
 
