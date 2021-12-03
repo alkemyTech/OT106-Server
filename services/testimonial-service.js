@@ -2,7 +2,6 @@ const testimonialRepository = require("../repositories/testimonial-repository.js
 
 //Response messages
 const {
-  TESTIMONIAL_EXISTS,
   TESTIMONIAL_NOT_FOUND,
 } = require("../constants/testimonial-constants");
 
@@ -11,11 +10,6 @@ const code = require("../constants/httpStatus");
 
 const createTestimonials = async (req, res) => {
   const create = await testimonialRepository.createTestimonial(req);
-
-  //Testimonial already exists
-  if (create === false) {
-    return res.status(code.INTERNAL_SERVER_ERROR).json(TESTIMONIAL_EXISTS);
-  }
 
   //Success?
   return create;

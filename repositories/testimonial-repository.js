@@ -5,17 +5,16 @@ const createTestimonial = async (req) => {
   let { name, image, content } = req.body;
 
   const create = await db.sequelize.transaction(async (t) => {
-    const [testimonial, wasCreated] = await db.Testimonial.findOrCreate({
-      where: { name },
-      defaults: {
+    const testimonial = await db.Testimonial.create(
+      {
         name,
         image,
         content,
       },
-      transaction: t,
-    });
-
-    if (!wasCreated) return false;
+      {
+        transaction: t,
+      }
+    );
     return testimonial;
   });
 
