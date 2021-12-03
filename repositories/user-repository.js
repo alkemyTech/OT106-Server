@@ -9,6 +9,8 @@ module.exports = {
 
   findUserByPk: async (id) => await User.findByPk(id),
 
+  findUserByEmail: async (email) => await User.findOne({ where: { email } }),
+
   createUser: async (attributes) => await User.create(attributes),
 
   updateUser: async (id, attributes) =>
