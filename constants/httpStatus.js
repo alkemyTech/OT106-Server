@@ -1,50 +1,31 @@
+const OK= 200;
+const CREATED= 201;
+const NO_CONTENT= 204;
+const BAD_REQUEST= 400;
+const UNAUTHORIZED= 401;
+const FORBIDDEN= 403;
+const NOT_FOUND= 404;
+const METHOD_NOT_ALLOWED= 405;
+const NOT_ACCEPTABLE= 406;
+const CONFLICT= 409;
+const UNSUPPORTED_MEDIA_TYPE= 415;
+const INTERNAL_SERVER_ERROR= 500;
+
+
 module.exports = {
-    OK: {
-        code: 200,
-        message: 'OK',
-    },
-    CREATED: {
-        code: 201,
-        message: 'CREATED',
-    },
-    NO_CONTENT: {
-        code: 204,
-        message: 'NO CONTENT',
-    },
-    BAD_REQUEST: {
-        code: 400,
-        message: 'BAD REQUEST',
-    },
-    UNAUTHORIZED: {
-        code: 401,
-        message: 'UNAUTHORIZED',
-    },
-    FORBIDDEN: {
-        code: 403,
-        message: 'FORBIDDEN',
-    },
-    NOT_FOUND: {
-        code: 404,
-        message: 'NOT FOUND',
-    },
-    METHOD_NOT_ALLOWED: {
-        code: 405,
-        message: 'METHOD NOT ALLOWED',
-    },
-    NOT_ACCEPTABLE: {
-        code: 406,
-        message: 'NOT ACCEPTABLE',
-    },
-    CONFLICT: {
-        code: 409,
-        message: 'CONFLICT',
-    },
-    UNSUPPORTED_MEDIA_TYPE: {
-        code: 415,
-        message: 'UNSUPPORTED MEDIA TYPE',
-    },
-    INTERNAL_SERVER_ERROR: {
-        code: 500,
-        message: 'INTERNAL SERVER ERROR',
-    },
+    OK,
+    CREATED,
+    NO_CONTENT,
+    BAD_REQUEST,
+    UNAUTHORIZED,
+    FORBIDDEN,
+    NOT_FOUND,
+    METHOD_NOT_ALLOWED,
+    NOT_ACCEPTABLE,
+    CONFLICT,
+    UNSUPPORTED_MEDIA_TYPE,
+    INTERNAL_SERVER_ERROR,
 }
+
+
+

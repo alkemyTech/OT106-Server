@@ -3,8 +3,10 @@ const router = express.Router();
 
 const categoryController = require('../controllers/category-controller');
 
-// ejemplo
+// /categories
 router.get('/',categoryController.list)
+router.get('/:id',categoryController.detail)
+
 
 
 
