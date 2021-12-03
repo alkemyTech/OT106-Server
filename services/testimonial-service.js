@@ -2,8 +2,6 @@ const testimonialRepository = require("../repositories/testimonial-repository.js
 
 //Response messages
 const {
-  BAD_CREATE_TESTIMONIAL_REQUEST,
-  BAD_UPDATE_TESTIMONIAL_REQUEST,
   TESTIMONIAL_EXISTS,
   TESTIMONIAL_NOT_FOUND,
 } = require("../constants/testimonial-constants");
@@ -12,13 +10,6 @@ const {
 const code = require("../constants/httpStatus");
 
 const createTestimonials = async (req, res) => {
-  //Incomplete request body
-  //TODO: create a middleware for this logic
-  let { name, image, content } = req.body;
-  if (![name, image, content].every(Boolean)) {
-    return res.status(code.BAD_REQUEST).json(BAD_CREATE_TESTIMONIAL_REQUEST);
-  }
-
   const create = await testimonialRepository.createTestimonial(req);
 
   //Testimonial already exists
@@ -57,13 +48,6 @@ const getTestimonialById = async (req, res) => {
 
 const updateTestimonial = async (req, res) => {
   let { id } = req.params;
-
-  //Incomplete request body
-  //TODO: create a middleware for this logic
-  let { name, image, content } = req.body;
-  if (![name, image, content].some(Boolean)) {
-    return res.status(code.BAD_REQUEST).json(BAD_UPDATE_TESTIMONIAL_REQUEST);
-  }
 
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
