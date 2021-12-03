@@ -4,11 +4,11 @@ const getTokenFrom = require('./get-token-from');
 
 module.exports = {
   generateAccesToken: (user) => {
-    if (!user.role || !user.id || !user.username) return null; // access denied, it returns null
+    if (!user.roleId || !user.id || !user.email) return null; // access denied, it returns null
 
     const userForToken = {
-      username: user.username,
-      role: user.role,
+      username: user.email,
+      role: user.roleId,
       id: user.id
     };
 
