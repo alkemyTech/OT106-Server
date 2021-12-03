@@ -40,7 +40,7 @@ const find = async (req, res) => {
 //POST a testimonial
 const create = async (req, res) => {
   try {
-    const testimonial = await testimonialService.createTestimonials(req, res);
+    const testimonial = await testimonialService.createTestimonial(req, res);
     res.status(code.OK).json({
       message: CREATED_TESTIMONIAL,
       body: testimonial

@@ -8,7 +8,7 @@ const {
 //http status
 const code = require("../constants/httpStatus");
 
-const createTestimonials = async (req, res) => {
+const createTestimonial = async (req, res) => {
   const create = await testimonialRepository.createTestimonial(req);
 
   //Success?
@@ -69,7 +69,7 @@ const deleteTestimonial = async (req, res) => {
 };
 
 module.exports = {
-  createTestimonials,
+  createTestimonial,
   getTestimonials,
   getTestimonialById,
   updateTestimonial,
