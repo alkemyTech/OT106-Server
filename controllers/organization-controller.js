@@ -43,8 +43,8 @@ module.exports = {
 
       return res.status(status.CREATED).send(result);
     } catch (err) {
-      err.status = status.INTERNAL_SERVER_ERROR;
-      err.message = message.INTERNAL_SERVER_ERROR;
+      err.status = err.status || status.INTERNAL_SERVER_ERROR;
+      err.message = err.message || message.INTERNAL_SERVER_ERROR;
       next(err);
     }
   },
@@ -57,8 +57,8 @@ module.exports = {
 
       return res.status(status.OK).send(result);
     } catch (err) {
-      err.status = status.INTERNAL_SERVER_ERROR;
-      err.message = message.INTERNAL_SERVER_ERROR;
+      err.status = err.status || status.INTERNAL_SERVER_ERROR;
+      err.message = err.message || message.INTERNAL_SERVER_ERROR;
       next(err);
     }
   },
@@ -69,8 +69,8 @@ module.exports = {
       const result = await destroyOrganization(id);
       return res.status(status.OK).send(result);
     } catch (err) {
-      err.status = status.INTERNAL_SERVER_ERROR;
-      err.message = message.INTERNAL_SERVER_ERROR;
+      err.status = err.status || status.INTERNAL_SERVER_ERROR;
+      err.message = err.message || message.INTERNAL_SERVER_ERROR;
       next(err);
     }
   },
