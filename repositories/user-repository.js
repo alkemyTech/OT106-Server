@@ -11,7 +11,15 @@ module.exports = {
 
   findUserByEmail: async (email) => await User.findOne({ where: { email } }),
 
-  createUser: async (attributes) => await User.create(attributes),
+  createUser: async (attributes) => {
+    // findOrCreate will fail if it find a user with the email of the new one
+    const [userCreated, success] = await User.findOrCreate({
+      where: { email: attributes.email },
+      defaults: attributes,
+    });
+
+    return success ? userCreated : null;
+  },
 
   updateUser: async (id, attributes) =>
     await User.update(attributes, { where: { id } }),
