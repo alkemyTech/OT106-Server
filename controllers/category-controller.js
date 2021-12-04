@@ -1,13 +1,13 @@
-const { list, detail, create, update, remove } = require('../services/categories-service');
+const { list, detail, create, update, remove } = require('../services/category-service');
 const httpStatus = require('../constants/httpStatus');
 const message = require('../constants/message')
 
-// ejemplo
+
 module.exports = {
   list: async (req, res) => {
 
     try {
-      const categories = await list();
+      let categories = await list();
       return res.status(httpStatus.OK).json(categories);
 
     } catch (error) {
@@ -21,7 +21,7 @@ module.exports = {
 
     try {
 
-      const category = await detail(id);
+      let category = await detail(id);
       if (category) {
         return res.status(httpStatus.OK).json(category);
         
@@ -30,6 +30,18 @@ module.exports = {
         
       }
 
+    } catch (error) {
+      console.log(error);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+
+    }
+  },
+  create: async (req, res) => {
+
+    try {
+      await create(req.body);
+      return res.status(httpStatus.CREATED).json(message.CREATED);
+        
     } catch (error) {
       console.log(error);
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
