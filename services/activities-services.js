@@ -1,15 +1,11 @@
 require('dotenv').config()
 const activitiesRepository = require('../repositories/activities-repository')
-const {
-    IMAGE_NOT_FOUND,
-    NAME_NOT_FOUND,
-    CONTENT_NOT_FOUND,
-    ACITIVITY_NOT_FOUND} = require('../constants/activities-constan')
+const {NOT_ACCEPTABLE,NOT_FOUND} = require('../constants/httpStatus')
 
 async function createActivity(request,response){     
-    if (!request.file) return response.status(400).send(IMAGE_NOT_FOUND)
-    if (!request.body.name) return response.status(400).send(NAME_NOT_FOUND)
-    if (!request.body.content) return response.status(400).send(CONTENT_NOT_FOUND)
+    if (!request.file) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
+    if (!request.body.name) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
+    if (!request.body.content) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
 
     const newActivity = await  activitiesRepository.createActivity(request)
     return newActivity
@@ -17,13 +13,13 @@ async function createActivity(request,response){
 
 async function getActivityimage(request,response){
     const getActivity = await activitiesRepository.getActivity(request)
-    if (!getActivity) return response.status(400).send(ACITIVITY_NOT_FOUND)
+    if (!getActivity) return response.status(NOT_FOUND.code).send(NOT_FOUND.message)
     return getActivity
 }
 
 async function getActivity(request,response){
     const getActivity = await activitiesRepository.getActivity(request)
-    if (!getActivity) return response.status(400).send(ACITIVITY_NOT_FOUND)
+    if (!getActivity) return response.status(NOT_FOUND.code).send(NOT_FOUND.message)
     return getActivity
 }
 
