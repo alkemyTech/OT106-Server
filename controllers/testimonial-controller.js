@@ -12,7 +12,7 @@ const { GOT_TESTIMONIAL, CREATED_TESTIMONIAL, UPDATED_TESTIMONIAL, DELETED_TESTI
 //GET all testimonials
 const list = async (req, res) => {
   try {
-    const testimonials = await testimonialService.getTestimonials();
+    const testimonials = await testimonialService.getTestimonials(req, res);
     res.status(code.OK).json({
       message: GOT_TESTIMONIAL,
       body: testimonials
