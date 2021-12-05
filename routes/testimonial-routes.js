@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const testimonialController = require("../controllers/testimonial-controller");
-const {validateCreateTestimonial, validateUpdateTestimonial} = require("../middleware/testimonial-validator")
+const {validateCreateTestimonial, validateUpdateTestimonial} = require("../middleware/testimonial-middleware")
 
 //GET
 router.get("/:id", testimonialController.find)
