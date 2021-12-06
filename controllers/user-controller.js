@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
 const { UserService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
-const { OK: OK_CODE, CREATED: CREATED_CODE } = require('../constants/httpStatus');
-const { OK: OK_MESSAGE } = require('../constants/message');
+const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
+const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 
 const removePassword = (x) => {
   return { ...x.dataValues, password: undefined };
@@ -42,6 +42,11 @@ module.exports = {
   }),
 
   updateUser: catchAsync(async (req, res, next) => {
+    // it is verified if param id matches with token id
+    if (req.tokenPayload.id !== Number(req.params.id)) {
+      return res.status(UNAUTHORIZED_CODE).send(UNAUTHORIZED_MESSAGE);
+    }
+
     const idToUpdate = req.params.id;
     const attributes = {
       firstName: req.body.firstName,
