@@ -10,13 +10,9 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-<<<<<<< HEAD
-const activitiesRouter = require('./routes/activities-routes')
-const membersRouter = require('./routes/members-routes');
-=======
 const activitiesRouter = require('./routes/activities-routes');
+const membersRouter = require('./routes/members-routes');
 const testimonialRouter = require("./routes/testimonial-routes");
->>>>>>> 88765824ec7041e0cdd817fc3ed29d1e92b42fec
 
 const categoriesRouter = require('./routes/categories')
 const app = express();
@@ -34,11 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/activities', activitiesRouter);
-<<<<<<< HEAD
 app.use('/members', membersRouter);
-=======
 app.use("/testimonials", testimonialRouter);
->>>>>>> 88765824ec7041e0cdd817fc3ed29d1e92b42fec
 
 
 app.use('/categories', categoriesRouter)
