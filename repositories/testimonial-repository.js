@@ -21,11 +21,27 @@ const createTestimonial = async (req) => {
   return create;
 };
 
-const getTestimonials = async () => {
-  const list = await db.Testimonial.findAll({
+const getTestimonials = async (page) => {
+  //Page size limit
+  const limit = 10;
+
+  //Find and count all testimonials
+  const list = await db.Testimonial.findAndCountAll({
+    limit,
+    offset: page * limit,
     paranoid: false,
   });
-  return list;
+
+  //Return object to service
+  const {rows} = list;
+  const totalPages = Math.ceil(list.count / limit);
+
+  const result = {
+    totalPages,
+    rows
+  }
+
+  return result;
 };
 
 const getTestimonialById = async (id) => {
