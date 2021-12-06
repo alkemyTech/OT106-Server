@@ -11,10 +11,12 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const activitiesRouter = require('./routes/activities-routes');
+
 const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');
-
 const categoriesRouter = require('./routes/categories');
+const membersRouter = require('./routes/members-routes');
+
 
 const app = express();
 app.use(cors());
@@ -30,9 +32,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', require('./routes/auth-route'));
 app.use('/activities', activitiesRouter);
+
 app.use('/testimonials', testimonialRouter);
 app.use('/organizations', organizationRouter);
+
+app.use('/members', membersRouter);
+
 
 
 app.use('/categories', categoriesRouter);
