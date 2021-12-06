@@ -10,8 +10,8 @@ const {checkActivity} = require('../middleware/validate-activityContent')
 const createActivity = [
     adminPermission, 
     validate(activitiesValidation.createActivity),
-    upload.single('image'),
     checkActivity,
+    upload.single('image'),
     activitiesController.createActivity
 ]
 
