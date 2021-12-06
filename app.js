@@ -11,6 +11,7 @@ require('dotenv').config()
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const activitiesRouter = require('./routes/activities-routes');
+const membersRouter = require('./routes/members-routes');
 const testimonialRouter = require("./routes/testimonial-routes");
 
 const categoriesRouter = require('./routes/categories')
@@ -30,6 +31,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', require('./routes/auth-route'));
 app.use('/activities', activitiesRouter);
+app.use('/members', membersRouter);
 app.use("/testimonials", testimonialRouter);
 
 
