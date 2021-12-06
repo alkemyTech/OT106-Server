@@ -1,84 +1,72 @@
-// [!] Keep this and where it's used commented until user-service exists
-// const { UserService } = require('../service/user-service');
+const bcrypt = require('bcryptjs');
+const { UserService } = require('../services');
+const catchAsync = require('../functions/catchAsync');
+const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
+const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 
-/**
- * try-catch blocks could be ommited if a general catch is implemented
- * i.e.,
- * const responseCatch = (fn) => (req, res, next) => {
- *   try {
- *     fn(req, res, next);
- *   } catch (err) {
- *     console.error(err);
- *     return res.sendStatus(500);
- *   }
- * };
- */
-
-// Also, the http response status code could be imported from another file
+const removePassword = (x) => {
+  return { ...x.dataValues, password: undefined };
+};
 
 module.exports = {
-  list: async (req, res, next) => {
-    try {
-      // TODO: Send to the service the filters of the search
-      // const result = UserService.list();
-      const result = null;
+  findAllUsers: catchAsync(async (req, res, next) => {
+    const result = await UserService.findAllUsers();
 
-      return res.status(200).send(result);
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500);
+    // Removes the passwords of every result
+    const resultWithoutPasswords = result.map(x => removePassword(x));
+
+    return res.status(OK_CODE).send(resultWithoutPasswords);
+  }),
+
+  findUserByPk: catchAsync(async (req, res, next) => {
+    const idToFind = req.params.id;
+    const result = await UserService.findUserByPk(idToFind);
+
+    return res.status(OK_CODE).send(removePassword(result));
+  }),
+
+  createUser: catchAsync(async (req, res, next) => {
+    // Hashs password
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const attributes = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+    };
+    const result = await UserService.createUser(attributes);
+
+    return res.status(CREATED_CODE).send(removePassword(result));
+  }),
+
+  updateUser: catchAsync(async (req, res, next) => {
+    // it is verified if param id matches with token id
+    if (req.tokenPayload.id !== Number(req.params.id)) {
+      return res.status(UNAUTHORIZED_CODE).send(UNAUTHORIZED_MESSAGE);
     }
-  },
 
-  find: async (req, res, next) => {
-    try {
-      // TODO: Send to the service the id of the user
-      // const result = UserService.find();
-      const result = null;
+    const idToUpdate = req.params.id;
+    const attributes = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      photo: req.body.photo,
+    };
+    await UserService.updateUser(idToUpdate, attributes);
 
-      return res.status(200).send(result);
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
-  },
+    // Finds the user updated and sent it as the result
+    const result = await UserService.findUserByPk(idToUpdate);
 
-  create: async (req, res, next) => {
-    try {
-      // TODO: Send to the service the properties to create it
-      // const result = UserService.create();
-      const result = null;
+    return res.status(OK_CODE).send(removePassword(result));
+  }),
 
-      return res.status(201).send(result);
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
-  },
+  destroyUser: catchAsync(async (req, res, next) => {
+    const idToDelete = req.params.id;
+    await UserService.destroyUser(idToDelete);
 
-  update: async (req, res, next) => {
-    try {
-      // TODO: Send to the service the properties to update it
-      // const result = UserService.update();
-      const result = null;
-
-      return res.status(200).send(result);
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
-  },
-
-  delete: async (req, res, next) => {
-    try {
-      // TODO: Send to the service the id to delete it
-      // const result = UserService.delete();
-      const result = null;
-
-      return res.status(200).send(result);
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
-  },
+    return res.status(OK_CODE).send(OK_MESSAGE);
+  }),
 };

@@ -1,71 +1,35 @@
-const News= require("../models/news");
+const db = require('../models');
+const baseRepository = require("../repositories/_base-repository");
+
 
 module.exports={
 
     addNews:async (req, res) => {
-        News.create({
-            name: req.body.title,
-            content: req.body.content,
-            image:req.body.image,
-        }).then(News => {
-            res.json(News)})
-        .catch(e => {
-            console.log(e);
-            res.status(500);
-        })
+        const oFields= {
+            name: req.body.name,
+            content: req.body.content,    
+        }
+        baseRepository.add(req,res,db.News,oFields)
     },
 
     getNews:async (req, res) => {
-        News.findByPk(req.params.id)
-        .then(News => {
-            res.json(News);   
-        })
-        .catch(e => {
-            console.log(e);
-            res.status(500);
-        })
+        baseRepository.get(req,res,db.News)
     },
 
     getAllNews:async  (req, res) => {
-        News.findAll().then(News => {
-            res.json(News);
-        })
-        .catch(e => {
-            console.log(e);
-            res.status(500);
-        })
+        baseRepository.getAll(req,res,db.News)
     },
 
     modifyNews:async (req, res) => {
-        News.update({
-            name: req.body.title,
+        const oFields= {
+            name: req.body.name,
             content: req.body.content,
-            image:req.body.image
-        }, {
-            where: {
-                id: req.params.id
-            }})
-        .then(result => {
-            res.json(result);
-        })
-        .catch(e => {
-            console.log(e);
-            res.status(500);
-        })
+        }
+        baseRepository.modify(req,res,db.News, oFields)
     },
 
     deleteNews: async (req, res) => {
-        News.destroy({
-            where: {
-                id: req.params.id
-            }})
-        .then(result => {
-            res.json(result);
-        })
-        .catch(e => {
-            console.log(e);
-            res.status(500);
-        })
+        baseRepository.delete(req,res,db.News)
     }
 
 }

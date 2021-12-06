@@ -20,7 +20,7 @@ async function findOne(id) {
 }
 
 async function findAll() {
-  const allOrganizations = await organization.findAll();
+  const allOrganizations = await organization.findAll({ attributes: ['name', 'image', 'phone', 'address'] });
 
   return allOrganizations;
 }
