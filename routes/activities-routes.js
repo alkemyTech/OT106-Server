@@ -1,23 +1,19 @@
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
-const activitiesController = require('../controllers/activities-controller')
-const activitiesValidation = require('../validations/activities-validators')
-const validate = require('../middleware/validate')
-const upload = require('../functions/uploadEngine')
-const adminPermission = require('../middleware/admin-authentication')
+const activitiesCombination = require('../combinations/activities-combination')
 
 router.route('/')
-    .post(adminPermission,validate(activitiesValidation.createActivity),upload.single('image'), activitiesController.createActivity)
-    .get(activitiesController.getActivities)
+    .post(activitiesCombination.createActivity)
+    .get(activitiesCombination.getActivities)
     
 
 router.route('/:id')
-    .get(validate(activitiesController.getActivity), activitiesController.getActivity )
-    .delete(adminPermission,validate(activitiesController.deleteActivity), activitiesController.deleteActivity)
-    .patch(adminPermission,validate(activitiesValidation.editActivity),upload.single('image'),activitiesController.editActivity)
+    .get(activitiesCombination.getActivity )
+    .delete(activitiesCombination.deleteActivity)
+    .patch(activitiesCombination.editActivity)
 
 router.route('/image/:id')
-    .get(validate(activitiesController.getActivity), activitiesController.getActivityimage)
+    .get(activitiesCombination.getActivityimage)
 
 module.exports =  router

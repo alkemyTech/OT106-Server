@@ -1,11 +1,11 @@
 require('dotenv').config()
+const httpStatus = require('http-status');
+const {NOT_ACCEPTABLE,NOT_FOUND} = require('../constants/message')
+
 const activitiesRepository = require('../repositories/activities-repository')
-const {NOT_ACCEPTABLE,NOT_FOUND} = require('../constants/httpStatus')
 
 async function createActivity(request,response){     
-    if (!request.file) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
-    if (!request.body.name) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
-    if (!request.body.content) return response.status(NOT_ACCEPTABLE.code).send(NOT_ACCEPTABLE.message)
+   
 
     const newActivity = await  activitiesRepository.createActivity(request)
     return newActivity
@@ -13,13 +13,13 @@ async function createActivity(request,response){
 
 async function getActivityimage(request,response){
     const getActivity = await activitiesRepository.getActivity(request)
-    if (!getActivity) return response.status(NOT_FOUND.code).send(NOT_FOUND.message)
+    if (!getActivity) return response.status(httpStatus.NOT_FOUND).send(NOT_FOUND)
     return getActivity
 }
 
 async function getActivity(request,response){
     const getActivity = await activitiesRepository.getActivity(request)
-    if (!getActivity) return response.status(NOT_FOUND.code).send(NOT_FOUND.message)
+    if (!getActivity) return response.status(httpStatus.NOT_FOUND).send(NOT_FOUND)
     return getActivity
 }
 
@@ -37,7 +37,7 @@ async function editActivity(request, response){
 
 async function deleteActivity(request, response){
     const getActivity = await activitiesRepository.getActivity(request)
-    if (!getActivity) return response.status(400).send(ACITIVITY_NOT_FOUND)
+    if (!getActivity) return response.status(httpStatus.NOT_FOUND).send(NOT_FOUND)
     const activityDelete = await activitiesRepository.deleteActivity(request)
     return activityDelete
 }
