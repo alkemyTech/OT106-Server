@@ -34,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    aboutUsText: DataTypes.TEXT
+    aboutUsText: DataTypes.TEXT,
+    facebook: DataTypes.STRING,
+    instagram: DataTypes.STRING,
+    linkedin: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Organization',
