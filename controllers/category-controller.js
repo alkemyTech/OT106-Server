@@ -1,4 +1,4 @@
-const { list, detail, create, update, remove } = require('../services/categories-service');
+const { list, detail, create, update, remove } = require('../services/category-service');
 const httpStatus = require('../constants/httpStatus');
 const message = require('../constants/message')
 

@@ -27,7 +27,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/activities', activitiesRouter)
+app.use('/activities', activitiesRouter);
+app.use('/news',require('./routes/news-routes'))//TODO (roleValidations ready) agregar el middleware para validar si es admin
 
 
 app.use('/categories', categoriesRouter)
