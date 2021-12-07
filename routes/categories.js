@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const categoryController = require('../controllers/category-controller');
-const createValidation = require('../validations/category/create-validation')
+const categoryValidation = require('../validations/category-validation')
 const validator = require('../functions/validator')
 const adminPermission = require('../middleware/admin-authentication')
 
@@ -11,7 +11,10 @@ const adminPermission = require('../middleware/admin-authentication')
 router.get('/', adminPermission,categoryController.list)
 router.get('/:id', adminPermission,categoryController.detail)
 
-router.post('/', adminPermission, createValidation, validator, categoryController.create)
+router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
+router.put('/:id', adminPermission,categoryValidation,categoryController.update)
+
+router.delete('/:id',categoryController.remove)
 
 
 
