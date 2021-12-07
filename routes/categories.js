@@ -14,7 +14,7 @@ router.get('/:id', adminPermission,categoryController.detail)
 router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
 router.put('/:id', adminPermission,categoryValidation,categoryController.update)
 
-router.delete('/:id',categoryController.remove)
+router.delete('/:id', adminPermission,categoryController.remove)
 
 
 
