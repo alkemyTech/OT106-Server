@@ -1,10 +1,8 @@
-require('dotenv').config()
+require("dotenv").config();
 const testimonialRepository = require("../repositories/testimonial-repository.js");
 
 //Response messages
-const {
-  TESTIMONIAL_NOT_FOUND,
-} = require("../constants/testimonial-constants");
+const { TESTIMONIAL_NOT_FOUND } = require("../constants/testimonial-constants");
 
 //http status
 const code = require("../constants/httpStatus");
@@ -25,7 +23,7 @@ const getTestimonials = async (req, res) => {
   const pageAsNumber = parseInt(pageQuery);
 
   //Use page query if valid
-  if(pageQuery > 0 && !isNaN(pageAsNumber)) {
+  if (pageQuery > 0 && !isNaN(pageAsNumber)) {
     page = parseInt(pageQuery);
   }
 
@@ -36,18 +34,23 @@ const getTestimonials = async (req, res) => {
   if (!testimonials.rows[0]) {
     return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
   }
-  
+
   //Env Variables
   const HOST = process.env.HOST;
   const PORT = process.env.PORT;
+  const HTTP_OR_HTTPS = process.env.HOST_HTTP_OR_HTTPS;
 
   //Add links if possible
-  if(page > 0) {
-    testimonials.previousPage = `http://${HOST}:${PORT}/testimonials/?page=${(page-1)}`
+  if (page > 0) {
+    testimonials.previousPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+      page - 1
+    }`;
   }
 
-  if(page < testimonials.totalPages-1) {
-    testimonials.nextPage = `http://${HOST}:${PORT}/testimonials/?page=${(page+1)}`
+  if (page < testimonials.totalPages - 1) {
+    testimonials.nextPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+      page + 1
+    }`;
   }
   //Success?
   return testimonials;
