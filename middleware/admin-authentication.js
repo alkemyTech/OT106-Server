@@ -21,8 +21,8 @@ module.exports = (req, res, next) => {
   // In order to access admin's content, roleId must exists inside the
   // token's payload and be equal to ADMIN_ROLE_ID environment variable
   if (
-    typeof payload.roleId === 'undefined' ||
-    payload.roleId !== parseInt(process.env.ADMIN_ROLE_ID, 10)
+    typeof payload.role === 'undefined' ||
+    payload.role !== parseInt(process.env.ADMIN_ROLE_ID, 10)
   ) {
     return res.status(FORBIDDEN_CODE).send(FORBIDDEN_MESSAGE);
   }
