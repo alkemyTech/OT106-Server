@@ -15,9 +15,9 @@ module.exports = {
 
     if (result !== null) {
       // it add token when user is created
-      result.token = generateAccesToken(result);
+      const user = Object.assign(result, { token: generateAccesToken(result) });
 
-      return result;
+      return user;
     }
 
     // The result as null means that the user can't be created
