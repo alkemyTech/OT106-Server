@@ -69,4 +69,19 @@ module.exports = {
 
     return res.status(OK_CODE).send(OK_MESSAGE);
   }),
+
+  loginUser: catchAsync(async (req, res, next) => {
+    const user = await UserService.findUserByEmail(req.body.email);
+
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (!validPassword) {
+      return res.status(UNAUTHORIZED_CODE).send({ ok: false });
+    }
+
+    return res.status(OK_CODE).send(removePassword(user));
+  }),
 };
