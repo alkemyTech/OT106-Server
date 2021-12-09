@@ -2,7 +2,7 @@
 
 let contacts = [];
 
-for (let i = 1; i < 41; i++) {
+for (let i = 1; i < 11; i++) {
   contacts.push({
     name: `Contact ${i}`,
     phone: 54110000000 + i,
