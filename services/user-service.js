@@ -5,7 +5,18 @@ const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = requi
 module.exports = {
   findAllUsers: UserRepository.findAllUsers,
 
-  findUserByPk: UserRepository.findUserByPk,
+  findUserByPk: async (id) => {
+    const user = await UserRepository.findUserByPk(id);
+
+    if (!user) {
+      const error = new Error();
+      error.message = NOT_FOUND_MESSAGE;
+      error.status = NOT_FOUND_CODE;
+      throw error;
+    }
+
+    return user;
+  },
 
   findUserByEmail: UserRepository.findUserByEmail,
 
