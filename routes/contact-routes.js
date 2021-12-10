@@ -8,8 +8,8 @@ const {
 const adminAuthentication = require("../middleware/admin-authentication");
 
 //GET
-router.get("/:id", contactController.find);
-router.get("/", contactController.list);
+router.get("/:id", adminAuthentication, contactController.find);
+router.get("/", adminAuthentication, contactController.list);
 
 //POST
 router.post(
