@@ -23,15 +23,26 @@ const s3Client = new S3Client({
 // Uploads a file to Amazon S3 bucket
 // This will create/update depending if the key already exists or not
 // You could create/access folders adding them to filename
-const uploadFile = (filename, localPath) =>
-  s3Client.send(
-    new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: filename,
-      Body: createReadStream(localPath),
-    })
-  );
-
+const uploadFile = (filename, buffer) =>{
+    try {
+      let sUrl;
+      let sKey= `${filename}.jpg`
+      s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: sKey,
+          Body: buffer
+        })
+      );
+        
+      sUrl= `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${sKey}`;
+      return sUrl;
+        
+  } catch (error) {
+      console.log(error);
+      throw new Error()
+  }
+  }
 // Lists up to 1000 files from the bucket
 // In order to list more files you should list again sending the key of the
 // last file received until IsTruncated (a property in the response) is false
