@@ -1,6 +1,7 @@
 const { UserRepository } = require('../repositories');
 const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('../constants/httpStatus');
 const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
+const { generateAccesToken } = require('../functions/jsonwebtoken');
 
 module.exports = {
   findAllUsers: UserRepository.findAllUsers,
@@ -23,7 +24,12 @@ module.exports = {
   createUser: async (attributes) => {
     const result = await UserRepository.createUser(attributes);
 
-    if (result !== null) return result;
+    if (result !== null) {
+      // it add token when user is created
+      const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
+
+      return userWithToken;
+    }
 
     // The result as null means that the user can't be created
     // with that email (because the repository use findOrCreate)
