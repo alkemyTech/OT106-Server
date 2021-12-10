@@ -1,7 +1,7 @@
 require("dotenv");
 const sgMail = require("@sendgrid/mail");
 
-const { VERIFIED_MAIL, SENDGRID_APIKEY } = process.env;
+const { VERIFIED_MAIL, SENDGRID_APIKEY, WELCOME_EMAIL_TEMPLATE } = process.env;
 
 function SendEmail(email, templateId) {
   //Set up Sendgrid API KEY
@@ -11,7 +11,7 @@ function SendEmail(email, templateId) {
   const msg = {
     to: email, // Change to your recipient
     from: VERIFIED_MAIL, // Change to your verified sender
-    templateId,
+    templateId: WELCOME_EMAIL_TEMPLATE, //Sendgrid Template Id
   };
 
   //Send Email
