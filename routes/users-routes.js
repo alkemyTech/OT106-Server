@@ -4,11 +4,12 @@ var router = express.Router();
 const usersController = require('../controllers/user-controller');
 
 const { validateUpdateUser } = require('../validations/update-user-validation');
-
+const { validateCreateUser } = require('../validations/user-validation')
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/',usersController.findAllUsers)
+
+router.post('/',validateCreateUser,usersController.createUser)
+
 
 // PATCH
 router.patch('/:id', validateUpdateUser, usersController.updateUser);
