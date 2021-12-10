@@ -1,13 +1,14 @@
-//POST y PATCH en desarrollo
-
+const { v4: uuidv4 } = require('uuid');
 const {uploadFileToAmazonS3Bucket}=require("../services/amazon-s3-service")
 const Constants= require("../constants/httpStatus");
 
 module.exports={
 
-    add:(req,res,cModel,oFields)=>{
-        
-        if(req.file) oFields.image= this.uploadImage(req)
+    add:async function (req,res,cModel,oFields){
+
+        if(req.file) {
+            oFields.image=await this.uploadImage(req)
+        }
 
         cModel.create(oFields)
         .then(oResult => {
@@ -30,7 +31,6 @@ module.exports={
             res.status(Constants.INTERNAL_SERVER_ERROR);
         })
     },
-
     getAll: async (req, res,cModel) => {
         cModel.findAll()
         .then(oResult => {
@@ -43,11 +43,9 @@ module.exports={
         })
     },
 
-    modify: (req, res,cModel,oFields) => {
-
-        if(req.file) oFields.image= this.uploadImage(req,oFields)
-        
-        cModel.update(oFields, {
+    modify: async function (req, res,cModel) {
+        if(req.file) req.body.image= await this.uploadImage(req);
+        cModel.update(req.body, {
             where: {
                 id: req.params.id
             }})
@@ -75,17 +73,14 @@ module.exports={
             res.status(Constants.INTERNAL_SERVER_ERROR);
         })
     },
-    uploadImage: async function(req){
-            let image;
-            let file = req.file.originalname.split(".");
-            const fileType = file[file.length - 1];
-            image = await uploadFileToAmazonS3Bucket(
-                req.file.buffer,
-                fileType,
-                req.body.name.toLowerCase()
-            );
-            return image    
+    uploadImage: async function(req,sFileName){
+        let sImage;
+        if(!sFileName) sFileName= uuidv4();
+
+        sImage = await uploadFileToAmazonS3Bucket(
+            sFileName, req.file.buffer
+        );
+        return sImage; 
         
     }
-
 }

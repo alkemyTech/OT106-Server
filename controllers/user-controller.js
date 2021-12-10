@@ -18,8 +18,15 @@ module.exports = {
     return res.status(OK_CODE).send(resultWithoutPasswords);
   }),
 
-  findUserByPk: catchAsync(async (req, res, next) => {
+  findUserByParamsId: catchAsync(async (req, res, next) => {
     const idToFind = req.params.id;
+    const result = await UserService.findUserByPk(idToFind);
+
+    return res.status(OK_CODE).send(removePassword(result));
+  }),
+
+  findUserByTokenId: catchAsync(async (req, res, next) => {
+    const idToFind = req.tokenPayload.id;
     const result = await UserService.findUserByPk(idToFind);
 
     return res.status(OK_CODE).send(removePassword(result));
