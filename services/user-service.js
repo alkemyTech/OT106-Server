@@ -1,13 +1,9 @@
-require('dotenv') 
 const { UserRepository } = require('../repositories');
 const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('../constants/httpStatus');
 const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
-<<<<<<< HEAD
-const sendEmail = require('../functions/mail-engine')
-=======
 const { generateAccesToken } = require('../functions/jsonwebtoken');
+const sendEmail = require('../functions/mail-engine')
 
->>>>>>> a503f3a79d4305391ffe5945ca9344d632515cfb
 module.exports = {
   findAllUsers: UserRepository.findAllUsers,
 
@@ -29,21 +25,13 @@ module.exports = {
   createUser: async (attributes) => {
     const result = await UserRepository.createUser(attributes);
 
-<<<<<<< HEAD
-    if (result !== null){
-        console.log(result.email)
-        sendEmail(result.email,process.env.TEMPLATEID_WELCOME)
-        return result;  
-    }
-      
-=======
     if (result !== null) {
       // it add token when user is created
-      const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
+    sendEmail(result.email,process.env.TEMPLATEID_WELCOME)
+    const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
 
       return userWithToken;
     }
->>>>>>> a503f3a79d4305391ffe5945ca9344d632515cfb
 
     // The result as null means that the user can't be created
     // with that email (because the repository use findOrCreate)
