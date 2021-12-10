@@ -16,6 +16,7 @@ const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');
 const categoriesRouter = require('./routes/categories');
 const membersRouter = require('./routes/members-routes');
+const slidesRouter = require('./routes/slides-router');
 
 
 const app = express();
@@ -32,16 +33,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/news',require('./routes/news-routes'))//TODO (roleValidations ready) agregar el middleware para validar si es admin
+app.use('/news', require('./routes/news-routes'));// TODO (roleValidations ready) agregar el middleware para validar si es admin
 
 app.use('/auth', require('./routes/auth-route'));
+
 app.use('/activities', activitiesRouter);
 
 app.use('/testimonials', testimonialRouter);
 app.use('/organizations', organizationRouter);
 
 app.use('/members', membersRouter);
-
+app.use('/slides', slidesRouter);
 
 
 app.use('/categories', categoriesRouter);
