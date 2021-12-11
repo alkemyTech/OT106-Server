@@ -9,7 +9,7 @@ const multer = require('multer');
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users-routes');
 const activitiesRouter = require('./routes/activities-routes');
 const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/news', require('./routes/news-routes'));// TODO (roleValidations ready) agregar el middleware para validar si es admin
-
+app.use('/commentary', require('./routes/commentary-routes'));
 app.use('/auth', require('./routes/auth-route'));
 
 app.use('/activities', activitiesRouter);
