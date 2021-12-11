@@ -20,13 +20,12 @@ async function findOne(id) {
 }
 
 async function findAll() {
-  const allOrganizations = await organization.findAll({ attributes: ['name', 'image', 'phone', 'address'] });
+  const allOrganizations = await organization.findAll({ attributes: ['name', 'image', 'phone', 'address', 'facebook', 'instagram', 'linkedin'] });
 
   return allOrganizations;
 }
 async function update(body, id) {
-  const updatedOrganization = await organization.update({ body }, { where: { id } });
-
+  const updatedOrganization = await organization.update(body, { where: { id } });
   return updatedOrganization;
 }
 

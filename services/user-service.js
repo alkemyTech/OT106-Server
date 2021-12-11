@@ -56,5 +56,16 @@ module.exports = {
     return updatedUser;
   },
 
-  destroyUser: UserRepository.destroyUser,
+  destroyUser: async (id) => {
+    const user = await UserRepository.findUserByPk(id);
+
+    if (!user) {
+      const error = new Error();
+      error.message = NOT_FOUND_MESSAGE;
+      error.status = NOT_FOUND_CODE;
+      throw error;
+    }
+
+    await UserRepository.destroyUser(id);
+  },
 };
