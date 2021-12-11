@@ -48,5 +48,41 @@ module.exports = {
 
     }
   },
+  update: async (req, res) => {
+
+    try {
+      let response = await update(req.params.id, req.body);
+      
+      if (response[0] === 0) {
+        return res.status(httpStatus.NOT_FOUND).json(message.NOT_FOUND);
+
+      }
+      
+      return res.status(httpStatus.OK).json(message.OK)
+        
+    } catch (error) {
+
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+
+    }
+  },
+  remove: async (req, res) => {
+
+    try {
+      let response = await remove(req.params.id);
+      console.log(response);
+      if (response === 0) {
+        return res.status(httpStatus.NOT_FOUND).json(message.NOT_FOUND);
+
+      }
+      
+      return res.status(httpStatus.OK).json(message.OK)
+        
+    } catch (error) {
+
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+
+    }
+  },
 
 }
