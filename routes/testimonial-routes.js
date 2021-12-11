@@ -1,19 +1,33 @@
-const express = require('express');
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const testimonialController = require("../controllers/testimonial-controller");
-const {validateCreateTestimonial, validateUpdateTestimonial} = require("../middleware/testimonial-middleware")
+const adminAuthentication = require("../middleware/admin-authentication");
+const {
+  validateCreateTestimonial,
+  validateUpdateTestimonial,
+} = require("../middleware/testimonial-middleware");
 
 //GET
-router.get("/:id", testimonialController.find)
-router.get("/", testimonialController.list)
+router.get("/:id", testimonialController.find);
+router.get("/", testimonialController.list);
 
 //POST
-router.post("/", validateCreateTestimonial, testimonialController.create)
+router.post(
+  "/",
+  adminAuthentication,
+  validateCreateTestimonial,
+  testimonialController.create
+);
 
 //PATCH
-router.patch("/:id", validateUpdateTestimonial, testimonialController.update)
+router.patch(
+  "/:id",
+  adminAuthentication,
+  validateUpdateTestimonial,
+  testimonialController.update
+);
 
 //DELETE
-router.delete("/:id", testimonialController.delete)
+router.delete("/:id", adminAuthentication, testimonialController.delete);
 
 module.exports = router;
