@@ -17,6 +17,18 @@ const swaggerDefinition = {
         url: 'https://jsonplaceholder.typicode.com',
       },
     },
+    components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          }
+        }
+      },
+      security: [{
+        bearerAuth: []
+    }],
     servers: [
       {
         url: 'http://localhost:3000',

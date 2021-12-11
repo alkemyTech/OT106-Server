@@ -81,6 +81,8 @@ const activitiesCombination = require('../combinations/activities-combination')
  * @swagger
  * /activities:
  *   post:
+ *     security:
+ *          - bearerAuth: []
  *     summary: Create a new activity
  *     tags: [activities]
  *     requestBody:
@@ -98,6 +100,7 @@ const activitiesCombination = require('../combinations/activities-combination')
  *               $ref: '#/components/schemas/Activities'
  *       500:
  *         description: Some server error
+ *          
  */
 
 router.route('/')
