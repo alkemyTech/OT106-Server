@@ -11,12 +11,12 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const activitiesRouter = require('./routes/activities-routes');
-
 const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');
 const categoriesRouter = require('./routes/categories');
 const membersRouter = require('./routes/members-routes');
 const slidesRouter = require('./routes/slides-router');
+const contactRouter = require('./routes/contact-routes');
 
 
 const app = express();
@@ -38,15 +38,16 @@ app.use('/news', require('./routes/news-routes'));// TODO (roleValidations ready
 app.use('/auth', require('./routes/auth-route'));
 
 app.use('/activities', activitiesRouter);
-
 app.use('/testimonials', testimonialRouter);
 app.use('/organizations', organizationRouter);
-
 app.use('/members', membersRouter);
 app.use('/slides', slidesRouter);
 
 
+
 app.use('/categories', categoriesRouter);
+app.use('/contacts', contactRouter)
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

@@ -10,10 +10,6 @@ const validateCreate=[
     .exists()
     .not()
     .isEmpty(),
-    check('image')
-    .exists()
-    .not()
-    .isEmpty(),
     (req,res,next)=>{
         validateResult(req,res,next)
     }
