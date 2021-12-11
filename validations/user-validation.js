@@ -39,7 +39,32 @@ const createUserSchema = {
   },
 };
 
+const loginUserSchema = {
+  email: {
+    in: ['body'],
+    optional: false,
+    notEmpty: true,
+    isEmail: true,
+    errorMessage: userValidation.invalidEmail,
+    custom: {
+      options: async (value) => {
+        const aux = await findUserByEmail(value);
+        if (aux !== null) return Promise.resolve();
+        return Promise.reject();
+      },
+      errorMessage: userValidation.unregisteredEmail,
+    },
+  },
+  password: {
+    in: ['body'],
+    optional: false,
+    notEmpty: true,
+    errorMessage: userValidation.invalidPassword,
+  },
+};
+
 // Remember, validateSchema returns a middleware function
 module.exports = {
   validateCreateUser: validateSchema(createUserSchema),
+  validateLoginUser: validateSchema(loginUserSchema),
 };
