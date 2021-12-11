@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { UserService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
+const { generateAccesToken } = require('../functions/jsonwebtoken');
 const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 
@@ -18,8 +19,15 @@ module.exports = {
     return res.status(OK_CODE).send(resultWithoutPasswords);
   }),
 
-  findUserByPk: catchAsync(async (req, res, next) => {
+  findUserByParamsId: catchAsync(async (req, res, next) => {
     const idToFind = req.params.id;
+    const result = await UserService.findUserByPk(idToFind);
+
+    return res.status(OK_CODE).send(removePassword(result));
+  }),
+
+  findUserByTokenId: catchAsync(async (req, res, next) => {
+    const idToFind = req.tokenPayload.id;
     const result = await UserService.findUserByPk(idToFind);
 
     return res.status(OK_CODE).send(removePassword(result));
@@ -68,5 +76,22 @@ module.exports = {
     await UserService.destroyUser(idToDelete);
 
     return res.status(OK_CODE).send(OK_MESSAGE);
+  }),
+
+  loginUser: catchAsync(async (req, res, next) => {
+    const user = await UserService.findUserByEmail(req.body.email);
+
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (!validPassword) {
+      return res.status(UNAUTHORIZED_CODE).send({ ok: false });
+    }
+
+    const result = { ...removePassword(user), token: generateAccesToken(user) };
+
+    return res.status(OK_CODE).send(result);
   }),
 };
