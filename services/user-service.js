@@ -2,6 +2,7 @@ const { UserRepository } = require('../repositories');
 const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('../constants/httpStatus');
 const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
 const { generateAccesToken } = require('../functions/jsonwebtoken');
+const sendEmail = require('../functions/mail-engine')
 
 module.exports = {
   findAllUsers: UserRepository.findAllUsers,
@@ -26,7 +27,8 @@ module.exports = {
 
     if (result !== null) {
       // it add token when user is created
-      const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
+    sendEmail(result.email,process.env.TEMPLATEID_WELCOME)
+    const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
 
       return userWithToken;
     }
