@@ -1,4 +1,5 @@
 const contactRepository = require("../repositories/contact-repository");
+const sendEmail = require("../functions/mail-engine");
 
 //http status
 const code = require("../constants/httpStatus");
@@ -6,9 +7,15 @@ const code = require("../constants/httpStatus");
 //Response messages
 const { CONTACT_NOT_FOUND } = require("../constants/contact-constants");
 
+//Env Variables
+const { CONTACT_EMAIL_TEMPLATE } = process.env;
+
 const createContact = async (req, res) => {
   //Repository
   const create = await contactRepository.createContact(req);
+
+  //Send Welcome Email
+  sendEmail(create.email, CONTACT_EMAIL_TEMPLATE);
 
   //Success?
   return create;
