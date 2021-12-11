@@ -5,7 +5,7 @@ const {addNews,deleteNews,modifyNews,getNews,getAllNews} = require('../controlle
 const {validateCreate}= require("../validations/news-validations")
 const upload= require("../middleware/upload")
 router.route('/')
-    .post(upload,validateCreate,addNews)
+    .post(upload,validateCreate,addNews,upload)
     .get(getAllNews);
 
 router.route('/:id')
