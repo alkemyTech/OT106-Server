@@ -31,12 +31,12 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Categories",
-          key: "id"
+          model: 'Category',
+          key: 'id',
         },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-      }
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
