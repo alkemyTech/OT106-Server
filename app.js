@@ -4,12 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerDefinition = require('./swaggerDefinition.json');
 const multer = require('multer');
 
 require('dotenv').config();
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users-routes');
 const activitiesRouter = require('./routes/activities-routes');
 const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');
@@ -22,6 +25,15 @@ const contactRouter = require('./routes/contact-routes');
 const app = express();
 app.use(cors());
 
+//DOCUMENTATION//
+const options = {
+  swaggerDefinition,
+  apis: [`${path.join(__dirname, 'routes', '*.js')}`]
+};
+const swaggerSpec = swaggerJsDoc(options);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+////////////////
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,7 +45,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/news', require('./routes/news-routes'));// TODO (roleValidations ready) agregar el middleware para validar si es admin
+app.use('/news', require('./routes/news-routes'))//TODO (roleValidations ready) agregar el middleware para validar si es admin
 
 app.use('/auth', require('./routes/auth-route'));
 
