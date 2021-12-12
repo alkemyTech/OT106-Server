@@ -2,10 +2,16 @@ const { UserRepository } = require('../repositories');
 const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('../constants/httpStatus');
 const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
 const { generateAccesToken } = require('../functions/jsonwebtoken');
-const sendEmail = require('../functions/mail-engine')
+const sendEmail = require('../functions/mail-engine');
 
 module.exports = {
-  findAllUsers: UserRepository.findAllUsers,
+  findAllUsers: async () => {
+    const result = await UserRepository.findAllUsers();
+
+    const users = result.map(user => user.dataValues);
+
+    return users;
+  },
 
   findUserByPk: async (id) => {
     const user = await UserRepository.findUserByPk(id);
