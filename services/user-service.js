@@ -58,7 +58,11 @@ module.exports = {
       throw error;
     }
 
-    const updatedUser = await UserRepository.updateUser(id, attributes);
+    const attributesToUpdate = attributes.password
+      ? attributes
+      : Object.assign(attributes, { password: user.dataValues.password });
+
+    const updatedUser = await UserRepository.updateUser(id, attributesToUpdate);
 
     return updatedUser.dataValues;
   },

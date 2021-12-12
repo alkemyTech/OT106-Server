@@ -1,9 +1,9 @@
-const bcrypt = require('bcryptjs');
 const { UserService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
 const { generateAccesToken } = require('../functions/jsonwebtoken');
 const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
+const { generatePassword } = require('../functions/generate-password');
 
 const removePassword = (x) => {
   return { ...x, password: undefined };
@@ -35,8 +35,7 @@ module.exports = {
 
   createUser: catchAsync(async (req, res, next) => {
     // Hashs password
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await generatePassword(req.body.password);
 
     const attributes = {
       firstName: req.body.firstName,
@@ -56,12 +55,16 @@ module.exports = {
       return res.status(UNAUTHORIZED_CODE).send(UNAUTHORIZED_MESSAGE);
     }
 
+    const hashedPassword = req.body.password
+    ? await generatePassword(req.body.password)
+    : null;
+
     const idToUpdate = req.params.id;
     const attributes = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       photo: req.body.photo,
     };
     await UserService.updateUser(idToUpdate, attributes);
