@@ -24,13 +24,11 @@ module.exports = {
 
   createUser: async (attributes) => {
     const result = await UserRepository.createUser(attributes);
-    console.log(result);
 
     if (result !== null) {
       // it add token when user is created
     sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
     const userWithToken = Object.assign(result.dataValues, { token: generateAccesToken(result.dataValues) });
-      console.log('userwt', userWithToken);
       return userWithToken;
     }
 
