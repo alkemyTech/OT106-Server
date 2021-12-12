@@ -28,13 +28,7 @@ const app = express();
 app.use(cors());
 
 //DOCUMENTATION//
-const options = {
-  swaggerDefinition,
-  apis: [`${path.join(__dirname, 'routes', '*.js')}`]
-};
-const swaggerSpec = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-////////////////
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

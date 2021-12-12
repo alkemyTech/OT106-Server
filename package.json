@@ -35,11 +35,6 @@
     "nodemon": "^2.0.15",
     "sequelize": "^6.3.5",
     "swagger-jsdoc": "^6.1.0",
-<<<<<<< HEAD
-    "swagger-ui-express": "^4.2.0",
-    "uuid": "^8.3.2"
-=======
     "swagger-ui-express": "^4.2.0"
->>>>>>> b2cb3ac4d54b8afab210db13b12690f443761967
   }
 }

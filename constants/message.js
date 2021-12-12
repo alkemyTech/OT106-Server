@@ -31,7 +31,3 @@ module.exports = {
   NAME_NOT_ACCEPTABLE,
   VERIFY_TYPE_IMAGE
 };
-<<<<<<< HEAD
-  
-=======
->>>>>>> b2cb3ac4d54b8afab210db13b12690f443761967

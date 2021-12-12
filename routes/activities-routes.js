@@ -16,6 +16,15 @@ router.route('/:id')
 router.route('/image/:id')
     .get(activitiesCombination.getActivityimage)
 
+
+ /**
+  * @swagger
+  * tags:
+  *   name: Activities
+  *   description: The activities managing API
+  */
+
+
 /**
  * @swagger
  * components:
@@ -45,12 +54,6 @@ router.route('/image/:id')
  *         content: algo que hacer con los
  */
 
- /**
-  * @swagger
-  * tags:
-  *   name: Activities
-  *   description: The activities managing API
-  */
 
 /**
  * @swagger
@@ -100,7 +103,7 @@ router.route('/image/:id')
  *     security:
  *          - bearerAuth: []
  *     summary: Create a new activity
- *     tags: [activities]
+ *     tags: [Activities]
  *     requestBody:
  *       required: true
  *       content:
@@ -126,7 +129,7 @@ router.route('/image/:id')
  *    security:
  *      - bearerAuth: []
  *    summary: update activity
- *    tags: [activities]
+ *    tags: [Activities]
  *    parameters:
  *      - in: path
  *        name: id
@@ -161,7 +164,7 @@ router.route('/image/:id')
  *     patch:
  *      security:
  *          - bearerAuth: [] 
- *     tags: [activities]
+ *     tags: [Activities]
  *     parameters:
  *       - in: path
  *         name: id
