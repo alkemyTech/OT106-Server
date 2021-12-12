@@ -5,7 +5,7 @@ const {addCommentary,deleteCommentary,modifyCommentary,getCommentary,getAllComme
 const {validateCreate}= require("../validations/commentary-validations")
 const upload= require("../middleware/upload")
 router.route('/')
-    .post(upload,validateCreate,addCommentary,upload)
+    .post(upload,validateCreate,addCommentary)
     .get(getAllCommentaries);
 
 router.route('/:id')
