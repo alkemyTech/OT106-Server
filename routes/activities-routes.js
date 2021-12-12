@@ -2,6 +2,20 @@ require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const activitiesCombination = require('../combinations/activities-combination')
+
+router.route('/')
+    .post(activitiesCombination.createActivity)
+    .get(activitiesCombination.getActivities)
+    
+
+router.route('/:id')
+    .get(activitiesCombination.getActivity )
+    .delete(activitiesCombination.deleteActivity)
+    .patch(activitiesCombination.editActivity)
+
+router.route('/image/:id')
+    .get(activitiesCombination.getActivityimage)
+
 /**
  * @swagger
  * components:
@@ -24,7 +38,7 @@ const activitiesCombination = require('../combinations/activities-combination')
  *           description: The activity content   
  *         image:
  *           type: string
- *           description: the activity image
+ *           description: File activity 
  *       example:
  *         name: reparto de juguetes
  *         image: juguetes.png
@@ -54,11 +68,12 @@ const activitiesCombination = require('../combinations/activities-combination')
  *               items:
  *                 $ref: '#/components/schemas/Activities'
  */
+
 /**
  * @swagger
  * /activities/{id}:
  *   get:
- *     summary: Get the book by id
+ *     summary: Get the activity by id
  *     tags: [Activities]
  *     parameters:
  *       - in: path
@@ -69,14 +84,15 @@ const activitiesCombination = require('../combinations/activities-combination')
  *         description: The activity id
  *     responses:
  *       200:
- *         description: The book description by id
+ *         description: The activity description by id
  *         contens:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Activities'
  *       404:
- *         description: The book was not found
+ *         description: The activity was not found
  */
+
 /**
  * @swagger
  * /activities:
@@ -103,17 +119,61 @@ const activitiesCombination = require('../combinations/activities-combination')
  *          
  */
 
-router.route('/')
-    .post(activitiesCombination.createActivity)
-    .get(activitiesCombination.getActivities)
-    
+/**
+ * @swagger
+ * /activities/{id}:
+ *  patch:
+ *    security:
+ *      - bearerAuth: []
+ *    summary: update activity
+ *    tags: [activities]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: The activity id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Activities'
+ *    responses:
+ *      200:
+ *        description: The activity was updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Activities'
+ *      404:
+ *        description: The activity was not found
+ *      500:
+ *        description: Some error happened
+ */
 
-router.route('/:id')
-    .get(activitiesCombination.getActivity )
-    .delete(activitiesCombination.deleteActivity)
-    .patch(activitiesCombination.editActivity)
-
-router.route('/image/:id')
-    .get(activitiesCombination.getActivityimage)
-
+/**
+ * @swagger
+ * /activities/{id}:
+ *   delete:
+ *     summary: Remove the activity by id
+ *     patch:
+ *      security:
+ *          - bearerAuth: [] 
+ *     tags: [activities]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The activity id
+ * 
+ *     responses:
+ *       200:
+ *         description: The activity was deleted
+ *       404:
+ *         description: The activity was not found
+ */
 module.exports =  router

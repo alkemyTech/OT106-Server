@@ -11,7 +11,7 @@ const multer = require('multer');
 require('dotenv').config();
 const swaggerSpec = require('./config/swagger-config')
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users-routes');
 const activitiesRouter = require('./routes/activities-routes');
 const testimonialRouter = require('./routes/testimonial-routes');
 const organizationRouter = require('./routes/organizations-routes');

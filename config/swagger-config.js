@@ -1,28 +1,29 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+require('dotenv').config()
 
 
 const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-      title: 'Express API for JSONPlaceholder',
+      title: 'Express API',
       version: '1.0.0',
       description:
-        'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+        'This is a REST API application made with Express. for ong.',
       license: {
         name: 'Licensed Under MIT',
-        url: 'https://spdx.org/licenses/MIT.html',
+        url: '',
       },
       contact: {
-        name: 'JSONPlaceholder',
-        url: 'https://jsonplaceholder.typicode.com',
+        name: 'contacto',
+        url: '',
       },
     },
     components: {
         securitySchemes: {
           bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
+            type: process.env.PROTOCOL,
+            scheme: process.env.SECURITY_SCHEMA,
+            bearerFormat: process.env.BEARER_FORMAT,
           }
         }
       },
@@ -31,7 +32,7 @@ const swaggerDefinition = {
     }],
     servers: [
       {
-        url: 'http://localhost:3000',
+        url: `${process.env.PROTOCOL}://${process.env.ENVIRONMENT}:${process.env.PORT}`,
         description: 'Development server',
       },
     ]
@@ -42,9 +43,9 @@ const swaggerDefinition = {
     components: {
         securitySchemes: {
           bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
+            type: process.env.PROTOCOL,
+            scheme: process.env.SECURITY_SCHEMA,
+            bearerFormat: process.env.BEARER_FORMAT,
           }
         }
       },
