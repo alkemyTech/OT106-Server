@@ -7,11 +7,16 @@ module.exports = {
         name: 'actividad1',
         content: 'contenido1',
         image: 'imagen.png',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        
       },
       {
         name: 'actividad2',
         content: 'contenido2',
         image: 'imagen.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
     ], {});
   },

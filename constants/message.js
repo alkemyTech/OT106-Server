@@ -32,4 +32,3 @@ module.exports = {
   NAME_NOT_ACCEPTABLE,
   VERIFY_TYPE_IMAGE
 };
-

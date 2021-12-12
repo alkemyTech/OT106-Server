@@ -1,6 +1,6 @@
 require('dotenv').config()
 const httpStatus = require('http-status');
-const {NOT_ACCEPTABLE,NOT_FOUND} = require('../constants/message')
+const {NOT_FOUND} = require('../constants/message')
 
 const activitiesRepository = require('../repositories/activities-repository')
 
