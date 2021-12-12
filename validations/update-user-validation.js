@@ -23,8 +23,8 @@ const createUpdateUserSchema = {
   },
   password: {
     in: ['body'],
-    optional: false,
-    notEmpty: true,
+    optional: true,
+    notEmpty: false,
     isLength: { options: { min: 8 } },
     errorMessage: userValidation.shortPassword,
   },
