@@ -6,7 +6,7 @@ const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = 
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 
 const removePassword = (x) => {
-  return { ...x.dataValues, password: undefined };
+  return { ...x, password: undefined };
 };
 
 module.exports = {
@@ -42,6 +42,7 @@ module.exports = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
+      roleId: Number(req.body.roleId),
       password: hashedPassword,
     };
     const result = await UserService.createUser(attributes);

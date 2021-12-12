@@ -17,19 +17,20 @@ module.exports = {
       throw error;
     }
 
-    return user;
+    return user.dataValues;
   },
 
   findUserByEmail: UserRepository.findUserByEmail,
 
   createUser: async (attributes) => {
     const result = await UserRepository.createUser(attributes);
+    console.log(result);
 
     if (result !== null) {
       // it add token when user is created
-    sendEmail(result.email,process.env.TEMPLATEID_WELCOME)
-    const userWithToken = Object.assign(result, { token: generateAccesToken(result) });
-
+    sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
+    const userWithToken = Object.assign(result.dataValues, { token: generateAccesToken(result.dataValues) });
+      console.log('userwt', userWithToken);
       return userWithToken;
     }
 
@@ -55,7 +56,7 @@ module.exports = {
 
     const updatedUser = await UserRepository.updateUser(id, attributes);
 
-    return updatedUser;
+    return updatedUser.dataValues;
   },
 
   destroyUser: async (id) => {
