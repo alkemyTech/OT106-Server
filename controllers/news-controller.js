@@ -9,7 +9,7 @@ module.exports={
         const oFields= {
             name: req.body.name,
             content: req.body.content,
-            categoryId:req.body.categoryId?req.body.categoryId:null
+            CategoryId:req.body.CategoryId?req.body.CategoryId:null
         }
         await baseRepository.add(req,res,db.News,oFields)
     },
