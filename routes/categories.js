@@ -8,13 +8,13 @@ const adminPermission = require('../middleware/admin-authentication')
 
 // /categories
 
-router.get('/', adminPermission,categoryController.list)
-router.get('/:id', adminPermission,categoryController.detail)
+router.get('/',adminPermission, categoryController.list)
+router.get('/:id', adminPermission, categoryController.detail)
 
 router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
-router.put('/:id', adminPermission,categoryValidation,categoryController.update)
+router.put('/:id', adminPermission, categoryValidation,validator,categoryController.update)
 
-router.delete('/:id', adminPermission,categoryController.remove)
+router.delete('/:id', adminPermission, categoryController.remove)
 
 
 

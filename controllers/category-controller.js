@@ -54,7 +54,7 @@ module.exports = {
       let response = await update(req.params.id, req.body);
       
       if (response[0] === 0) {
-        return res.status(httpStatus.NOT_FOUND).json(message.NOT_FOUND);
+        return res.status(httpStatus.BAD_REQUEST).json(message.BAD_REQUEST);
 
       }
       

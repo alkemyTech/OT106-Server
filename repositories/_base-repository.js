@@ -42,7 +42,19 @@ module.exports={
             res.status(Constants.INTERNAL_SERVER_ERROR);
         })
     },
-
+    getAllWithParam: async function(req,res,cModel,oParams){
+        cModel.findAll({
+            where: oParams
+          })
+          .then(oResult => {
+            res.json(oResult)
+            res.status(Constants.OK);
+        })
+        .catch(e => {
+            console.log(e);
+            res.status(Constants.INTERNAL_SERVER_ERROR);
+        })
+    },
     modify: async function (req, res,cModel) {
         if(req.file) req.body.image= await this.uploadImage(req);
         cModel.update(req.body, {
@@ -83,4 +95,5 @@ module.exports={
         return sImage; 
         
     }
+    
 }

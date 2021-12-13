@@ -1,24 +1,16 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('News', {
+    await queryInterface.createTable('Commentaries', {
       id: {
-        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      content: {
+      body: {
         type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      image: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -28,10 +20,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      CategoryId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Category',
+          model: 'Users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
+      NewsId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'News',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -40,6 +41,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('News');
+    await queryInterface.dropTable('Commentaries');
   }
 };
