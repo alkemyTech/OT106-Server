@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class News extends Model {
     static associate({ Category }) {
       this.belongsTo(Category, {
-        foreignKey: 'CategoryId',
+        foreignKey: 'categoryId',
         targetKey: 'id',
       });
     }
