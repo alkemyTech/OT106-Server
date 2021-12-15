@@ -3,6 +3,7 @@ const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('..
 const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
 const { generateAccesToken } = require('../functions/jsonwebtoken');
 const sendEmail = require('../functions/mail-engine');
+const throwError = require('../helpers/throw-error');
 
 module.exports = {
   findAllUsers: async () => {
@@ -40,10 +41,7 @@ module.exports = {
 
     // The result as null means that the user can't be created
     // with that email (because the repository use findOrCreate)
-    const err = new Error();
-    err.message = BAD_REQUEST_MESSAGE;
-    err.status = BAD_REQUEST_CODE;
-    throw err;
+    throwError(BAD_REQUEST_CODE, BAD_REQUEST_MESSAGE);
   },
 
   updateUser: async (id, attributes) => {
