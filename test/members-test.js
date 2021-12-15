@@ -18,7 +18,7 @@ describe('Suite de peticiones GET a members',()=>{
     it('Deberia generar el token del usuario',(done) => {
         chai.request(URL)
             .get('/auth/login ')
-           .set({email:"test@test.com",password:"1234"})
+           .set({email:process.env.USER_TEST,password:process.env.PASSWORD_TEST})
             .end((error, res) => {
                expect(res.body).to.have.property('token');
                 token = res.body.token;
