@@ -8,7 +8,7 @@ const pagination = require('../middleware/pagination');
 
 // /categories
 
-router.get('/',pagination.validate, categoryController.list)
+router.get('/',adminPermission,pagination.validate, categoryController.list)
 router.get('/:id', adminPermission, categoryController.detail)
 
 router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
