@@ -47,6 +47,7 @@ router.route('/image/:id')
  *           description: The activity content   
  *         image:
  *           type: string
+ *           format: binary    
  *           description: File activity 
  *       example:
  *         name: reparto de juguetes
@@ -107,9 +108,9 @@ router.route('/image/:id')
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Activities'
+ *           multipart/form-data:
+ *              schema:
+ *                  $ref: '#/components/schemas/Activities'
  *     responses:
  *       200:
  *         description: The activity was successfully created
@@ -134,15 +135,26 @@ router.route('/image/:id')
  *      - in: path
  *        name: id
  *        schema:
- *          type: integer
- *        required: true
+ *         type: integer
  *        description: The activity id
  *    requestBody:
- *      required: true
+ *      require: false
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *          schema:
- *            $ref: '#/components/schemas/Activities'
+ *            type:
+ *              object  
+ *            properties:
+ *              name:
+ *                  type: string
+ *                  description: The activity name
+ *              content:
+ *                  type: string
+ *                  description: The activity content   
+ *              image:
+ *                  type: string
+ *                  format: binary    
+ *                  description: File activity
  *    responses:
  *      200:
  *        description: The activity was updated
