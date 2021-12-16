@@ -92,7 +92,8 @@ module.exports = {
     );
 
     if (!validPassword) {
-      throwError(UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE, { ok: false });
+      const responseBody = { ok: false };
+      throwError(UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE, responseBody);
     }
 
     const result = { ...removePassword(user), token: generateAccesToken(user) };
