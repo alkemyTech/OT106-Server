@@ -1,3 +1,5 @@
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -10,7 +12,7 @@ const swaggerDefinition = require('./swaggerDefinition.json');
 const multer = require('multer');
 
 require('dotenv').config();
-
+const swaggerSpec = require('./config/swagger-config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users-routes');
 const activitiesRouter = require('./routes/activities-routes');
@@ -26,13 +28,7 @@ const app = express();
 app.use(cors());
 
 //DOCUMENTATION//
-const options = {
-  swaggerDefinition,
-  apis: [`${path.join(__dirname, 'routes', '*.js')}`]
-};
-const swaggerSpec = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-////////////////
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -62,6 +58,7 @@ app.use('/slides', slidesRouter);
 
 app.use('/categories', categoriesRouter);
 app.use('/contacts', contactRouter)
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -78,5 +75,4 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;
