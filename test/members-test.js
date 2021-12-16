@@ -1,4 +1,4 @@
-require('dotenv').config
+require('dotenv').config()
 const chai = require('chai')
 const chaiHttp = require('chai-http');
 const path = require('path')
@@ -8,24 +8,25 @@ chai.use(chaiHttp);
 
 const imagen =  path.join(__dirname, '/imgTest/member-test.png');
 
-const URL = 'http://localhost:3000';
+const URL = `${process.env.HOST_HTTP_OR_HTTPS}://${process.env.HOST}:${process.env.PORT}`;
+
+
 let token;
 
 describe('Suite de peticiones GET a members',()=>{
 
-    /* si se necesita token
-     it('Deberia generar el token del usuario',(done) => {
-         chai.request(URL)
-             .post('/auth/login')
-            .send({email:"cristian@gmail.com",password:"cristianlell123"})
-             .end((error, res) => {
-                expect(res.body).to.have.property('token');
-                 token = res.body.token;
-                 expect(res).to.have.status(200);// tener estado "200"
-                 done();
-               });
-     })
-    */
+    it('Deberia generar el token del usuario',(done) => {
+        chai.request(URL)
+            .get('/auth/login ')
+           .set({email:process.env.USER_TEST,password:process.env.PASSWORD_TEST})
+            .end((error, res) => {
+               expect(res.body).to.have.property('token');
+                token = res.body.token;
+                expect(res).to.have.status(200);// tener estado "200"
+                done();
+              });
+    })
+
     it('Deberia traer todos los miembros en un array',(done) => {
         chai.request(URL)
             .get('/members?page=1')

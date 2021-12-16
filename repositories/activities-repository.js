@@ -37,8 +37,9 @@ async function getActivities(){
     return activities
 }
 async function editActivity(request){
-  if (request.file !== undefined){
-    const activityImage = await Activity.update({
+    console.log(request.body)
+    if (request.file !== undefined){
+    await Activity.update({
         image:request.file.filename,
       },
 
@@ -47,14 +48,14 @@ async function editActivity(request){
             }
         )
     } 
-    const activity = await Activity.update(
+    await Activity.update(
         request.body,
         {where:{
             id : request.params.id } 
         }
-        
+
     )
-    
+    const activity = getActivity(request)
     return activity
 }
 

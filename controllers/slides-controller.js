@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const { SlideService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
 const { OK: OK_CODE, CREATED: CREATED_CODE } = require('../constants/httpStatus');

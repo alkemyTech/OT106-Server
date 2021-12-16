@@ -28,10 +28,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      CategoryId: {
+      categoryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Category',
+          model: 'Categories',
           key: 'id',
         },
         onUpdate: 'CASCADE',
