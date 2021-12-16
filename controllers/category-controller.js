@@ -5,13 +5,15 @@ const message = require('../constants/message')
 
 module.exports = {
   list: async (req, res) => {
+    let page = +req.params.page;
 
     try {
-      let categories = await list();
-      return res.status(httpStatus.OK).json(categories);
-
+      let categories = await list(req,page);
+      return res.status(httpStatus.OK).json({ message: message.OK, body: categories });
+      
     } catch (error) {
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+      console.log(categories);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: message.INTERNAL_SERVER_ERROR, body: categories });
 
     }
   },
@@ -23,28 +25,29 @@ module.exports = {
 
       let category = await detail(id);
       if (category) {
-        return res.status(httpStatus.OK).json(category);
+        return res.status(httpStatus.OK).json({ message: message.OK, body: categories });
         
       } else {
-        return res.status(httpStatus.NOT_FOUND).json(message.NO_CONTENT);
+        return res.status(httpStatus.NOT_FOUND).json({ message: message.NO_CONTENT });
         
       }
 
     } catch (error) {
       console.log(error);
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: message.INTERNAL_SERVER_ERROR });
 
     }
   },
   create: async (req, res) => {
 
     try {
-      await create(req.body);
-      return res.status(httpStatus.CREATED).json(message.CREATED);
+      let category = await create(req.body);
+      console.log( await category);
+      return res.status(httpStatus.CREATED).json({ message: message.CREATED,body:category.dataValues});
         
     } catch (error) {
       console.log(error);
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: message.INTERNAL_SERVER_ERROR });
 
     }
   },
@@ -54,15 +57,15 @@ module.exports = {
       let response = await update(req.params.id, req.body);
       
       if (response[0] === 0) {
-        return res.status(httpStatus.BAD_REQUEST).json(message.BAD_REQUEST);
+        return res.status(httpStatus.BAD_REQUEST).json({message : message.BAD_REQUEST});
 
       }
       
-      return res.status(httpStatus.OK).json(message.OK)
+      return res.status(httpStatus.OK).json({message: message.OK})
         
     } catch (error) {
 
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message:message.INTERNAL_SERVER_ERROR});
 
     }
   },
@@ -72,15 +75,15 @@ module.exports = {
       let response = await remove(req.params.id);
       console.log(response);
       if (response === 0) {
-        return res.status(httpStatus.NOT_FOUND).json(message.NOT_FOUND);
+        return res.status(httpStatus.NOT_FOUND).json({message:message.NOT_FOUND});
 
       }
       
-      return res.status(httpStatus.OK).json(message.OK)
+      return res.status(httpStatus.OK).json({message:message.OK})
         
     } catch (error) {
 
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({message:message.INTERNAL_SERVER_ERROR});
 
     }
   },
