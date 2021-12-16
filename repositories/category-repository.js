@@ -1,10 +1,12 @@
 const db = require('../models');
 
 module.exports = {
-  list: async () => {
-    return db.Category.findAll({
-         attributes: ['name'] 
-        });
+  list: async (limit, offset) => {
+    return db.Category.findAll({limit: limit,offset: offset ,attributes: ['name'] });
+  },
+
+  count: async () => {
+    return db.Category.count();
   },
 
   detail: async (id) => {

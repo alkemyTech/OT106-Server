@@ -4,11 +4,11 @@ const categoryController = require('../controllers/category-controller');
 const categoryValidation = require('../validations/category-validation')
 const validator = require('../functions/validator')
 const adminPermission = require('../middleware/admin-authentication')
-
+const pagination = require('../middleware/pagination');
 
 // /categories
 
-router.get('/',adminPermission, categoryController.list)
+router.get('/',adminPermission,pagination.validate, categoryController.list)
 router.get('/:id', adminPermission, categoryController.detail)
 
 router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
