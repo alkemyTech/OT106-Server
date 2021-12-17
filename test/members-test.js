@@ -1,3 +1,4 @@
+require('dotenv').config()
 const chai = require('chai')
 const chaiHttp = require('chai-http');
 const path = require('path')
@@ -7,7 +8,9 @@ chai.use(chaiHttp);
 
 const imagen =  path.join(__dirname, '/imgTest/member-test.png');
 
-const URL = 'http://localhost:3000';
+const URL = `${process.env.HOST_HTTP_OR_HTTPS}://${process.env.HOST}:${process.env.PORT}`;
+
+
 let token;
 
 describe('Suite de peticiones GET a members',()=>{
@@ -15,7 +18,7 @@ describe('Suite de peticiones GET a members',()=>{
     it('Deberia generar el token del usuario',(done) => {
         chai.request(URL)
             .get('/auth/login ')
-           .set({email:"test@test.com",password:"1234"})
+           .set({email:process.env.USER_TEST,password:process.env.PASSWORD_TEST})
             .end((error, res) => {
                expect(res.body).to.have.property('token');
                 token = res.body.token;

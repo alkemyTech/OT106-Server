@@ -8,8 +8,8 @@ module.exports={
         
         const oFields= {
             body: req.body.body,
-            UserId: req.body.UserId,
-            NewsId:req.body.NewsId
+            userId: req.body.userId,
+            newsId:req.body.newsId
         }
         await baseRepository.add(req,res,db.Commentary,oFields)
     },
@@ -20,7 +20,7 @@ module.exports={
 
     getAllCommentaries:async  (req, res) => {
         const oFields= {
-            NewsId:req.body.NewsId
+            newsId:req.body.NewsId
         }
         baseRepository.getAllWithParam(req,res,db.Commentary,oFields)
     },
