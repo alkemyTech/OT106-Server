@@ -1,15 +1,21 @@
-const { UserRepository } = require('../repositories');
-const { BAD_REQUEST: BAD_REQUEST_CODE, NOT_FOUND: NOT_FOUND_CODE } = require('../constants/httpStatus');
-const { BAD_REQUEST: BAD_REQUEST_MESSAGE, NOT_FOUND: NOT_FOUND_MESSAGE } = require('../constants/message');
-const { generateAccesToken } = require('../functions/jsonwebtoken');
-const sendEmail = require('../functions/mail-engine');
-const throwError = require('../helpers/throw-error');
+const { UserRepository } = require("../repositories");
+const {
+  BAD_REQUEST: BAD_REQUEST_CODE,
+  NOT_FOUND: NOT_FOUND_CODE,
+} = require("../constants/httpStatus");
+const {
+  BAD_REQUEST: BAD_REQUEST_MESSAGE,
+  NOT_FOUND: NOT_FOUND_MESSAGE,
+} = require("../constants/message");
+const { generateAccesToken } = require("../functions/jsonwebtoken");
+const sendEmail = require("../functions/mail-engine");
+const throwError = require("../functions/throw-error");
 
 module.exports = {
   findAllUsers: async () => {
     const result = await UserRepository.findAllUsers();
 
-    const users = result.map(user => user.dataValues);
+    const users = result.map((user) => user.dataValues);
 
     return users;
   },
@@ -34,8 +40,10 @@ module.exports = {
 
     if (result !== null) {
       // it add token when user is created
-    sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
-    const userWithToken = Object.assign(result.dataValues, { token: generateAccesToken(result.dataValues) });
+      sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
+      const userWithToken = Object.assign(result.dataValues, {
+        token: generateAccesToken(result.dataValues),
+      });
       return userWithToken;
     }
 

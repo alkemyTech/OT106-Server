@@ -4,7 +4,7 @@ const { generateAccesToken } = require('../functions/jsonwebtoken');
 const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 const { generatePassword } = require('../functions/generate-password');
-const throwError = require('../helpers/throw-error');
+const throwError = require('../functions/throw-error');
 
 const removePassword = (x) => {
   return { ...x, password: undefined };
