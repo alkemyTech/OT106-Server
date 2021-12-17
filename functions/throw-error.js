@@ -30,12 +30,6 @@ module.exports = (status, message, body) => {
 
       default:
         console.log(
-          "Something went wrong when checking 'process.env.NODE_ENV' "
-        );
-        console.log(
-          "This variable should be set to 'test', 'development', or 'production'"
-        );
-        console.log(
           "Returning 500 status code and Internal Server Error Message"
         );
         break;
