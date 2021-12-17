@@ -8,6 +8,12 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDefinition = require('./swaggerDefinition.json');
 const multer = require('multer');
+const { 
+  developmentErrorHandler, 
+  testErrorHandler, 
+  productionErrorHandler, 
+  defaultErrorHandler,
+} = require('./functions/errorHandler');
 
 require('dotenv').config();
 
@@ -70,13 +76,25 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const {NODE_ENV} = process.env;
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  switch(NODE_ENV) {
+    case "development":
+      developmentErrorHandler(err, req, res);
+      break;
+
+    case "production":
+      productionErrorHandler(err, req, res);
+      break;
+
+    case "test":
+      testErrorHandler(err, req, res);
+      break;
+
+    default:
+      defaultErrorHandler(err, req, res);
+      break;
+  }
 });
 
 module.exports = app;
