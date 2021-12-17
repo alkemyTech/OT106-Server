@@ -1,5 +1,6 @@
 const statusCode = require('../constants/httpStatus');
 const message = require('../constants/message');
+const { CREATED_MEMBER, ALL_THE_MEMBERS, UPDATED_MEMBER, DELETED_MEMBER } = require('../constants/member-constants');
 const memberService = require('../services/members-services');
 
 module.exports = {
@@ -7,7 +8,10 @@ module.exports = {
         try {
             let body = { ...req.body }
             const member = await memberService.createMember(body);
-            return res.status(statusCode.CREATED).send(member);
+            return res.status(statusCode.CREATED).json({
+                msg: CREATED_MEMBER,
+                body: member
+            });
         } catch (error) {
             return res.status(statusCode.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
         }
@@ -18,7 +22,8 @@ module.exports = {
             const page = +req.query.page;
             const members = await memberService.getMembersAll(req, page);
             return res.status(statusCode.OK).json({
-                members: members,
+                msg: ALL_THE_MEMBERS,
+                body: members,
                 previousPage: members.previousPage,
                 nextPage: members.nextPage
             });
@@ -35,7 +40,10 @@ module.exports = {
         try {
             let body = { ...req.body }
             const member = await memberService.updateMember(req.params.id, body);
-            return res.status(statusCode.OK).send(message.OK);
+            return res.status(statusCode.OK).json({
+                msg: UPDATED_MEMBER,
+                body: member
+            });
         } catch (error) {
             return res.status(statusCode.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
         }
@@ -46,7 +54,10 @@ module.exports = {
         if (!memberExists) return res.status(statusCode.NOT_FOUND).json(message.NOT_FOUND);
         try {
             const memberEliminated = await memberService.deleteMember(req.params.id);
-            return res.status(statusCode.OK).send(message.OK);
+            return res.status(statusCode.OK).json({
+                msg: DELETED_MEMBER,
+                body: memberEliminated
+            });
         } catch (error) {
             return res.status(statusCode.INTERNAL_SERVER_ERROR).json(message.INTERNAL_SERVER_ERROR);
         }
