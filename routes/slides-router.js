@@ -15,4 +15,9 @@ router.get('/:id',
     adminAuthentication, // try to validate admin user
     SlidesController.findSlideByPk);
 
+router.delete('/:id',
+    adminAuthentication,
+    SlidesController.destroySlide)
+
+
 module.exports = router;
