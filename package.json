@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "testDB": "sequelize db:drop --env test && sequelize db:create --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
-    "test": "npm run testDB",
+    "test": "npm run testDB && mocha",
     "mocha": "mocha"
   },
   "dependencies": {
