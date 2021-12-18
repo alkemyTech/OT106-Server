@@ -2,6 +2,8 @@ const { SlideService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
 const { OK: OK_CODE, CREATED: CREATED_CODE } = require('../constants/httpStatus');
 const { OK: OK_MESSAGE } = require('../constants/message');
+const { orderSlides } = require('../functions/order-slides');
+const db = require('../models');
 
 module.exports = {
   findAllSlides: catchAsync(async (req, res, next) => {
@@ -17,7 +19,17 @@ module.exports = {
 
   createSlide: catchAsync(async (req, res, next) => {
     const body = req.body;
-    const result = await SlideService.createslide(body);
+
+    // if order already exists => update slides with transaction
+    const result = await db.sequelize.transaction(async (t) => {
+      // verify the correct order for new Slide
+      const newOrder = await orderSlides(body, t);
+      const buffer = req.decoded;
+      const bodyVerified = { ...body, order: newOrder, format: req.format };
+
+      const newSlide = await SlideService.createslide(bodyVerified, t, buffer);
+      return newSlide;
+    });
 
     return res.status(CREATED_CODE).send(result);
   }),
