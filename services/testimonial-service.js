@@ -36,19 +36,17 @@ const getTestimonials = async (req, res) => {
   }
 
   //Env Variables
-  const HOST = process.env.HOST;
-  const PORT = process.env.PORT;
-  const HTTP_OR_HTTPS = process.env.HOST_HTTP_OR_HTTPS;
+  const { PORT, HOST, PROTOCOL } = process.env;
 
   //Add links if possible
   if (page > 0) {
-    testimonials.previousPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+    testimonials.previousPage = `${PROTOCOL}://${HOST}:${PORT}/testimonials/?page=${
       page - 1
     }`;
   }
 
   if (page < testimonials.totalPages - 1) {
-    testimonials.nextPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+    testimonials.nextPage = `${PROTOCOL}://${HOST}:${PORT}/testimonials/?page=${
       page + 1
     }`;
   }
