@@ -58,7 +58,7 @@ const router = express.Router();
  *        "required": [ "name", "image" ],
  *         "example": {
  *           "name": "Isaias",
- *           "image": "imagen.jpg"
+ *           "image": "http://www.imagen.com/ejemplo.jpg"
  *         }
  *      },
  *      "OrganizationUrls": {

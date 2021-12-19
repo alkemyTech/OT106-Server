@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 // //// at the moment, only verify the response code
 
 describe('Organization suit test', () => {
-  describe('Suit test for GET', () => {
+  describe('Suite test for GET', () => {
     it('Valid request. Should response 200.', (done) => {
       chai
         .request(app)
@@ -28,7 +28,111 @@ describe('Organization suit test', () => {
     });
   });
 
-  describe('Suit test for POST', () => {
+  describe('Suite test for POST | update data for organizations', () => {
+    it('Invalid request, missing token. Should response 403.', (done) => {
+      chai
+          .request(app)
+          .post(`${path}/4`)
+          .send({
+            name: '',
+            image: '',
+            address: '',
+            phone: '',
+            email: '',
+            welcomeText: '',
+            aboutUsText: ''
+          })
+          .end((err, res) => {
+            assert.equal(res.status, status.FORBIDDEN);
+          });
+      done();
+    });
+
+    it('Invalid request, missing id organization to update. Should response 404.', (done) => {
+      chai
+            .request(app)
+            .post(`${path}/`)
+            .set('Authorization', `Bearer ${token}`)
+            .send({
+              name: 'test',
+              image: 'http://www.test.com/test.jpg',
+              address: 'test 123',
+              phone: 123456,
+              email: 'test@test.com',
+              welcomeText: 'welcome example',
+              aboutUsText: 'about example',
+              facebook: 'http://www.facebook.com/test',
+              instagram: 'http://www.instagram.com/test',
+              linkedin: 'http://www.linkedin.com/test'
+            })
+            .end((err, res) => {
+              assert.equal(res.status, status.NOT_FOUND);
+            });
+      done();
+    });
+
+    it('Invalid request, id organization not exists. Should response 404.', (done) => {
+      chai
+              .request(app)
+              .post(`${path}/999`)
+              .set('Authorization', `Bearer ${token}`)
+              .send({
+                name: 'test',
+                image: 'http://www.test.com/test.jpg',
+                address: 'test 123',
+                phone: 123456,
+                email: 'test@test.com',
+                welcomeText: 'welcome example',
+                aboutUsText: 'about example',
+                facebook: 'http://www.facebook.com/test',
+                instagram: 'http://www.instagram.com/test',
+                linkedin: 'http://www.linkedin.com/test'
+              })
+              .end((err, res) => {
+                assert.equal(res.status, status.NOT_FOUND);
+              });
+      done();
+    });
+
+    it('Invalid request, missing required fields. Should response 400.', (done) => {
+      chai
+              .request(app)
+              .post(`${path}/4`)
+              .set('Authorization', `Bearer ${token}`)
+              .send({
+                aboutUsText: 'this is a example text'
+              })
+              .end((err, res) => {
+                assert.equal(res.status, status.BAD_REQUEST);
+              });
+      done();
+    });
+
+    it('Valid request. Should response 200.', (done) => {
+      chai
+                .request(app)
+                .post(`${path}/4`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                  name: 'test',
+                  image: 'http://www.test.com/test.jpg',
+                  address: 'test 123',
+                  phone: 123456,
+                  email: 'test@test.com',
+                  welcomeText: 'welcome example',
+                  aboutUsText: 'about example',
+                  facebook: 'http://www.facebook.com/test',
+                  instagram: 'http://www.instagram.com/test',
+                  linkedin: 'http://www.linkedin.com/test'
+                })
+                .end((err, res) => {
+                  assert.equal(res.status, status.OK);
+                });
+      done();
+    });
+  });
+
+  describe('Suite test for POST | update contact info for organizations', () => {
     it('Invalid request, missing token. Should response 403.', (done) => {
       chai
           .request(app)
