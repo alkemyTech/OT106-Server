@@ -38,7 +38,12 @@ module.exports = {
     const id = req.params.id;
     const body = req.body;
 
-    const result = await SlideService.updateSlide(body, id);
+    const result = await db.sequelize.transaction(async (t) => {
+      const newOrder = await orderSlides(body, t);
+      const slideUpdated = await SlideService.updateSlide({ ...body, order: newOrder }, id, t);
+      return slideUpdated;
+    });
+
 
     return res.status(OK_CODE).send(result);
   }),

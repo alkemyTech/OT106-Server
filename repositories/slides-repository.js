@@ -31,8 +31,8 @@ async function findByOrgId(orgId) {
   return slides;
 }
 
-async function update(body, id) {
-  const updatedSlide = await slide.update(body, { where: { id } });
+async function update(body, id, transactionT) {
+  const updatedSlide = await slide.update(body, { where: { id }, transaction: transactionT });
 
   return updatedSlide;
 }
