@@ -1,9 +1,6 @@
-const express = require('express');
-const memberValidate = require('../validations/members-validators');
-const pagination = require('../middleware/pagination');
-const router = express.Router();
+const router = require('express').Router();
 
-const { create, getMembersAll, updateMember, deleteMember } = require('../controllers/members-controller');
+const { createMember, getAllMembers, updateMember, deleteMember } = require('../combinations/members-combinations');
 
 /**
  *@swagger
@@ -81,7 +78,7 @@ const { create, getMembersAll, updateMember, deleteMember } = require('../contro
  *}
  */
 
-router.post('/', memberValidate.memberIsValid, create);
+router.post('/', createMember);
 
 /**
  * @swagger
@@ -106,7 +103,7 @@ router.post('/', memberValidate.memberIsValid, create);
  *  }
  *}
  */
-router.get('/', pagination.validate, getMembersAll);
+router.get('/', getAllMembers);
 
 /**
  * @swagger

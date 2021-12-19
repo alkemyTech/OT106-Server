@@ -1,18 +1,13 @@
-require('dotenv').config();
-const express = require('express');
-const router = express.Router();
-const {addNews,deleteNews,modifyNews,getNews,getAllNews} = require('../controllers/news-controller')
-const {validateCreate}= require("../validations/news-validations")
-const upload= require("../middleware/upload");
-const adminAuthentication = require("../middleware/admin-authentication");
+const { createNew, getNews, getNew, updateNew, deleteNew } = require('../combinations/news-combinations');
+const router = require('express').Router();
+
 router.route('/')
-    .post(adminAuthentication,upload,validateCreate,addNews)
-    .get(adminAuthentication,getAllNews);
+    .post(createNew)
+    .get(getNews);
 
 router.route('/:id')
-    .get(adminAuthentication,getNews)
-    .delete(adminAuthentication,deleteNews)
-    .patch(adminAuthentication, upload,modifyNews)
+    .get(getNew)
+    .delete(deleteNew)
+    .patch(updateNew);
 
-
-module.exports =  router 
+module.exports = router;

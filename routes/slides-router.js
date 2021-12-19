@@ -1,18 +1,11 @@
-const express = require('express');
-const { SlidesController } = require('../controllers/');
-const adminAuthentication = require('../middleware/admin-authentication');
-// const { } = require('../middleware');
+const { getSlides, getSlide } = require('../combinations/slides-combination');
 
-const router = express.Router();
+const router = require('express').Router();
 
 // list imageUrl and order for all slides
-router.get('/',
-    adminAuthentication, // try to validate admin user
-    SlidesController.findAllSlides);
+router.get('/', getSlides);
 
 // list details for slide
-router.get('/:id',
-    adminAuthentication, // try to validate admin user
-    SlidesController.findSlideByPk);
+router.get('/:id', getSlide);
 
 module.exports = router;

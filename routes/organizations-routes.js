@@ -1,27 +1,16 @@
-const express = require('express');
-const organizationController = require('../controllers/organization-controller');
-const adminAuthentication = require('../middleware/admin-authentication');
-const { validateSchemaOrganization, validateSchemaUrls } = require('../validations/organizations-validations');
+const { listAll, updateOrganization, updateOrganizationContact } = require('../combinations/organizations-combination');
 
-const router = express.Router();
+const router = require('express').Router();
 
 // list name, image, phone, address and social networks links of organizations
-router.get('/public', organizationController.listAll);
+router.get('/public', listAll);
 
 
 // update organization by id
-router.post('/public/:id',
-                adminAuthentication, // try validate admin user
-                validateSchemaOrganization, // array of validations for organizations model
-                organizationController.update
-            );
+router.post('/public/:id', updateOrganization);
 
 // update contact fields for organization by id
-router.post('/public/contact/:id',
-                adminAuthentication, // try validate admin user
-                validateSchemaUrls, // array of validations for organization's urls
-                organizationController.update
-            );
+router.post('/public/contact/:id', updateOrganizationContact);
 
 
 // create new organization

@@ -1,25 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const categoryController = require('../controllers/category-controller');
-const categoryValidation = require('../validations/category-validation')
-const validator = require('../functions/validator')
-const adminPermission = require('../middleware/admin-authentication')
-const pagination = require('../middleware/pagination');
+const { getAllCategories, getCategory, createCategory, updateCategory, deleteCategory } = require('../combinations/categories-combinations');
+
+const router = require('express').Router();
 
 // /categories
 
-router.get('/',adminPermission,pagination.validate, categoryController.list)
-router.get('/:id', adminPermission, categoryController.detail)
+router.get('/', getAllCategories);
+router.get('/:id', getCategory);
 
-router.post('/', adminPermission, categoryValidation, validator, categoryController.create)
-router.put('/:id', adminPermission, categoryValidation,validator,categoryController.update)
+router.post('/', createCategory);
+router.put('/:id', updateCategory);
 
-router.delete('/:id', adminPermission, categoryController.remove)
-
-
-
-
-
+router.delete('/:id', deleteCategory);
 
 
 module.exports = router;

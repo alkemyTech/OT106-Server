@@ -1,33 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const contactController = require("../controllers/contact-controller");
-const {
-  validateCreateContact,
-  validateUpdateContact,
-} = require("../middleware/contact-middleware");
-const adminAuthentication = require("../middleware/admin-authentication");
+const { getContact, getAllContacts, createContact, updateContact, deleteContact } = require('../combinations/contact-combination');
 
-//GET
-router.get("/:id", adminAuthentication, contactController.find);
-router.get("/", adminAuthentication, contactController.list);
+const router = require('express').Router();
 
-//POST
-router.post(
-  "/",
-  adminAuthentication,
-  validateCreateContact,
-  contactController.create
-);
+// GET
+router.get('/:id', getContact);
+router.get('/', getAllContacts);
 
-//PATCH
-router.patch(
-  "/:id",
-  adminAuthentication,
-  validateUpdateContact,
-  contactController.update
-);
+// POST
+router.post('/', createContact);
 
-//DELETE
-router.delete("/:id", adminAuthentication, contactController.delete);
+// PATCH
+router.patch('/:id', updateContact);
+
+// DELETE
+router.delete('/:id', deleteContact);
 
 module.exports = router;

@@ -1,19 +1,15 @@
 require('dotenv').config();
-const express = require('express');
-const router = express.Router();
-const {addCommentary,deleteCommentary,modifyCommentary,getCommentary,getAllCommentaries} = require('../controllers/commentary-controller')
-const {validateCreate}= require("../validations/commentary-validations")
-const upload= require("../middleware/upload");
-const adminAuthentication = require("../middleware/admin-authentication");
-const authentication = require('../middleware/authentication');
+const router = require('express').Router();
+const { addCommentary, getAllCommentaries, getCommentary, deleteCommentary, updateCommentary } = require('../combinations/commentaries-combination');
+
 router.route('/')
-    .post(authentication,upload,validateCreate,addCommentary)
-    .get(adminAuthentication,getAllCommentaries);
+    .post(addCommentary)
+    .get(getAllCommentaries);
 
 router.route('/:id')
-    .get(authentication, getCommentary)
-    .delete(authentication,deleteCommentary)
-    .patch( authentication,upload,modifyCommentary)
+    .get(getCommentary)
+    .delete(deleteCommentary)
+    .patch(updateCommentary);
 
  /**
   * @swagger
@@ -166,4 +162,4 @@ router.route('/:id')
  */
 
 
-module.exports =  router 
+module.exports = router;
