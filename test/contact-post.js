@@ -14,49 +14,54 @@ const TOKEN = generateAccesToken({ id: 1, email: "test@test.com", roleId: 1 });
 const code = require("../constants/httpStatus");
 const message = require("../constants/message");
 const {
-  BAD_UPDATE_TESTIMONIAL_REQUEST,
-  UPDATED_TESTIMONIAL,
-  TESTIMONIAL_NOT_FOUND,
-} = require("../constants/testimonial-constants");
+  CREATED_CONTACT,
+  BAD_CREATE_CONTACT_REQUEST,
+} = require("../constants/contact-constants");
 
 //Endpoint method and path
 const ENDPOINT = {
-  METHOD: "PATCH",
-  PATH: "/testimonials",
-};
-
-//Good Request
-const goodRequest = {
-  name: "Testimonial name updated",
-};
-
-//Bad Request, no valid fields
-const badRequest = {
-  title: "Testimonial name updated",
+  METHOD: "POST",
+  PATH: "/contacts",
 };
 
 //Body
 const returnBody = (res) => res.body.body;
 
+//Good Request
+const goodRequest = {
+  name: "New Contact",
+  phone: 54110000046,
+  email: "newcontact@gmail.com",
+  message: "Message for the new contact",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+//Request missing data
+const badRequest = {
+  title: "New Contact",
+};
+
 describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
   describe("Successful response", () => {
-    it("PATCH a new testimonial", (done) => {
+    it("POST a new contact", (done) => {
       chai
         .request(server)
-        .patch(`${ENDPOINT.PATH}/10`)
+        .post(ENDPOINT.PATH)
         .set("Authorization", `Bearer ${TOKEN}`)
         .send(goodRequest)
         .end((err, res) => {
           const body = returnBody(res);
           assert.isNull(err);
           assert.equal(res.status, code.OK);
+          assert.equal(res.body.message, CREATED_CONTACT);
           assert.property(body, "id");
           assert.property(body, "name");
-          assert.property(body, "image");
-          assert.property(body, "content");
+          assert.property(body, "phone");
+          assert.property(body, "email");
+          assert.property(body, "message");
           assert.property(body, "createdAt");
           assert.property(body, "updatedAt");
-          assert.equal(res.body.message, UPDATED_TESTIMONIAL(10));
 
           done();
         });
@@ -67,7 +72,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
     it("token (undefined)", (done) => {
       chai
         .request(server)
-        .patch(`${ENDPOINT.PATH}/10`)
+        .post(ENDPOINT.PATH)
         .send(goodRequest)
         .end((err, res) => {
           assert.isNull(err);
@@ -82,13 +87,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
     // it("token (expired)", (done) => {
     //   chai
     //     .request(server)
-    //     .patch(`${ENDPOINT.PATH}/1`)
+    //     .post(ENDPOINT.PATH)
     //     .set("Authorization", `Bearer ${EXPIRED_TOKEN}`)
     //     .send(goodRequest)
     //     .end((err, res) => {
     //       assert.isNull(err);
     //       assert.equal(res.status, code.FORBIDDEN);
-    //       assert.equal(res.text, message.FORBIDDEN);
+    //       assert.equal(res.text, message.FORBIDDEN)
 
     //       done();
     //     });
@@ -97,7 +102,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
     it("token (invalid)", (done) => {
       chai
         .request(server)
-        .patch(`${ENDPOINT.PATH}/10`)
+        .post(ENDPOINT.PATH)
         .set("Authorization", "Bearer abcdefghijklmnop")
         .send(goodRequest)
         .end((err, res) => {
@@ -110,34 +115,17 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
     });
   });
 
-  describe("Validation", () => {
+  describe("Middleware Validation", () => {
     it("Missing fields in request body", (done) => {
       chai
         .request(server)
-        .patch(`${ENDPOINT.PATH}/10`)
+        .post(ENDPOINT.PATH)
         .set("Authorization", `Bearer ${TOKEN}`)
         .send(badRequest)
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.BAD_REQUEST);
-          assert.equal(res.body.message, BAD_UPDATE_TESTIMONIAL_REQUEST);
-
-          done();
-        });
-    });
-  });
-
-  describe("Testimonial NOT FOUND", () => {
-    it("Testimonial id NOT FOUND", (done) => {
-      chai
-        .request(server)
-        .patch(`${ENDPOINT.PATH}/999`)
-        .set("Authorization", `Bearer ${TOKEN}`)
-        .send(goodRequest)
-        .end((err, res) => {
-          assert.isNull(err);
-          assert.equal(res.status, code.NOT_FOUND);
-          assert.equal(res.body.message, TESTIMONIAL_NOT_FOUND);
+          assert.equal(res.body.message, BAD_CREATE_CONTACT_REQUEST);
 
           done();
         });

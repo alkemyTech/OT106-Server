@@ -14,25 +14,25 @@ const TOKEN = generateAccesToken({ id: 1, email: "test@test.com", roleId: 1 });
 const code = require("../constants/httpStatus");
 const message = require("../constants/message");
 const {
-  BAD_UPDATE_TESTIMONIAL_REQUEST,
-  UPDATED_TESTIMONIAL,
-  TESTIMONIAL_NOT_FOUND,
-} = require("../constants/testimonial-constants");
+  BAD_UPDATE_CONTACT_REQUEST,
+  UPDATED_CONTACT,
+  CONTACT_NOT_FOUND,
+} = require("../constants/contact-constants");
 
 //Endpoint method and path
 const ENDPOINT = {
   METHOD: "PATCH",
-  PATH: "/testimonials",
+  PATH: "/contacts",
 };
 
 //Good Request
 const goodRequest = {
-  name: "Testimonial name updated",
+  name: "Contact name updated",
 };
 
 //Bad Request, no valid fields
 const badRequest = {
-  title: "Testimonial name updated",
+  title: "Contact name updated",
 };
 
 //Body
@@ -40,7 +40,7 @@ const returnBody = (res) => res.body.body;
 
 describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
   describe("Successful response", () => {
-    it("PATCH a new testimonial", (done) => {
+    it("PATCH a new contact", (done) => {
       chai
         .request(server)
         .patch(`${ENDPOINT.PATH}/10`)
@@ -52,11 +52,12 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.equal(res.status, code.OK);
           assert.property(body, "id");
           assert.property(body, "name");
-          assert.property(body, "image");
-          assert.property(body, "content");
+          assert.property(body, "phone");
+          assert.property(body, "email");
+          assert.property(body, "message");
           assert.property(body, "createdAt");
           assert.property(body, "updatedAt");
-          assert.equal(res.body.message, UPDATED_TESTIMONIAL(10));
+          assert.equal(res.body.message, UPDATED_CONTACT(10));
 
           done();
         });
@@ -120,15 +121,15 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.BAD_REQUEST);
-          assert.equal(res.body.message, BAD_UPDATE_TESTIMONIAL_REQUEST);
+          assert.equal(res.body.message, BAD_UPDATE_CONTACT_REQUEST);
 
           done();
         });
     });
   });
 
-  describe("Testimonial NOT FOUND", () => {
-    it("Testimonial id NOT FOUND", (done) => {
+  describe("Contact NOT FOUND", () => {
+    it("Contact id NOT FOUND", (done) => {
       chai
         .request(server)
         .patch(`${ENDPOINT.PATH}/999`)
@@ -137,7 +138,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.NOT_FOUND);
-          assert.equal(res.body.message, TESTIMONIAL_NOT_FOUND);
+          assert.equal(res.body.message, CONTACT_NOT_FOUND);
 
           done();
         });
