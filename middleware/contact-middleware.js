@@ -7,7 +7,9 @@ const {
 const validateCreateContact = (req, res, next) => {
   let { name, phone, email, message } = req.body;
   if (![name, phone, email, message].every(Boolean)) {
-    return res.status(code.BAD_REQUEST).json(BAD_CREATE_CONTACT_REQUEST);
+    return res
+      .status(code.BAD_REQUEST)
+      .json({ message: BAD_CREATE_CONTACT_REQUEST });
   }
 
   next();
@@ -16,7 +18,9 @@ const validateCreateContact = (req, res, next) => {
 const validateUpdateContact = (req, res, next) => {
   let { name, phone, email, message } = req.body;
   if (![name, phone, email, message].some(Boolean)) {
-    return res.status(code.BAD_REQUEST).json(BAD_UPDATE_CONTACT_REQUEST);
+    return res
+      .status(code.BAD_REQUEST)
+      .json({ message: BAD_UPDATE_CONTACT_REQUEST });
   }
 
   next();
