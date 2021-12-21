@@ -7,7 +7,7 @@ const upload= require("../middleware/upload");
 const adminAuthentication = require("../middleware/admin-authentication");
 router.route('/')
     .post(adminAuthentication,upload,validateCreate,addNews)
-    .get(adminAuthentication,getAllNews);
+    .get(adminAuthentication,getAllNews);// /?page=NUMBER
 
 router.route('/:id')
     .get(adminAuthentication,getNews)
