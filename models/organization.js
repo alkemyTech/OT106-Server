@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Organization.hasMany(models.Slide, { as: 'slides' })
     }
   }
   Organization.init({
@@ -34,10 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    aboutUsText: DataTypes.TEXT,
-    facebook: DataTypes.STRING,
-    instagram: DataTypes.STRING,
-    linkedin: DataTypes.STRING,
+    aboutUsText: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Organization',

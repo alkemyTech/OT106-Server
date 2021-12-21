@@ -1,10 +1,12 @@
+const message = require('../constants/message');
+const statusCode = require('../constants/httpStatus');
 
 const pagination = (limit, max, req, entity) => {
     let page = Number(req.query.page);
     const lastPage = Math.ceil(max / limit);
     if (page > lastPage) {
-        const error = new Error('Parameter "page" out of range');
-        error.status = 400;
+        const error = new Error(message.NOT_FOUND);
+        error.status = statusCode.NOT_FOUND;
         throw error;
     }
 
