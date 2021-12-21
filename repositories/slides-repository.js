@@ -24,10 +24,22 @@ async function findAll() {
 
   return allSlides;
 }
+
+async function findByOrgId(orgId) {
+  const slides = await slide.findAll({ where: { organizationId: orgId } });
+
+  return slides;
+}
+
 async function update(body, id) {
   const updatedSlide = await slide.update(body, { where: { id } });
 
   return updatedSlide;
+}
+
+async function bulkUpdate(slides, transactionT) {
+  const updates = await slide.bulkCreate(slides, { updateOnDuplicate: ['order'], transaction: transactionT });
+  return updates;
 }
 
 
@@ -41,7 +53,9 @@ async function destroy(id) {
 module.exports = {
   create,
   findOne,
+  findByOrgId,
   findAll,
   update,
+  bulkUpdate,
   destroy
 };
