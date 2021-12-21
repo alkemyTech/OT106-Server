@@ -1,14 +1,7 @@
 const { SlideService } = require('../services');
 
-async function orderSlides(body, transactionT) {
-  const { order, organizationId } = body;
-  let newOrder;
-
-  // if order not exists => maxim value
-  if (order === undefined) { newOrder = 999999; } else { newOrder = order; }
-
-  // if order is negative => 1
-  if (order <= 0) newOrder = 1;
+async function orderSlides({ order, organizationId }, transactionT) {
+  let newOrder = defaultOrder(order);
 
   // search slides where organizationId already exists
   const result = await SlideService.findByOrgId(organizationId);
@@ -40,6 +33,18 @@ async function orderSlides(body, transactionT) {
     }
   }
 
+
+  return newOrder;
+}
+
+
+function defaultOrder(order) {
+  let newOrder;
+  // if order not exists => maxim value
+  if (order === undefined) { newOrder = 999999; } else { newOrder = order; }
+
+  // if order is negative => 1
+  if (order <= 0) newOrder = 1;
 
   return newOrder;
 }

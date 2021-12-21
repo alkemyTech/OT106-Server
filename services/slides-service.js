@@ -47,7 +47,7 @@ async function findByOrgId(id) {
   return slides;
 }
 
-async function updateSlide(body, id) {
+async function updateSlide(body, id, transactionT) {
   const slide = await findSlideById(id);
   if (!slide) {
     const error = new Error();
@@ -56,7 +56,7 @@ async function updateSlide(body, id) {
     throw error;
   }
 
-  const updatedslide = await SlideRepository.update(body, id);
+  const updatedslide = await SlideRepository.update(body, id, transactionT);
   return updatedslide;
 }
 

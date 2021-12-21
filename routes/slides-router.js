@@ -17,10 +17,18 @@ router.get('/:id',
     SlidesController.findSlideByPk);
 
 router.post('/',
-    // adminAuthentication, // try to validate admin user
+    adminAuthentication, // try to validate admin user
     validateSchemaSlide,
     decodeImgBase64, // decode and save img in req object
     SlidesController.createSlide
+    );
+
+
+router.put('/:id',
+    adminAuthentication, // try to validate admin user
+    validateSchemaSlide,
+    decodeImgBase64, // decode and save img in req object
+    SlidesController.updateSlide
     );
 
 module.exports = router;
