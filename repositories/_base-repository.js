@@ -54,22 +54,12 @@ module.exports = {
     const nPage = parseInt(req.query.page);
     const model = await this.getAllWithPaginationReq(parseInt(req.query.page),nLimit,cModel);
 
-    if (!model.rows[0]) {
-      return res.status(Constants.NOT_FOUND).json(Message.NOT_FOUND);
-    }
+    if (!model.rows[0]) return res.status(Constants.NOT_FOUND).json(Message.NOT_FOUND);
 
-    if (nPage > 0) {
-      model.previousPage = `${req.protocol}://${req.get('host')}/${sEntity}/?page=${
-        nPage - 1
-      }`
+    if (nPage > 0) model.previousPage = `${req.protocol}://${req.get('host')}/${sEntity}/?page=${nPage - 1}`
 
-    }
-    if (nPage < model.totalPages - 1) {
-      model.nextPage = `${req.protocol}://${req.get('host')}/${sEntity}/?page=${
-        nPage + 1
-      }`;
-    }
-
+    if (nPage < model.totalPages - 1) model.nextPage = `${req.protocol}://${req.get('host')}/${sEntity}/?page=${nPage + 1}`;
+    
     res.status(Constants.OK).json(model);
   }
   catch(e){
