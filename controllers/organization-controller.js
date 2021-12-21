@@ -52,7 +52,15 @@ module.exports = {
   update: async (req, res, next) => {
     const body = req.body;
     const id = req.params.id;
+
     try {
+      if (!id) {
+        const err = new Error();
+        err.status = status.NOT_FOUND;
+        err.message = message.NOT_FOUND;
+        next(err);
+      }
+
       const result = await updateOrganization(body, id);
 
       return res.status(status.OK).send(result);
