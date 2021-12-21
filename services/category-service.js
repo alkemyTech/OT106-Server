@@ -24,7 +24,17 @@ module.exports = {
 
   },
   detail: id => categoriesRepository.detail(id),
-  create: body => categoriesRepository.createCategory(body),
-  update: (id, body) => categoriesRepository.updateCategory(id, body),
+  create:async (body) => {
+    if (body.image) {
+      body.image = await uploadFile(body.image);
+    }
+    return categoriesRepository.createCategory(body)
+  },
+  update: (id, body) => {
+    if (body.image) {
+      body.image = await uploadFile(body.image);
+    }
+    return categoriesRepository.updateCategory(id, body);
+  },
   remove: id => categoriesRepository.deleteCategory(id)
 };

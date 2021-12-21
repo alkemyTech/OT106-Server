@@ -12,8 +12,7 @@ module.exports = {
       return res.status(httpStatus.OK).json({ message: message.OK, body: categories });
       
     } catch (error) {
-      console.log(categories);
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ message: message.INTERNAL_SERVER_ERROR, body: categories });
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR || error.status).json({ message:message.INTERNAL_SERVER_ERROR || error });
 
     }
   },
@@ -25,7 +24,8 @@ module.exports = {
 
       let category = await detail(id);
       if (category) {
-        return res.status(httpStatus.OK).json({ message: message.OK, body: categories });
+
+        return res.status(httpStatus.OK).json({ message: message.OK, body: category });
         
       } else {
         return res.status(httpStatus.NOT_FOUND).json({ message: message.NO_CONTENT });
@@ -40,6 +40,8 @@ module.exports = {
   },
   create: async (req, res) => {
 
+    req.body.image = req.file
+
     try {
       let category = await create(req.body);
       console.log( await category);
@@ -52,16 +54,16 @@ module.exports = {
     }
   },
   update: async (req, res) => {
-
+    req.body.image = req.file
     try {
       let response = await update(req.params.id, req.body);
-      
+      console.log(response);
       if (response[0] === 0) {
         return res.status(httpStatus.BAD_REQUEST).json({message : message.BAD_REQUEST});
 
       }
       
-      return res.status(httpStatus.OK).json({message: message.OK})
+      return res.status(httpStatus.CREATED).json({message: message.CREATED,body:response})
         
     } catch (error) {
 
@@ -75,11 +77,11 @@ module.exports = {
       let response = await remove(req.params.id);
       console.log(response);
       if (response === 0) {
-        return res.status(httpStatus.NOT_FOUND).json({message:message.NOT_FOUND});
+        return res.status(httpStatus.NOT_FOUND).json({message:message.NOT_FOUND,body:response});
 
       }
       
-      return res.status(httpStatus.OK).json({message:message.OK})
+      return res.status(httpStatus.OK).json({message:message.OK,body:response})
         
     } catch (error) {
 
