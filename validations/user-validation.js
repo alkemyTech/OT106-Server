@@ -39,6 +39,35 @@ const createUserSchema = {
   },
 };
 
+const updateUserSchema = {
+  firstName: {
+    in: ['body'],
+    optional: false,
+    notEmpty: true,
+    errorMessage: userValidation.invalidFirstName,
+  },
+  lastName: {
+    in: ['body'],
+    optional: false,
+    notEmpty: true,
+    errorMessage: userValidation.invalidLastName,
+  },
+  email: {
+    in: ['body'],
+    optional: false,
+    notEmpty: true,
+    isEmail: true,
+    errorMessage: userValidation.invalidEmail
+  },
+  password: {
+    in: ['body'],
+    optional: true,
+    notEmpty: false,
+    isLength: { options: { min: 8 } },
+    errorMessage: userValidation.shortPassword,
+  },
+};
+
 const loginUserSchema = {
   email: {
     in: ['body'],
@@ -66,5 +95,6 @@ const loginUserSchema = {
 // Remember, validateSchema returns a middleware function
 module.exports = {
   validateCreateUser: validateSchema(createUserSchema),
+  validateUpdateUser: validateSchema(updateUserSchema),
   validateLoginUser: validateSchema(loginUserSchema),
 };
