@@ -1,5 +1,6 @@
 require("dotenv").config();
 const testimonialRepository = require("../repositories/testimonial-repository.js");
+const throwError = require("../functions/throw-error");
 
 //Response messages
 const { TESTIMONIAL_NOT_FOUND } = require("../constants/testimonial-constants");
@@ -32,7 +33,7 @@ const getTestimonials = async (req, res) => {
 
   //Couldn't find testimonial
   if (!testimonials.rows[0]) {
-    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
+    return throwError(code.NOT_FOUND, TESTIMONIAL_NOT_FOUND);
   }
 
   //Env Variables
@@ -60,7 +61,7 @@ const getTestimonialById = async (req, res) => {
 
   //Couldn't find testimonial
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
+    return throwError(code.NOT_FOUND, TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
@@ -73,7 +74,7 @@ const updateTestimonial = async (req, res) => {
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
+    return throwError(code.NOT_FOUND, TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
@@ -87,7 +88,7 @@ const deleteTestimonial = async (req, res) => {
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
+    return throwError(code.NOT_FOUND, TESTIMONIAL_NOT_FOUND);
   }
 
   //Success?
