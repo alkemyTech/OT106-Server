@@ -1,3 +1,5 @@
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -8,9 +10,15 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerDefinition = require('./swaggerDefinition.json');
 const multer = require('multer');
+const { 
+  developmentErrorHandler, 
+  testErrorHandler, 
+  productionErrorHandler, 
+  defaultErrorHandler,
+} = require('./functions/errorHandler');
 
 require('dotenv').config();
-
+const swaggerSpec = require('./config/swagger-config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users-routes');
 const activitiesRouter = require('./routes/activities-routes');
@@ -26,13 +34,7 @@ const app = express();
 app.use(cors());
 
 //DOCUMENTATION//
-const options = {
-  swaggerDefinition,
-  apis: [`${path.join(__dirname, 'routes', '*.js')}`]
-};
-const swaggerSpec = swaggerJsDoc(options);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-////////////////
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -62,6 +64,7 @@ app.use('/slides', slidesRouter);
 
 app.use('/categories', categoriesRouter);
 app.use('/contacts', contactRouter)
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -70,13 +73,24 @@ app.use((req, res, next) => {
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const {NODE_ENV} = process.env;
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  switch(NODE_ENV) {
+    case "development":
+      developmentErrorHandler(err, req, res);
+      break;
+
+    case "production":
+      productionErrorHandler(err, req, res);
+      break;
+
+    case "test":
+      testErrorHandler(err, req, res);
+      break;
+
+    default:
+      defaultErrorHandler(err, req, res);
+      break;
+  }
 });
-
 module.exports = app;

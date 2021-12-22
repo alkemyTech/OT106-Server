@@ -27,7 +27,7 @@ const getContacts = async (req, res) => {
 
   //No contacts
   if (!contacts[0]) {
-    return res.status(code.NOT_FOUND).json(CONTACT_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
   }
 
   //Success?
@@ -42,7 +42,7 @@ const getContactById = async (req, res) => {
 
   //No contact found
   if (!contact) {
-    return res.status(code.NOT_FOUND).json(CONTACT_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
   }
 
   //Success?
@@ -55,7 +55,7 @@ const updateContact = async (req, res) => {
   //Check if it exists
   const contact = await contactRepository.getContactById(id);
   if (!contact) {
-    return res.status(code.NOT_FOUND).json(CONTACT_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
   }
 
   //Success?
@@ -69,7 +69,7 @@ const deleteContact = async (req, res) => {
   //Check if it exists
   const contact = await contactRepository.getContactById(id);
   if (!contact) {
-    return res.status(code.NOT_FOUND).json(CONTACT_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
   }
 
   //Success

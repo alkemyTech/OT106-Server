@@ -30,6 +30,8 @@ async function getActivities(request,response){
 }
    
 async function editActivity(request, response){
+    const getActivity = await activitiesRepository.getActivity(request)
+    if (!getActivity) return response.status(httpStatus.NOT_FOUND).send(NOT_FOUND)
     const activity = await activitiesRepository.editActivity(request)
     return activity
 }

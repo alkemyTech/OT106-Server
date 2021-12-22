@@ -32,23 +32,21 @@ const getTestimonials = async (req, res) => {
 
   //Couldn't find testimonial
   if (!testimonials.rows[0]) {
-    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
   }
 
   //Env Variables
-  const HOST = process.env.HOST;
-  const PORT = process.env.PORT;
-  const HTTP_OR_HTTPS = process.env.HOST_HTTP_OR_HTTPS;
+  const { PORT, HOST, PROTOCOL } = process.env;
 
   //Add links if possible
   if (page > 0) {
-    testimonials.previousPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+    testimonials.previousPage = `${PROTOCOL}://${HOST}:${PORT}/testimonials/?page=${
       page - 1
     }`;
   }
 
   if (page < testimonials.totalPages - 1) {
-    testimonials.nextPage = `${HTTP_OR_HTTPS}://${HOST}:${PORT}/testimonials/?page=${
+    testimonials.nextPage = `${PROTOCOL}://${HOST}:${PORT}/testimonials/?page=${
       page + 1
     }`;
   }
@@ -62,7 +60,7 @@ const getTestimonialById = async (req, res) => {
 
   //Couldn't find testimonial
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
   }
 
   //Success?
@@ -75,7 +73,7 @@ const updateTestimonial = async (req, res) => {
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
   }
 
   //Success?
@@ -89,7 +87,7 @@ const deleteTestimonial = async (req, res) => {
   //Check if it exists
   const testimonial = await testimonialRepository.getTestimonialById(id);
   if (!testimonial) {
-    return res.status(code.NOT_FOUND).json(TESTIMONIAL_NOT_FOUND);
+    return res.status(code.NOT_FOUND).json({ message: TESTIMONIAL_NOT_FOUND });
   }
 
   //Success?

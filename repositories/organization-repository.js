@@ -20,7 +20,12 @@ async function findOne(id) {
 }
 
 async function findAll() {
-  const allOrganizations = await organization.findAll({ attributes: ['name', 'image', 'phone', 'address', 'facebook', 'instagram', 'linkedin'] });
+  const allOrganizations = await organization.findAll({
+    include: 'slides',
+    order: [
+      ['slides', 'order', 'ASC'],
+    ]
+  });
 
   return allOrganizations;
 }
@@ -31,7 +36,7 @@ async function update(body, id) {
 
 
 async function destroy(id) {
-    // returns number of raws deleted
+  // returns number of raws deleted
   const destroyedOrganization = await organization.destroy({ where: { id } });
   return destroyedOrganization;
 }

@@ -1,0 +1,1167 @@
+{
+	"info": {
+		"_postman_id": "27dbf2f3-355c-4b54-9798-74af5a8ec915",
+		"name": "OT106",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "getAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"prueba@pru.com\",\n    \"facebook\": \"http://www.facebook.com/alguna-prueba\",\n    \"instagram\": \"http://www.facebook.com/alguna-prueba\",\n    \"linkedin\": \"http://www.facebook.com/alguna-prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/organizations/public",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"organizations",
+								"public"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"prueba@pru.com\",\n    \"facebook\": \"http://www.facebook.com/alguna-prueba\",\n    \"instagram\": \"http://www.facebook.com/alguna-prueba\",\n    \"linkedin\": \"http://www.facebook.com/alguna-prueba\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/organizations/public/contact/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"organizations",
+								"public",
+								"contact",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Slides",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "createActivity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "name",
+									"value": "pruebaImagen",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activities"
+							]
+						},
+						"description": "create a new activity"
+					},
+					"response": []
+				},
+				{
+					"name": "getActivity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/activities/60",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activities",
+								"60"
+							]
+						},
+						"description": "trae una actividad en particular , pasar el id por parametro"
+					},
+					"response": []
+				},
+				{
+					"name": "allactivities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activities"
+							]
+						},
+						"description": "trae todas las actividades, inclusive las soft deleted"
+					},
+					"response": []
+				},
+				{
+					"name": "delete activity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/activities/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activities",
+								"4"
+							]
+						},
+						"description": "soft delete de una actividad, pasar el id por parametro"
+					},
+					"response": []
+				},
+				{
+					"name": "get activity image",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/activities/image/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activities",
+								"image",
+								"11"
+							]
+						},
+						"description": "trae la imagen correspondiente a una actividad, pasar el id por parametro"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "getAllContacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/contacts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						},
+						"description": "GETs all contacts"
+					},
+					"response": []
+				},
+				{
+					"name": "getContactById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/contacts/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"1"
+							]
+						},
+						"description": "GETs a single contact by id"
+					},
+					"response": []
+				},
+				{
+					"name": "newContact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mock Contact Name\",\r\n    \"phone\": 54110000001,\r\n    \"email\": \"contactemail@gmail.com\",\r\n    \"message\": \"Mock contact message\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/contacts",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts"
+							]
+						},
+						"description": "POSTs a new contact"
+					},
+					"response": []
+				},
+				{
+					"name": "updateContact",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Name for Contact 5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/contacts/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"5"
+							]
+						},
+						"description": "PATCHes a contact by id"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteContact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/contacts/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"contacts",
+								"3"
+							]
+						},
+						"description": "DELETEs a contact by id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users (jwt)",
+			"item": [
+				{
+					"name": "Crear usuario y responder con el mismo y token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "nombre",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "apellido",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password12345",
+									"type": "text"
+								},
+								{
+									"key": "roleId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/users/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "nomb",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "apell",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password123",
+									"type": "text"
+								},
+								{
+									"key": "roleId",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/users/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuario (borrado lógico)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Jorge",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Altamirano",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "jgaaadfasdfga@gmail.cosdf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "gaston12345",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "roleId",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/users/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener mis datos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstName",
+									"value": "Jorge",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lastName",
+									"value": "Altamirano",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "jgaaadfasdfga@gmail.cosdf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "gaston12345",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "roleId",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/auth/me",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News",
+			"item": [
+				{
+					"name": "getAllNews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"hola\",\n    \"cost\":1648\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/news/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"news",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postNews",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "tomas",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "hola",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Tomás/Downloads/descarga.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/news",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "tomas",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "hola",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Tomás/Downloads/descarga.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/news",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteNews",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "tomas",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "hola",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Tomás/Downloads/descarga.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/news/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"news",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modifyNews",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "MODIFI",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "hola",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Tomás/Downloads/descarga.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/news/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"news",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@test.com\",\r\n    \"password\": \"87654321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john.doe@test.com\",\r\n    \"password\": \"87654321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ADMIN_ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Testimonials",
+			"item": [
+				{
+					"name": "getAllTestimonials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/testimonials/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"testimonials",
+								"1"
+							]
+						},
+						"description": "GET a single testimonial by id"
+					},
+					"response": []
+				},
+				{
+					"name": "getTestimonialById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/testimonials/?page=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"testimonials",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Gets all testimonials with pagination"
+					},
+					"response": []
+				},
+				{
+					"name": "newTestimonial",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mock Testimonial Name\",\r\n    \"image\": \"https://popupsmart.com/encyclopedia/images/t/e/s/t/i/testimonial-example-da3e2204.png\",\r\n    \"content\": \"Mock content for testimonial\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/testimonials",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"testimonials"
+							]
+						},
+						"description": "POSTs a new testimonial"
+					},
+					"response": []
+				},
+				{
+					"name": "updateTestimonial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Name for Testimonial 5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/testimonials/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"testimonials",
+								"5"
+							]
+						},
+						"description": "PATCHes a testimonial by id"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTestimonial",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/testimonials/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"testimonials",
+								"3"
+							]
+						},
+						"description": "DELETEs a testimonial by id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "createCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"crear\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/categories/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createCategory Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"uptade\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/categories/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/categories/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCaegories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/categories/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categories",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/categories/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

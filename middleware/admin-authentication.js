@@ -1,6 +1,7 @@
-const authentication = require('./authentication');
-const { FORBIDDEN: FORBIDDEN_CODE } = require('../constants/httpStatus');
-const { FORBIDDEN: FORBIDDEN_MESSAGE } = require('../constants/message');
+const authentication = require("./authentication");
+const { FORBIDDEN: FORBIDDEN_CODE } = require("../constants/httpStatus");
+const { FORBIDDEN: FORBIDDEN_MESSAGE } = require("../constants/message");
+const throwError = require("../functions/throw-error");
 
 module.exports = [
   authentication,
@@ -10,10 +11,10 @@ module.exports = [
     //   - role must be a property of tokenPayload
     //   - role must be equal to ADMIN_ROLE_ID environment variable
     if (
-      typeof req.tokenPayload === 'undefined' ||
+      typeof req.tokenPayload === "undefined" ||
       req.tokenPayload.role !== parseInt(process.env.ADMIN_ROLE_ID, 10)
     ) {
-      return res.status(FORBIDDEN_CODE).send(FORBIDDEN_MESSAGE);
+      return throwError(FORBIDDEN_CODE, FORBIDDEN_MESSAGE);
     }
 
     return next();

@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      UserId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -29,7 +29,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       },
-      NewsId: {
+      newsId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'News',
