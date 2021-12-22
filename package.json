@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "testDB": "sequelize db:drop --env test && sequelize db:create --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
-    "test": "npm run testDB && mocha",
+    "start": "cross-env NODE_ENV=production",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "testDB": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "test": "cross-env-shell NODE_ENV=test \"npm run testDB && mocha\"",
     "mocha": "mocha"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "chai-http": "^4.3.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
