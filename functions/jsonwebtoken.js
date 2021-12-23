@@ -29,5 +29,21 @@ module.exports = {
     } catch (err) {
       return null; // returns null if err
     }
-  }
+  },
+
+  // This will be used at testing
+  generateAccesTokenExpired: (user) => {
+    if (!user.roleId || !user.id || !user.email) return null;
+
+    const userForToken = {
+      email: user.email,
+      role: user.roleId,
+      id: user.id
+    };
+
+    // This should expire as soon as posible
+    const token = jwt.sign(userForToken, process.env.ACCESS_SECRET, { expiresIn: "1ms" });
+
+    return token;
+  },
 };
