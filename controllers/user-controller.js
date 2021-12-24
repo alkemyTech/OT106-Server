@@ -5,6 +5,7 @@ const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = 
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 const { generatePassword } = require('../functions/generate-password');
 const throwError = require('../functions/throw-error');
+const bcrypt = require('bcryptjs');
 
 const removePassword = (x) => {
   return { ...x, password: undefined };
@@ -51,11 +52,6 @@ module.exports = {
   }),
 
   updateUser: catchAsync(async (req, res, next) => {
-    // it is verified if param id matches with token id
-    if (req.tokenPayload.id !== Number(req.params.id)) {
-      return res.status(UNAUTHORIZED_CODE).send(UNAUTHORIZED_MESSAGE);
-    }
-
     const hashedPassword = req.body.password
     ? await generatePassword(req.body.password)
     : null;
