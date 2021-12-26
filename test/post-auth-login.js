@@ -3,7 +3,6 @@ const chaiHttp = require('chai-http');
 
 const server = require('../app');
 const httpStatus = require('../constants/httpStatus');
-const httpMessages = require('../constants/message');
 const userConstants = require('../constants/user-constant');
 
 const assert = chai.assert;
@@ -25,14 +24,14 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.notInclude(
-            res.body.errors,
-            userConstants.userFailureMessages.email.invalid
+            res.body.body,
+            userConstants.userValidationMessages.email.invalid
           );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.unregistered
           );
 
@@ -47,10 +46,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -66,10 +65,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -85,10 +84,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -100,16 +99,12 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
       chai
         .request(server)
         .post(ENDPOINT.PATH)
-        .send({ email: 'test@test.com' })
+        .send({ email: 'test@test.com', password: '12345678' })
         .end((err, res) => {
           assert.isNull(err);
-          assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
-          assert.include(
-            res.body.errors,
-            userConstants.userValidationMessages.email.unregistered
-          );
+          assert.equal(res.status, httpStatus.NOT_FOUND);
+          assert.equal(res.body.status, httpStatus.NOT_FOUND);
+          assert.equal(res.body.message, userConstants.userFailureMessages.notFound);
 
           done();
         });
@@ -123,10 +118,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.invalid
           );
 
@@ -141,10 +136,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.invalid
           );
 
@@ -160,10 +155,10 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(res.body.message, userConstants.userFailureMessages.validation);
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.invalid
           );
 
@@ -179,8 +174,9 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.UNAUTHORIZED);
-
-          assert.equal(res.body.ok, false);
+          assert.equal(res.body.status, httpStatus.UNAUTHORIZED);
+          assert.equal(res.body.message, userConstants.userFailureMessages.wrongPassword);
+          assert.equal(res.body.body.ok, false);
 
           done();
         });
@@ -195,17 +191,19 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
       .end((err, res) => {
         assert.isNull(err);
         assert.equal(res.status, httpStatus.OK);
+        assert.equal(res.body.status, httpStatus.OK);
+        assert.equal(res.body.message, userConstants.userSuccessMessages.login);
 
-        assert.property(res.body.dataValues, 'id');
-        assert.property(res.body.dataValues, 'firstName');
-        assert.property(res.body.dataValues, 'lastName');
-        assert.property(res.body.dataValues, 'email');
-        assert.property(res.body.dataValues, 'photo');
-        assert.property(res.body.dataValues, 'roleId');
-        assert.property(res.body, 'token');
-        assert.property(res.body.dataValues, 'createdAt');
-        assert.property(res.body.dataValues, 'updatedAt');
-        assert.property(res.body.dataValues, 'deletedAt');
+        assert.property(res.body.body, 'id');
+        assert.property(res.body.body, 'firstName');
+        assert.property(res.body.body, 'lastName');
+        assert.property(res.body.body, 'email');
+        assert.property(res.body.body, 'photo');
+        assert.property(res.body.body, 'roleId');
+        assert.property(res.body.body, 'token');
+        assert.property(res.body.body, 'createdAt');
+        assert.property(res.body.body, 'updatedAt');
+        assert.property(res.body.body, 'deletedAt');
 
         done();
       });

@@ -90,6 +90,12 @@ module.exports = {
   loginUser: catchAsync(async (req, res, next) => {
     const user = await UserService.findUserByEmail(req.body.email);
 
+    if (user === null)
+      throwError(
+        httpStatus.NOT_FOUND,
+        userConstant.userFailureMessages.notFound
+      );
+
     const validPassword = await passwordHelper.comparePassword(
       req.body.password,
       user.password
@@ -97,11 +103,22 @@ module.exports = {
 
     if (!validPassword) {
       const responseBody = { ok: false };
-      throwError(httpStatus.UNAUTHORIZED, httpMessage.UNAUTHORIZED, responseBody);
+      throwError(
+        httpStatus.UNAUTHORIZED,
+        userConstant.userFailureMessages.wrongPassword,
+        responseBody
+      );
     }
 
-    const result = { ...passwordHelper.removePassword(user), token: generateAccessToken(user) };
+    const result = {
+      ...passwordHelper.removePassword(user),
+      token: generateAccessToken(user),
+    };
 
-    return res.status(httpStatus.OK).send(result);
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: userConstant.userSuccessMessages.login,
+      body: result,
+    });
   }),
 };

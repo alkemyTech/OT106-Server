@@ -75,14 +75,6 @@ const loginUserSchema = {
     notEmpty: true,
     isEmail: true,
     errorMessage: userValidationMessages.email.invalid,
-    custom: {
-      options: async (value) => {
-        const aux = await findUserByEmail(value);
-        if (aux !== null) return Promise.resolve();
-        return Promise.reject();
-      },
-      errorMessage: userValidationMessages.email.unregistered,
-    },
   },
   password: {
     in: ['body'],

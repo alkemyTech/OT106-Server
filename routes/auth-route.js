@@ -76,10 +76,14 @@ router
  *           schema:
  *             type: object
  *             properties:
+ *               status:
+ *                 description: HTTP status
+ *                 type: number
  *               message:
  *                 description: A message about the request sent
  *                 type: string
  *             example:
+ *               status: 404
  *               message: The user wasn't found
  */
 
@@ -262,6 +266,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -270,6 +277,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *             example:
+ *               status: 200
  *               message: Successful login
  *               body:
  *                 id: 1
@@ -289,6 +297,9 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -296,9 +307,10 @@ router
  *                   description: Specific error messages
  *                   type: array
  *               example:
+ *                 status: 400
  *                 message: There are some validation problems
  *                 body:
- *                   - The email wasn't registered
+ *                   - The email is invalid
  *                   - The password is invalid
  *       401:
  *         description: The password is incorrect
@@ -307,12 +319,16 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
  *                 body:
  *                   type: object
  *               example:
+ *                 status: 401
  *                 message: The password is incorrect
  *                 body:
  *                   ok: false
