@@ -1,6 +1,7 @@
 const authentication = require('./authentication');
 const { FORBIDDEN: FORBIDDEN_CODE } = require('../constants/httpStatus');
 const { FORBIDDEN: FORBIDDEN_MESSAGE } = require('../constants/message');
+const throwError = require('../functions/throw-error');
 
 module.exports = [
   authentication,
@@ -14,7 +15,7 @@ module.exports = [
       (req.tokenPayload.id !== parseInt(req.params.id, 10) &&
         req.tokenPayload.role !== parseInt(process.env.ADMIN_ROLE_ID, 10))
     ) {
-      return res.status(FORBIDDEN_CODE).send(FORBIDDEN_MESSAGE);
+      return throwError(FORBIDDEN_CODE, FORBIDDEN_MESSAGE);
     }
 
     return next();
