@@ -60,10 +60,14 @@ router
  *           schema:
  *             type: object
  *             properties:
+ *               status:
+ *                 description: HTTP status
+ *                 type: number
  *               message:
  *                 description: An error message
  *                 type: string
  *             example:
+ *               status: 500
  *               message: INTERNAL SERVER ERROR
  *     UserNotFound:
  *       description: The user wasn't found
@@ -122,6 +126,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -130,6 +137,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *               example:
+ *                 status: 201
  *                 message: The user has been registered
  *                 body:
  *                   id: 1
@@ -149,6 +157,9 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -158,6 +169,7 @@ router
  *                   items:
  *                     type: string
  *               example:
+ *                 status: 400
  *                 message: There are some validation problems
  *                 body:
  *                   - The firstName is invalid

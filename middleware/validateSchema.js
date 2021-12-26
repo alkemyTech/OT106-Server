@@ -1,12 +1,14 @@
 const { checkSchema, validationResult } = require('express-validator');
 const { BAD_REQUEST: BAD_REQUEST_CODE } = require('../constants/httpStatus');
+const { BAD_REQUEST: BAD_REQUEST_MESSAGE } = require('../constants/message');
+const throwError = require('../functions/throw-error');
 
 // This function will be used by validators to validate their schemas
 // with express-validator. But this shouldn't be used directly in routes,
 // only through validators
 
 // https://express-validator.github.io/docs/running-imperatively.html
-module.exports = schema => async (req, res, next) => {
+module.exports = (schema, message = BAD_REQUEST_MESSAGE) => async (req, res, next) => {
   // Gets all the validations to do
   const validations = checkSchema(schema);
 
@@ -25,5 +27,9 @@ module.exports = schema => async (req, res, next) => {
     (el, idx) => idx === errorsMessages.indexOf(el)
   );
 
-  return res.status(BAD_REQUEST_CODE).json({ errors: filteredErrors });
+  return res.status(BAD_REQUEST_CODE).json({
+    status: BAD_REQUEST_CODE,
+    message,
+    body: filteredErrors,
+  });
 };

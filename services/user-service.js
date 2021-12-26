@@ -33,14 +33,18 @@ module.exports = {
     return user.dataValues;
   },
 
-  findUserByEmail: UserRepository.findUserByEmail,
+  findUserByEmail: async (email) => {
+    const result = await UserRepository.findUserByEmail(email);
+    if (result === null) return null;
+    return result.dataValues;
+  },
 
   createUser: async (attributes) => {
     const result = await UserRepository.createUser(attributes);
 
     if (result !== null) {
       // it add token when user is created
-      sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
+      sendEmail(result.dataValues.email, process.env.TEMPLATEID_WELCOME);
       const userWithToken = Object.assign(result.dataValues, {
         token: generateAccessToken(result.dataValues),
       });

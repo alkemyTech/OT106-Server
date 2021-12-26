@@ -1,5 +1,5 @@
 const validateSchema = require('../middleware/validateSchema');
-const { userValidationMessages } = require('../constants/user-constant');
+const { userValidationMessages, userFailureMessages } = require('../constants/user-constant');
 const { findUserByEmail } = require('../services/user-service');
 
 const createUserSchema = {
@@ -94,7 +94,7 @@ const loginUserSchema = {
 
 // Remember, validateSchema returns a middleware function
 module.exports = {
-  validateCreateUser: validateSchema(createUserSchema),
+  validateCreateUser: validateSchema(createUserSchema, userFailureMessages.validation),
   validateUpdateUser: validateSchema(updateUserSchema),
-  validateLoginUser: validateSchema(loginUserSchema),
+  validateLoginUser: validateSchema(loginUserSchema, userFailureMessages.validation),
 };

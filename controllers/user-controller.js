@@ -1,8 +1,8 @@
 const { UserService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
 const { generateAccessToken } = require('../functions/jsonwebtoken');
-const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
-const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
+const httpStatus = require('../constants/httpStatus');
+const httpMessage = require('../constants/message');
 const passwordHelper = require('../helpers/password-helper');
 const throwError = require('../functions/throw-error');
 const userConstant = require('../constants/user-constant');
@@ -14,21 +14,21 @@ module.exports = {
     // Removes the passwords of every result
     const resultWithoutPasswords = result.map(x => passwordHelper.removePassword(x));
 
-    return res.status(OK_CODE).send(resultWithoutPasswords);
+    return res.status(httpStatus.OK).send(resultWithoutPasswords);
   }),
 
   findUserByParamsId: catchAsync(async (req, res, next) => {
     const idToFind = req.params.id;
     const result = await UserService.findUserByPk(idToFind);
 
-    return res.status(OK_CODE).send(passwordHelper.removePassword(result));
+    return res.status(httpStatus.OK).send(passwordHelper.removePassword(result));
   }),
 
   findUserByTokenId: catchAsync(async (req, res, next) => {
     const idToFind = req.tokenPayload.id;
     const result = await UserService.findUserByPk(idToFind);
 
-    return res.status(OK_CODE).send(passwordHelper.removePassword(result));
+    return res.status(httpStatus.OK).send(passwordHelper.removePassword(result));
   }),
 
   createUser: catchAsync(async (req, res, next) => {
@@ -37,16 +37,31 @@ module.exports = {
       lastName: req.body.lastName,
       email: req.body.email,
       password: await passwordHelper.hashPassword(req.body.password),
+      photo: req.body.photo,
+      roleId: 2,
     };
-    const result = await UserService.createUser(attributes);
 
-    return res.status(CREATED_CODE).send(passwordHelper.removePassword(result));
+    await UserService.createUser(attributes);
+    const newUser = await UserService.findUserByEmail(attributes.email);
+    
+    if (newUser === null) throwError(httpStatus.NOT_FOUND, httpMessage.NOT_FOUND); 
+
+    const result = {
+      ...passwordHelper.removePassword(newUser),
+      token: generateAccessToken(newUser),
+    };
+
+    return res.status(httpStatus.CREATED).json({
+      status: httpStatus.CREATED,
+      message: userConstant.userSuccessMessages.register,
+      body: result,
+    });
   }),
 
   updateUser: catchAsync(async (req, res, next) => {
     // it is verified if param id matches with token id
     if (req.tokenPayload.id !== Number(req.params.id)) {
-      return res.status(UNAUTHORIZED_CODE).send(UNAUTHORIZED_MESSAGE);
+      return res.status(httpStatus.UNAUTHORIZED).send(httpMessage.UNAUTHORIZED);
     }
 
     const idToUpdate = req.params.id;
@@ -62,14 +77,14 @@ module.exports = {
     // Finds the user updated and sent it as the result
     const result = await UserService.findUserByPk(idToUpdate);
 
-    return res.status(OK_CODE).send(passwordHelper.removePassword(result));
+    return res.status(httpStatus.OK).send(passwordHelper.removePassword(result));
   }),
 
   destroyUser: catchAsync(async (req, res, next) => {
     const idToDelete = req.params.id;
     await UserService.destroyUser(idToDelete);
 
-    return res.status(OK_CODE).send(OK_MESSAGE);
+    return res.status(httpStatus.OK).send(httpMessage.OK);
   }),
 
   loginUser: catchAsync(async (req, res, next) => {
@@ -82,11 +97,11 @@ module.exports = {
 
     if (!validPassword) {
       const responseBody = { ok: false };
-      throwError(UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE, responseBody);
+      throwError(httpStatus.UNAUTHORIZED, httpMessage.UNAUTHORIZED, responseBody);
     }
 
     const result = { ...passwordHelper.removePassword(user), token: generateAccessToken(user) };
 
-    return res.status(OK_CODE).send(result);
+    return res.status(httpStatus.OK).send(result);
   }),
 };

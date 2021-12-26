@@ -25,10 +25,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.firstName.invalid
           );
 
@@ -43,10 +46,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.firstName.invalid
           );
 
@@ -62,10 +68,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.firstName.invalid
           );
 
@@ -81,10 +90,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.lastName.invalid
           );
 
@@ -99,10 +111,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.lastName.invalid
           );
 
@@ -118,10 +133,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.lastName.invalid
           );
 
@@ -137,14 +155,17 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.registered
           );
 
@@ -159,10 +180,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -178,10 +202,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -197,10 +224,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.invalid
           );
 
@@ -216,10 +246,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.email.registered
           );
 
@@ -235,10 +268,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.notInclude(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.short
           );
 
@@ -253,10 +289,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.short
           );
 
@@ -272,10 +311,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.short
           );
 
@@ -291,10 +333,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.BAD_REQUEST);
-
-          assert.isArray(res.body.errors);
+          assert.equal(res.body.status, httpStatus.BAD_REQUEST);
+          assert.equal(
+            res.body.message,
+            userConstants.userFailureMessages.validation
+          );
           assert.include(
-            res.body.errors,
+            res.body.body,
             userConstants.userValidationMessages.password.short
           );
 
@@ -313,22 +358,26 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           lastName: 'testB',
           email: 'testA@test.com',
           password: '12345678',
-          roleId: 2, // FIXME: make roleId=2 the default
         })
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.CREATED);
+          assert.equal(res.body.status, httpStatus.CREATED);
+          assert.equal(
+            res.body.message,
+            userConstants.userSuccessMessages.register
+          );
 
-          assert.isNotNull(res.body.id);
-          assert.equal(res.body.firstName, 'testA');
-          assert.equal(res.body.lastName, 'testB');
-          assert.equal(res.body.email, 'testA@test.com');
-          // assert.isNull(res.body.photo); // FIXME: make the response have a photo property
-          assert.equal(res.body.roleId, 2);
-          assert.isNotNull(res.body.token);
-          assert.isNotNull(res.body.createdAt);
-          assert.isNotNull(res.body.updatedAt);
-          // assert.isNull(res.body.deletedAt); // FIXME: make the response have a deleteAt property
+          assert.isNotNull(res.body.body.id);
+          assert.equal(res.body.body.firstName, 'testA');
+          assert.equal(res.body.body.lastName, 'testB');
+          assert.equal(res.body.body.email, 'testA@test.com');
+          assert.isNull(res.body.body.photo);
+          assert.equal(res.body.body.roleId, 2);
+          assert.isNotNull(res.body.body.token);
+          assert.isNotNull(res.body.body.createdAt);
+          assert.isNotNull(res.body.body.updatedAt);
+          assert.isNull(res.body.body.deletedAt);
 
           done();
         });
@@ -344,25 +393,29 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           email: 'testB@test.com',
           password: '12345678',
           photo: 'https://dummyimage.com/100/000/fff.jpg',
-          roleId: 2, // FIXME: make roleId=2 the default
         })
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.CREATED);
+          assert.equal(res.body.status, httpStatus.CREATED);
+          assert.equal(
+            res.body.message,
+            userConstants.userSuccessMessages.register
+          );
 
           assert.isNotNull(res.body.id);
-          assert.equal(res.body.firstName, 'testA');
-          assert.equal(res.body.lastName, 'testB');
-          assert.equal(res.body.email, 'testB@test.com');
-          // assert.equal(
-          //   res.body.photo,
-          //   'https://dummyimage.com/100/000/fff.jpg'
-          // ); // FIXME: make the response have a photo property
-          assert.equal(res.body.roleId, 2);
-          assert.isNotNull(res.body.token);
-          assert.isNotNull(res.body.createdAt);
-          assert.isNotNull(res.body.updatedAt);
-          // assert.isNull(res.body.deletedAt); // FIXME: make the response have a deleteAt property
+          assert.equal(res.body.body.firstName, 'testA');
+          assert.equal(res.body.body.lastName, 'testB');
+          assert.equal(res.body.body.email, 'testB@test.com');
+          assert.equal(
+            res.body.body.photo,
+            'https://dummyimage.com/100/000/fff.jpg'
+          );
+          assert.equal(res.body.body.roleId, 2);
+          assert.isNotNull(res.body.body.token);
+          assert.isNotNull(res.body.body.createdAt);
+          assert.isNotNull(res.body.body.updatedAt);
+          assert.isNull(res.body.body.deletedAt);
 
           done();
         });
