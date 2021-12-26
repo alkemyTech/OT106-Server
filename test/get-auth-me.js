@@ -4,6 +4,7 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 const httpStatus = require('../constants/httpStatus');
 const httpMessages = require('../constants/message');
+const userConstant = require('../constants/user-constant');
 const { generateAccessToken, generateAccessTokenExpired } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
@@ -28,6 +29,8 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.message, httpMessages.FORBIDDEN);
 
           done();
         });
@@ -41,6 +44,8 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.message, httpMessages.FORBIDDEN);
 
           done();
         });
@@ -54,6 +59,8 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.message, httpMessages.FORBIDDEN);
 
           done();
         });
@@ -67,6 +74,8 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.status, httpStatus.FORBIDDEN);
+          assert.equal(res.body.message, httpMessages.FORBIDDEN);
 
           done();
         });
@@ -80,6 +89,8 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.NOT_FOUND);
+          assert.equal(res.body.status, httpStatus.NOT_FOUND);
+          assert.equal(res.body.message, httpMessages.NOT_FOUND);
 
           done();
         });
@@ -94,17 +105,19 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
       .end((err, res) => {
         assert.isNull(err);
         assert.equal(res.status, httpStatus.OK);
+        assert.equal(res.body.status, httpStatus.OK);
+        assert.equal(res.body.message, userConstant.userSuccessMessages.getInfo);
 
-        assert.property(res.body, 'id');
-        assert.property(res.body, 'firstName');
-        assert.property(res.body, 'lastName');
-        assert.property(res.body, 'email');
-        assert.property(res.body, 'photo');
-        assert.property(res.body, 'roleId');
-        // assert.property(res.body, 'token'); // FIXME: make the response have a token property
-        assert.property(res.body, 'createdAt');
-        assert.property(res.body, 'updatedAt');
-        assert.property(res.body, 'deletedAt');
+        assert.property(res.body.body, 'id');
+        assert.property(res.body.body, 'firstName');
+        assert.property(res.body.body, 'lastName');
+        assert.property(res.body.body, 'email');
+        assert.property(res.body.body, 'photo');
+        assert.property(res.body.body, 'roleId');
+        assert.property(res.body.body, 'token');
+        assert.property(res.body.body, 'createdAt');
+        assert.property(res.body.body, 'updatedAt');
+        assert.property(res.body.body, 'deletedAt');
 
         done();
       });

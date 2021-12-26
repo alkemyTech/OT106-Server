@@ -197,6 +197,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -205,6 +208,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *               example:
+ *                 status: 200
  *                 message: My personal information
  *                 body:
  *                   id: 1
@@ -224,10 +228,14 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number 
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
  *               example:
+ *                 status: 403
  *                 message: An access token is needed
  *       404:
  *         $ref: '#/components/responses/UserNotFound'

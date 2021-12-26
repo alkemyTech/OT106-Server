@@ -26,9 +26,17 @@ module.exports = {
 
   findUserByTokenId: catchAsync(async (req, res, next) => {
     const idToFind = req.tokenPayload.id;
-    const result = await UserService.findUserByPk(idToFind);
+    const user = await UserService.findUserByPk(idToFind);
+    const result = {
+      ...passwordHelper.removePassword(user),
+      token: generateAccessToken(user),
+    };
 
-    return res.status(httpStatus.OK).send(passwordHelper.removePassword(result));
+    return res.status(httpStatus.OK).json({
+      status: httpStatus.OK,
+      message: userConstant.userSuccessMessages.getInfo,
+      body: result,
+    });
   }),
 
   createUser: catchAsync(async (req, res, next) => {
