@@ -7,8 +7,8 @@ const { assert } = chai;
 chai.use(chaiHttp);
 
 //TOKEN
-const { generateAccesToken } = require("../functions/jsonwebtoken");
-const TOKEN = generateAccesToken({ id: 1, email: "test@test.com", roleId: 1 });
+const { generateAccessToken } = require("../functions/jsonwebtoken");
+const TOKEN = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });
 
 //Constants files
 const code = require("../constants/httpStatus");

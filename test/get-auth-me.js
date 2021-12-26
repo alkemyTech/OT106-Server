@@ -4,7 +4,7 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 const httpStatus = require('../constants/httpStatus');
 const httpMessages = require('../constants/message');
-const { generateAccesToken, generateAccesTokenExpired } = require('../functions/jsonwebtoken');
+const { generateAccessToken, generateAccessTokenExpired } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
 
@@ -15,9 +15,9 @@ const ENDPOINT = {
   PATH: '/auth/me',
 };
 
-const TOKEN = generateAccesToken({ id: 1, email: 'test@test.com', roleId: 1 });
-const TOKEN_EXPIRED = generateAccesTokenExpired({ id: 1, email: 'test@test.com', roleId: 1 });
-const TOKEN_USER_NOT_FOUND = generateAccesToken({ id: 999, email: 'test@test.com', roleId: 1 });
+const TOKEN = generateAccessToken({ id: 1, email: 'test@test.com', roleId: 1 });
+const TOKEN_EXPIRED = generateAccessTokenExpired({ id: 1, email: 'test@test.com', roleId: 1 });
+const TOKEN_USER_NOT_FOUND = generateAccessToken({ id: 999, email: 'test@test.com', roleId: 1 });
 
 describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
   describe('Authentication', () => {

@@ -1,6 +1,6 @@
 const { UserService } = require('../services');
 const catchAsync = require('../functions/catchAsync');
-const { generateAccesToken } = require('../functions/jsonwebtoken');
+const { generateAccessToken } = require('../functions/jsonwebtoken');
 const { OK: OK_CODE, CREATED: CREATED_CODE, UNAUTHORIZED: UNAUTHORIZED_CODE } = require('../constants/httpStatus');
 const { OK: OK_MESSAGE, UNAUTHORIZED: UNAUTHORIZED_MESSAGE } = require('../constants/message');
 const passwordHelper = require('../helpers/password-helper');
@@ -85,7 +85,7 @@ module.exports = {
       throwError(UNAUTHORIZED_CODE, UNAUTHORIZED_MESSAGE, responseBody);
     }
 
-    const result = { ...passwordHelper.removePassword(user), token: generateAccesToken(user) };
+    const result = { ...passwordHelper.removePassword(user), token: generateAccessToken(user) };
 
     return res.status(OK_CODE).send(result);
   }),

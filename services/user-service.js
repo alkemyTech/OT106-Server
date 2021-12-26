@@ -7,7 +7,7 @@ const {
   BAD_REQUEST: BAD_REQUEST_MESSAGE,
   NOT_FOUND: NOT_FOUND_MESSAGE,
 } = require("../constants/message");
-const { generateAccesToken } = require("../functions/jsonwebtoken");
+const { generateAccessToken } = require("../functions/jsonwebtoken");
 const sendEmail = require("../functions/mail-engine");
 const throwError = require("../functions/throw-error");
 
@@ -42,7 +42,7 @@ module.exports = {
       // it add token when user is created
       sendEmail(result.email, process.env.TEMPLATEID_WELCOME);
       const userWithToken = Object.assign(result.dataValues, {
-        token: generateAccesToken(result.dataValues),
+        token: generateAccessToken(result.dataValues),
       });
       return userWithToken;
     }
