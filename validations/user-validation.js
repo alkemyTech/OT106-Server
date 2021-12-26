@@ -1,5 +1,5 @@
 const validateSchema = require('../middleware/validateSchema');
-const { userValidation } = require('../constants/user-constant');
+const { userValidationMessages } = require('../constants/user-constant');
 const { findUserByEmail } = require('../services/user-service');
 
 const createUserSchema = {
@@ -7,27 +7,27 @@ const createUserSchema = {
     in: ['body'],
     optional: false,
     notEmpty: true,
-    errorMessage: userValidation.invalidFirstName,
+    errorMessage: userValidationMessages.firstName.invalid,
   },
   lastName: {
     in: ['body'],
     optional: false,
     notEmpty: true,
-    errorMessage: userValidation.invalidLastName,
+    errorMessage: userValidationMessages.lastName.invalid,
   },
   email: {
     in: ['body'],
     optional: false,
     notEmpty: true,
     isEmail: true,
-    errorMessage: userValidation.invalidEmail,
+    errorMessage: userValidationMessages.email.invalid,
     custom: {
       options: async (value) => {
         const aux = await findUserByEmail(value);
         if (aux === null) return Promise.resolve();
         return Promise.reject();
       },
-      errorMessage: userValidation.registeredEmail,
+      errorMessage: userValidationMessages.email.registered,
     },
   },
   password: {
@@ -35,7 +35,7 @@ const createUserSchema = {
     optional: false,
     notEmpty: true,
     isLength: { options: { min: 8 } },
-    errorMessage: userValidation.shortPassword,
+    errorMessage: userValidationMessages.password.short,
   },
 };
 
@@ -44,27 +44,27 @@ const updateUserSchema = {
     in: ['body'],
     optional: false,
     notEmpty: true,
-    errorMessage: userValidation.invalidFirstName,
+    errorMessage: userValidationMessages.firstName.invalid,
   },
   lastName: {
     in: ['body'],
     optional: false,
     notEmpty: true,
-    errorMessage: userValidation.invalidLastName,
+    errorMessage: userValidationMessages.lastName.invalid,
   },
   email: {
     in: ['body'],
     optional: false,
     notEmpty: true,
     isEmail: true,
-    errorMessage: userValidation.invalidEmail
+    errorMessage: userValidationMessages.email.invalid,
   },
   password: {
     in: ['body'],
     optional: true,
     notEmpty: false,
     isLength: { options: { min: 8 } },
-    errorMessage: userValidation.shortPassword,
+    errorMessage: userValidationMessages.password.short,
   },
 };
 
@@ -74,21 +74,21 @@ const loginUserSchema = {
     optional: false,
     notEmpty: true,
     isEmail: true,
-    errorMessage: userValidation.invalidEmail,
+    errorMessage: userValidationMessages.email.invalid,
     custom: {
       options: async (value) => {
         const aux = await findUserByEmail(value);
         if (aux !== null) return Promise.resolve();
         return Promise.reject();
       },
-      errorMessage: userValidation.unregisteredEmail,
+      errorMessage: userValidationMessages.email.unregistered,
     },
   },
   password: {
     in: ['body'],
     optional: false,
     notEmpty: true,
-    errorMessage: userValidation.invalidPassword,
+    errorMessage: userValidationMessages.password.invalid,
   },
 };
 

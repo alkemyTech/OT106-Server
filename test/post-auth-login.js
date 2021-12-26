@@ -29,11 +29,11 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.notInclude(
             res.body.errors,
-            userConstants.userValidation.invalidEmail
+            userConstants.userFailureMessages.email.invalid
           );
           assert.notInclude(
             res.body.errors,
-            userConstants.userValidation.unregisteredEmail
+            userConstants.userValidationMessages.email.unregistered
           );
 
           done();
@@ -51,7 +51,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.invalidEmail
+            userConstants.userValidationMessages.email.invalid
           );
 
           done();
@@ -70,7 +70,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.invalidEmail
+            userConstants.userValidationMessages.email.invalid
           );
 
           done();
@@ -89,7 +89,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.invalidEmail
+            userConstants.userValidationMessages.email.invalid
           );
 
           done();
@@ -108,7 +108,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.unregisteredEmail
+            userConstants.userValidationMessages.email.unregistered
           );
 
           done();
@@ -127,7 +127,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.notInclude(
             res.body.errors,
-            userConstants.userValidation.invalidPassword
+            userConstants.userValidationMessages.password.invalid
           );
 
           done();
@@ -145,7 +145,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.invalidPassword
+            userConstants.userValidationMessages.password.invalid
           );
 
           done();
@@ -164,7 +164,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.isArray(res.body.errors);
           assert.include(
             res.body.errors,
-            userConstants.userValidation.invalidPassword
+            userConstants.userValidationMessages.password.invalid
           );
 
           done();

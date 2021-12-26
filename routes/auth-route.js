@@ -189,7 +189,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *               example:
- *                 message: Personal information of the user 1
+ *                 message: My personal information
  *                 body:
  *                   id: 1
  *                   firstName: John
