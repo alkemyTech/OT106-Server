@@ -73,7 +73,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.FORBIDDEN);
-          assert.equal(res.text, message.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
 
           done();
         });
@@ -89,7 +89,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
     //     .end((err, res) => {
     //       assert.isNull(err);
     //       assert.equal(res.status, code.FORBIDDEN);
-    //       assert.equal(res.text, message.FORBIDDEN);
+    //       assert.equal(res.body.message, message.FORBIDDEN);
 
     //       done();
     //     });
@@ -104,7 +104,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.FORBIDDEN);
-          assert.equal(res.text, message.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
 
           done();
         });

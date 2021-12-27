@@ -1,5 +1,6 @@
 const contactRepository = require("../repositories/contact-repository");
 const sendEmail = require("../functions/mail-engine");
+const throwError = require("../functions/throw-error");
 
 //http status
 const code = require("../constants/httpStatus");
@@ -27,7 +28,7 @@ const getContacts = async (req, res) => {
 
   //No contacts
   if (!contacts[0]) {
-    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
+    return throwError(code.NOT_FOUND, CONTACT_NOT_FOUND);
   }
 
   //Success?
@@ -41,8 +42,8 @@ const getContactById = async (req, res) => {
   const contact = await contactRepository.getContactById(id);
 
   //No contact found
-  if (!contact) {
-    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
+  if (!contacts) {
+    return throwError(code.NOT_FOUND, CONTACT_NOT_FOUND);
   }
 
   //Success?
@@ -55,7 +56,7 @@ const updateContact = async (req, res) => {
   //Check if it exists
   const contact = await contactRepository.getContactById(id);
   if (!contact) {
-    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
+    return throwError(code.NOT_FOUND, CONTACT_NOT_FOUND);
   }
 
   //Success?
@@ -69,7 +70,7 @@ const deleteContact = async (req, res) => {
   //Check if it exists
   const contact = await contactRepository.getContactById(id);
   if (!contact) {
-    return res.status(code.NOT_FOUND).json({ message: CONTACT_NOT_FOUND });
+    return throwError(code.NOT_FOUND, CONTACT_NOT_FOUND);
   }
 
   //Success

@@ -3,7 +3,7 @@ var router = express.Router();
 
 const usersController = require('../controllers/user-controller');
 const adminAuthentication = require('../middleware/admin-authentication');
-const { validateCreateUser, validateUpdateUser } = require('../validations/user-validation');
+const { validateUpdateUser } = require('../validations/user-validation');
 const ownerAtuhentication = require('../middleware/owner-authentication');
 
 // List all the users

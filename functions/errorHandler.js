@@ -6,26 +6,33 @@ const hasCustomError = (err) => typeof err.customError !== "undefined";
 let errorToSend = {};
 
 const developmentErrorHandler = (err, req, res) => {
-  if (!hasCustomError(err)) {
-    console.error(err);
+  console.error(err);
+
+  //Default errors
+  if (!err.customError) {
     errorToSend = {
       status: err.status || code.INTERNAL_SERVER_ERROR,
       message:
         err.status === code.NOT_FOUND
           ? message.NOT_FOUND
           : message.INTERNAL_SERVER_ERROR,
-      rawMessage: err.message,
       stack: err.stack,
     };
 
     return res.status(err.status).json(errorToSend);
   }
 
-  console.error(err.customError);
-  return res.status(err.customError.status).json(err.customError);
+  //Custom errors
+  errorToSend = {
+    status: err.customError.status,
+    message: err.customError.message,
+    stack: err.stack,
+  };
+  return res.status(errorToSend.status).json(errorToSend);
 };
 
 const testErrorHandler = (err, req, res) => {
+  //Default errors
   if (!hasCustomError(err)) {
     errorToSend = {
       status: err.status || code.INTERNAL_SERVER_ERROR,
@@ -36,13 +43,19 @@ const testErrorHandler = (err, req, res) => {
       rawMessage: err.message,
       stack: err.stack,
     };
-    return res.status(err.status).json(errorToSend);
   }
 
-  return res.status(err.customError.status).json(err.customError);
+  //Custom error
+  errorToSend = {
+    status: err.customError.status,
+    message: err.customError.message,
+    stack: err.stack,
+  };
+  return res.status(errorToSend.status).json(errorToSend);
 };
 
 const productionErrorHandler = (err, req, res) => {
+  //Default errors
   if (!hasCustomError(err)) {
     errorToSend = {
       status: err.status || code.INTERNAL_SERVER_ERROR,
@@ -54,7 +67,12 @@ const productionErrorHandler = (err, req, res) => {
     return res.status(err.status).json(errorToSend);
   }
 
-  return res.status(err.customError.status).json(err.customError);
+  //Custom error
+  errorToSend = {
+    status: err.customError.status,
+    message: err.customError.message,
+  };
+  return res.status(errorToSend.status).json(errorToSend);
 };
 
 const defaultErrorHandler = (err, req, res) => {
