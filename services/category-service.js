@@ -30,7 +30,7 @@ module.exports = {
     }
     return categoriesRepository.createCategory(body)
   },
-  update: (id, body) => {
+  update: async (id, body) => {
     if (body.image) {
       body.image = await uploadFile(body.image);
     }
