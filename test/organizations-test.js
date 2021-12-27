@@ -3,12 +3,12 @@ const chaiHttp = require('chai-http');
 const app = require('../app');
 const status = require('../constants/httpStatus');
 // const message = require('../constants/organization-constant');
-const { generateAccesToken } = require('../functions/jsonwebtoken');
+const { generateAccessToken } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
 const path = '/organizations/public';
 
-const token = generateAccesToken({ id: 67, email: 'fa@afa.com', roleId: 1 });
+const token = generateAccessToken({ id: 67, email: 'fa@afa.com', roleId: 1 });
 
 chai.use(chaiHttp);
 

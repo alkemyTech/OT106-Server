@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const getTokenFrom = require('./get-token-from');
 
 module.exports = {
-  generateAccesToken: (user) => {
+  generateAccessToken: (user) => {
     if (!user.roleId || !user.id || !user.email) return null; // access denied, it returns null
 
     const userForToken = {
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   // This will be used at testing
-  generateAccesTokenExpired: (user) => {
+  generateAccessTokenExpired: (user) => {
     if (!user.roleId || !user.id || !user.email) return null;
 
     const userForToken = {

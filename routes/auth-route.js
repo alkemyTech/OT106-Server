@@ -60,10 +60,14 @@ router
  *           schema:
  *             type: object
  *             properties:
+ *               status:
+ *                 description: HTTP status
+ *                 type: number
  *               message:
  *                 description: An error message
  *                 type: string
  *             example:
+ *               status: 500
  *               message: INTERNAL SERVER ERROR
  *     UserNotFound:
  *       description: The user wasn't found
@@ -72,10 +76,14 @@ router
  *           schema:
  *             type: object
  *             properties:
+ *               status:
+ *                 description: HTTP status
+ *                 type: number
  *               message:
  *                 description: A message about the request sent
  *                 type: string
  *             example:
+ *               status: 404
  *               message: The user wasn't found
  */
 
@@ -122,6 +130,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -130,6 +141,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *               example:
+ *                 status: 201
  *                 message: The user has been registered
  *                 body:
  *                   id: 1
@@ -149,6 +161,9 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -158,6 +173,7 @@ router
  *                   items:
  *                     type: string
  *               example:
+ *                 status: 400
  *                 message: There are some validation problems
  *                 body:
  *                   - The firstName is invalid
@@ -181,6 +197,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -189,7 +208,8 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *               example:
- *                 message: Personal information of the user 1
+ *                 status: 200
+ *                 message: My personal information
  *                 body:
  *                   id: 1
  *                   firstName: John
@@ -208,10 +228,14 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number 
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
  *               example:
+ *                 status: 403
  *                 message: An access token is needed
  *       404:
  *         $ref: '#/components/responses/UserNotFound'
@@ -250,6 +274,9 @@ router
  *           application/json:
  *             schema:
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -258,6 +285,7 @@ router
  *                   type: object
  *                   $ref: '#/components/schemas/User'
  *             example:
+ *               status: 200
  *               message: Successful login
  *               body:
  *                 id: 1
@@ -277,6 +305,9 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
@@ -284,9 +315,10 @@ router
  *                   description: Specific error messages
  *                   type: array
  *               example:
+ *                 status: 400
  *                 message: There are some validation problems
  *                 body:
- *                   - The email wasn't registered
+ *                   - The email is invalid
  *                   - The password is invalid
  *       401:
  *         description: The password is incorrect
@@ -295,12 +327,16 @@ router
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   description: HTTP status
+ *                   type: number
  *                 message:
  *                   description: A message about the request sent
  *                   type: string
  *                 body:
  *                   type: object
  *               example:
+ *                 status: 401
  *                 message: The password is incorrect
  *                 body:
  *                   ok: false
