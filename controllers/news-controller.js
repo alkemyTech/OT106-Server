@@ -19,7 +19,7 @@ module.exports={
     },
 
     getAllNews:async  (req, res) => {
-        baseRepository.getAll(req,res,db.News)
+        baseRepository.getAllWithPagination(req,res,db.News,"news");
     },
 
     modifyNews:async (req, res) => {
