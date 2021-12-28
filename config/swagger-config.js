@@ -20,7 +20,7 @@ const swaggerDefinition = {
     components: {
         securitySchemes: {
           bearerAuth: {
-            type: process.env.PROTOCOL,
+          type: process.env.SWAGGER_SECURITY_TYPE,
             scheme: process.env.SECURITY_SCHEMA,
             bearerFormat: process.env.BEARER_FORMAT,
           }
