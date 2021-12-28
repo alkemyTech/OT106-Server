@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const imagen =  path.join(__dirname, '/imgTest/member-test.png');
 
-const URL = `${process.env.HOST_HTTP_OR_HTTPS}://${process.env.HOST}:${process.env.PORT}`;
+const URL = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`;
 
 
 let token;
