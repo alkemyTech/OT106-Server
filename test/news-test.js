@@ -10,8 +10,8 @@ chai.use(chaiHttp);
 
 const URL = `${process.env.PROTOCOL}://${process.env.ENVIRONMENT}:${process.env.PORT}`;
 
-const { generateAccesToken } = require("../functions/jsonwebtoken");
-const TOKEN = generateAccesToken({ id: 1, email: "test@test.com", roleId: 1 });
+const { generateAccessToken } = require("../functions/jsonwebtoken");
+const TOKEN = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });
 
 
 describe('News Get ',()=>{
