@@ -39,7 +39,7 @@ module.exports = {
 
     if (result !== null) {
       // it add token when user is created
-      sendEmail(result.dataValues.email, process.env.TEMPLATEID_WELCOME);
+      sendEmail(result.dataValues.email, process.env.CONTACT_EMAIL_TEMPLATE);
       const userWithToken = Object.assign(result.dataValues, {
         token: generateAccessToken(result.dataValues),
       });
