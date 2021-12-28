@@ -1,5 +1,3 @@
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -7,9 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerDefinition = require('./swaggerDefinition.json');
-const multer = require('multer');
 const { 
   developmentErrorHandler, 
   testErrorHandler, 
