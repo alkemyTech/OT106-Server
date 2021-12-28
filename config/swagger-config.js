@@ -32,7 +32,7 @@ const swaggerDefinition = {
     }],
     servers: [
       {
-        url: `${process.env.PROTOCOL}://${process.env.ENVIRONMENT}:${process.env.PORT}`,
+        url: `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`,
         description: 'Development server',
       },
     ]
