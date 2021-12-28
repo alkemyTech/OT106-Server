@@ -36,16 +36,6 @@ const swaggerDefinition = {
   
   const options = {
     swaggerDefinition,
-    components: {
-        securitySchemes: {
-          bearerAuth: {
-            type: process.env.PROTOCOL,
-            scheme: process.env.SECURITY_SCHEMA,
-            bearerFormat: process.env.BEARER_FORMAT,
-          }
-        }
-      },
-
     // Paths to files containing OpenAPI definitions
     apis: ['./routes/*.js']
 
