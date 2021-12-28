@@ -5,10 +5,9 @@ require('dotenv').config()
 const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-      title: 'Express API',
+      title: "SOMOS MAS API",
+      description: "API para ONG Somos MAS",
       version: '1.0.0',
-      description:
-        'This is a REST API application made with Express. for ong.',
       license: {
         name: 'Licensed Under MIT',
         url: '',
