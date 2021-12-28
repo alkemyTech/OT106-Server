@@ -26,9 +26,6 @@ const swaggerDefinition = {
           }
         }
       },
-      security: [{
-        bearerAuth: []
-    }],
     servers: [
       {
         url: `${process.env.PROTOCOL}://${process.env.ENVIRONMENT}:${process.env.PORT}`,
@@ -48,9 +45,6 @@ const swaggerDefinition = {
           }
         }
       },
-      security: [{
-        bearerAuth: []
-      }],
 
     // Paths to files containing OpenAPI definitions
     apis: ['./routes/*.js']
