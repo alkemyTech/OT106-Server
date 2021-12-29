@@ -1,6 +1,8 @@
 const organizationRepository = require('../repositories/organization-repository');
 const status = require('../constants/httpStatus');
 const { ORG_NOT_FOUND } = require('../constants/organization-constant');
+const throwError = require('../functions/throw-error');
+
 
 // validations for BODY and ID belongs to a middleware
 async function createOrganization(body) {
@@ -11,10 +13,7 @@ async function createOrganization(body) {
 async function findOrganizationById(id) {
   const organization = await organizationRepository.findOne(id);
   if (!organization) {
-    const error = new Error();
-    error.message = ORG_NOT_FOUND;
-    error.status = status.NOT_FOUND;
-    throw error;
+    return throwError(status.NOT_FOUND, ORG_NOT_FOUND);
   }
   return organization;
 }
@@ -28,10 +27,7 @@ async function findAllOrganizations() {
 async function updateOrganization(body, id) {
   const organization = await findOrganizationById(id);
   if (!organization) {
-    const error = new Error();
-    error.message = ORG_NOT_FOUND;
-    error.status = status.NOT_FOUND;
-    throw error;
+    return throwError(status.NOT_FOUND, ORG_NOT_FOUND);
   }
 
   const updatedOrganization = await organizationRepository.update(body, id);
@@ -42,10 +38,7 @@ async function updateOrganization(body, id) {
 async function destroyOrganization(id) {
   const organization = await organizationRepository.findeOne(id);
   if (!organization) {
-    const error = new Error();
-    error.message = ORG_NOT_FOUND;
-    error.status = status.NOT_FOUND;
-    throw error;
+    return throwError(status.NOT_FOUND, ORG_NOT_FOUND);
   }
   const destroyed = await organizationRepository.destroy(id);
   return destroyed;
