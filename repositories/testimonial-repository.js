@@ -1,8 +1,8 @@
 const db = require("../models/index");
 const pick = require("../functions/pick");
 
-const createTestimonial = async (req) => {
-  let { name, image, content } = req.body;
+const createTestimonial = async (body) => {
+  let { name, image, content } = body;
 
   const create = await db.sequelize.transaction(async (t) => {
     const testimonial = await db.Testimonial.create(
@@ -33,13 +33,13 @@ const getTestimonials = async (page) => {
   });
 
   //Return object to service
-  const {rows} = list;
+  const { rows } = list;
   const totalPages = Math.ceil(list.count / limit);
 
   const result = {
     totalPages,
-    rows
-  }
+    rows,
+  };
 
   return result;
 };
@@ -61,12 +61,12 @@ const updateTestimonial = async (req) => {
     const testimonial = await db.Testimonial.update(updateBodyObject, {
       where: { id },
       transaction: t,
-    })
+    });
     return testimonial;
   });
 
   const update = await db.Testimonial.findOne({
-    where: {id}
+    where: { id },
   });
   return update;
 };

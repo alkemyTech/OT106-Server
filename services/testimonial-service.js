@@ -1,5 +1,6 @@
 require("dotenv").config();
 const testimonialRepository = require("../repositories/testimonial-repository.js");
+const { uploadFileToAmazonS3Bucket } = require("./amazon-s3-service.js");
 const throwError = require("../functions/throw-error");
 
 //Response messages
@@ -9,7 +10,15 @@ const { TESTIMONIAL_NOT_FOUND } = require("../constants/testimonial-constants");
 const code = require("../constants/httpStatus");
 
 const createTestimonial = async (req, res) => {
-  const create = await testimonialRepository.createTestimonial(req);
+  const buffer = req.decoded;
+  const filename = (req.body.name + Date.now()).toString();
+  const urlS3 = await uploadFileToAmazonS3Bucket(filename.trim(), buffer);
+  const body = {
+    name: req.body.name,
+    image: urlS3,
+    content: req.body.content,
+  };
+  const create = await testimonialRepository.createTestimonial(body);
 
   //Success?
   return create;

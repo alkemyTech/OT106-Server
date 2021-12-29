@@ -29,8 +29,7 @@ const ENDPOINT = {
 const returnBody = (res) => res.body.body;
 const goodRequest = {
   name: "New Testimonial",
-  image:
-    "https://www.soyisabelromero.com/wp-content/uploads/2014/07/testimonios.jpg",
+  image: "./imgTest/member-test.png",
   content: "Content for a New Testimonial",
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -39,8 +38,6 @@ const goodRequest = {
 //Request missing data
 const badRequest = {
   name: "New Testimonial",
-  image:
-    "https://www.soyisabelromero.com/wp-content/uploads/2014/07/testimonios.jpg",
 };
 
 describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
