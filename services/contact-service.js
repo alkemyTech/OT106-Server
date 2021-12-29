@@ -42,7 +42,7 @@ const getContactById = async (req, res) => {
   const contact = await contactRepository.getContactById(id);
 
   //No contact found
-  if (!contacts) {
+  if (!contact) {
     return throwError(code.NOT_FOUND, CONTACT_NOT_FOUND);
   }
 
