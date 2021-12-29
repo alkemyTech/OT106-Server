@@ -6,6 +6,7 @@ const {
   validateCreateTestimonial,
   validateUpdateTestimonial,
 } = require("../middleware/testimonial-middleware");
+const upload = require("../middleware/upload");
 
 //GET
 router.get("/:id", testimonialController.find);
@@ -15,6 +16,7 @@ router.get("/", testimonialController.list);
 router.post(
   "/",
   adminAuthentication,
+  upload,
   validateCreateTestimonial,
   testimonialController.create
 );
@@ -23,6 +25,7 @@ router.post(
 router.patch(
   "/:id",
   adminAuthentication,
+  upload,
   validateUpdateTestimonial,
   testimonialController.update
 );

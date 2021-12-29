@@ -1,5 +1,6 @@
 require("dotenv").config();
 const testimonialRepository = require("../repositories/testimonial-repository.js");
+const baseRepository = require("../repositories/_base-repository");
 const throwError = require("../functions/throw-error");
 
 //Response messages
@@ -9,7 +10,15 @@ const { TESTIMONIAL_NOT_FOUND } = require("../constants/testimonial-constants");
 const code = require("../constants/httpStatus");
 
 const createTestimonial = async (req, res) => {
-  const create = await testimonialRepository.createTestimonial(req);
+  let filename = (req.body.name + Date.now()).toString().trim();
+  filename = filename.replace(/\s+/g, "");
+  const image = await baseRepository.uploadImage(req, filename);
+  const body = {
+    name: req.body.name,
+    image,
+    content: req.body.content,
+  };
+  const create = await testimonialRepository.createTestimonial(body);
 
   //Success?
   return create;
@@ -76,9 +85,18 @@ const updateTestimonial = async (req, res) => {
   if (!testimonial) {
     return throwError(code.NOT_FOUND, TESTIMONIAL_NOT_FOUND);
   }
+  let { body } = req;
+  //Check for image file
+
+  if (req.file) {
+    let filename = (req.body.name + Date.now()).toString().trim();
+    filename = filename.replace(/\s+/g, "");
+    const url = await baseRepository.uploadImage(req, filename);
+    body.image = url;
+  }
 
   //Success?
-  const update = await testimonialRepository.updateTestimonial(req);
+  const update = await testimonialRepository.updateTestimonial(id, body);
   return update;
 };
 
