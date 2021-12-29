@@ -1,5 +1,6 @@
 const code = require("../constants/httpStatus");
 const codeMessage = require("../constants/message");
+const throwError = require("./throw-error");
 
 module.exports = (status, message, body) => {
   const { NODE_ENV } = process.env;
@@ -17,7 +18,10 @@ module.exports = (status, message, body) => {
         break;
     }
 
-    throwError(code.INTERNAL_SERVER_ERROR, codeMessage.INTERNAL_SERVER_ERROR);
+    return throwError(
+      code.INTERNAL_SERVER_ERROR,
+      codeMessage.INTERNAL_SERVER_ERROR
+    );
   }
 
   const response = { status, message, body };
