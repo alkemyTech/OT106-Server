@@ -206,22 +206,20 @@ router.delete("/:id", adminAuthentication, testimonialController.delete);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
+ *             type: object
  *             properties:
  *               name:
  *                 type: string
  *                 description: the testimonial name
- *               image:
- *                 type: string
- *                 description: the testimonial image
  *               content:
  *                 type: string
  *                 description: the testimonial content
- *             example:
- *               name: Testimonial 1
- *               image: image.png
- *               content: Content for testimonial 1
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: the testimonial image
  *     responses:
  *       200:
  *         description: The testimonial was successfully created
@@ -271,18 +269,20 @@ router.delete("/:id", adminAuthentication, testimonialController.delete);
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *          schema:
+ *            type: object
  *            properties:
  *              name:
  *                type: string
  *                description: the testimonial name
- *              image:
- *                type: string
- *                description: the testimonial image
  *              content:
  *                type: string
  *                description: the testimonial content
+ *              image:
+ *                type: string
+ *                format: binary
+ *                description: the testimonial image
  *            example:
  *                name: Updated Testimonial 1
  *    responses:
