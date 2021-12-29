@@ -5,81 +5,60 @@ const {
   updateOrganization,
   destroyOrganization
 } = require('../services/organization-service');
+const catchAsync = require('../functions/catchAsync');
+const throwError = require('../functions/throw-error');
 
 const status = require('../constants/httpStatus');
-const message = require('../constants/message');
+const { NOT_FOUND } = require('../constants/message');
+const message = require('../constants/organization-constant');
 
 module.exports = {
-  listAll: async (req, res, next) => {
-    try {
-      const result = await findAllOrganizations();
+  listAll: catchAsync(async (req, res) => {
+    const result = await findAllOrganizations();
+    return res.status(status.OK).json({
+      message: message.ORGS_FOUND,
+      body: result
+    });
+  }),
 
-      return res.status(status.OK).send(result);
-    } catch (err) {
-      // HandlerError shows de status and message error (if env=dev shows more details )
-      err.status = err.status || status.INTERNAL_SERVER_ERROR;
-      err.message = err.message || message.INTERNAL_SERVER_ERROR;
-      next(err);
-    }
-  },
-
-  findById: async (req, res, next) => {
+  findById: catchAsync(async (req, res) => {
     const id = req.params.id;
-    try {
-      const result = await findOrganizationById(id);
+    if (!id) { return throwError(status.NOT_FOUND, NOT_FOUND); }
+    const result = await findOrganizationById(id);
+    return res.status(status.OK).json({
+      message: message.ORG_FOUND,
+      body: result
+    });
+  }),
 
-      return res.status(status.OK).send(result);
-    } catch (err) {
-      err.status = err.status || status.INTERNAL_SERVER_ERROR;
-      err.message = err.message || message.INTERNAL_SERVER_ERROR;
-      next(err);
-    }
-  },
-
-  create: async (req, res, next) => {
+  create: catchAsync(async (req, res) => {
     const body = req.body;
-    try {
-      const result = await createOrganization(body);
+    const result = await createOrganization(body);
+    return res.status(status.CREATED).json({
+      message: message.CREATED_ORG,
+      body: result
+    });
+  }),
 
-      return res.status(status.CREATED).send(result);
-    } catch (err) {
-      err.status = err.status || status.INTERNAL_SERVER_ERROR;
-      err.message = err.message || message.INTERNAL_SERVER_ERROR;
-      next(err);
-    }
-  },
-
-  update: async (req, res, next) => {
+  update: catchAsync(async (req, res) => {
     const body = req.body;
     const id = req.params.id;
 
-    try {
-      if (!id) {
-        const err = new Error();
-        err.status = status.NOT_FOUND;
-        err.message = message.NOT_FOUND;
-        next(err);
-      }
+    if (!id) { return throwError(status.NOT_FOUND, NOT_FOUND); }
 
-      const result = await updateOrganization(body, id);
+    const result = await updateOrganization(body, id);
+    return res.status(status.OK).json({
+      message: message.UPDATED_ORG,
+      body: result
+    });
+  }),
 
-      return res.status(status.OK).send(result);
-    } catch (err) {
-      err.status = err.status || status.INTERNAL_SERVER_ERROR;
-      err.message = err.message || message.INTERNAL_SERVER_ERROR;
-      next(err);
-    }
-  },
-
-  delete: async (req, res, next) => {
+  delete: catchAsync(async (req, res) => {
     const id = req.params.id;
-    try {
-      const result = await destroyOrganization(id);
-      return res.status(status.OK).send(result);
-    } catch (err) {
-      err.status = err.status || status.INTERNAL_SERVER_ERROR;
-      err.message = err.message || message.INTERNAL_SERVER_ERROR;
-      next(err);
-    }
-  },
+    const result = await destroyOrganization(id);
+    return res.status(status.OK).json({
+      message: message.DELETED_ORG,
+      body: result
+    });
+  }),
 };
