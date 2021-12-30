@@ -8,7 +8,7 @@ const expect = chai.expect
 
 chai.use(chaiHttp);
 
-const URL = `${process.env.PROTOCOL}://${process.env.ENVIRONMENT}:${process.env.PORT}`;
+const URL = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`;
 
 const { generateAccessToken } = require("../functions/jsonwebtoken");
 const TOKEN = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });

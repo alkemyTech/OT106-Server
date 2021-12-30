@@ -1,12 +1,12 @@
-const swaggerJsdoc = require("swagger-jsdoc");
-require("dotenv").config();
+const swaggerJsdoc = require('swagger-jsdoc');
+require('dotenv').config();
 
 const swaggerDefinition = {
-  openapi: "3.0.0",
+  openapi: '3.0.0',
   info: {
-    title: "SOMOS MAS API",
-    description: "API para ONG Somos MAS",
-    version: "1.0.0",
+    title: 'SOMOS MAS API',
+    description: 'API para ONG Somos MAS',
+    version: '1.0.0',
   },
   components: {
     securitySchemes: {
@@ -20,7 +20,7 @@ const swaggerDefinition = {
   servers: [
     {
       url: `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`,
-      description: "API server",
+      description: 'API server',
     },
   ],
 };
@@ -28,7 +28,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
-  apis: ["./routes/*.js"],
+  apis: ['./routes/*.js'],
 };
 
 const swaggetSpect = swaggerJsdoc(options);
