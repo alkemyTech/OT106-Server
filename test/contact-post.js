@@ -7,8 +7,16 @@ const assert = chai.assert;
 chai.use(chaiHttp);
 
 //TOKEN
-const { generateAccessToken } = require("../functions/jsonwebtoken");
+const {
+  generateAccessToken,
+  generateAccessTokenExpired,
+} = require("../functions/jsonwebtoken");
 const TOKEN = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });
+const EXPIRED_TOKEN = generateAccessTokenExpired({
+  id: 1,
+  email: "test@test.com",
+  roleId: 1,
+});
 
 //Constants files
 const code = require("../constants/httpStatus");
@@ -83,21 +91,20 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         });
     });
 
-    // TODO: Generate expired Token
-    // it("token (expired)", (done) => {
-    //   chai
-    //     .request(server)
-    //     .post(ENDPOINT.PATH)
-    //     .set("Authorization", `Bearer ${EXPIRED_TOKEN}`)
-    //     .send(goodRequest)
-    //     .end((err, res) => {
-    //       assert.isNull(err);
-    //       assert.equal(res.status, code.FORBIDDEN);
-    //       assert.equal(res.body.message, message.FORBIDDEN)
+    it("token (expired)", (done) => {
+      chai
+        .request(server)
+        .post(ENDPOINT.PATH)
+        .set("Authorization", `Bearer ${EXPIRED_TOKEN}`)
+        .send(goodRequest)
+        .end((err, res) => {
+          assert.isNull(err);
+          assert.equal(res.status, code.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
 
-    //       done();
-    //     });
-    // });
+          done();
+        });
+    });
 
     it("token (invalid)", (done) => {
       chai
