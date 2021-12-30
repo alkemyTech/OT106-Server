@@ -6,6 +6,7 @@ const httpMessage = require('../constants/message');
 const passwordHelper = require('../helpers/password-helper');
 const throwError = require('../functions/throw-error');
 const userConstant = require('../constants/user-constant');
+const { uploadFileToAmazonS3Bucket } = require('../services/amazon-s3-service');
 
 module.exports = {
   findAllUsers: catchAsync(async (req, res, next) => {
@@ -45,14 +46,20 @@ module.exports = {
       lastName: req.body.lastName,
       email: req.body.email,
       password: await passwordHelper.hashPassword(req.body.password),
-      photo: req.body.photo,
+      photo:
+        typeof req.file !== 'undefined'
+          ? await uploadFileToAmazonS3Bucket(
+              `user_${req.body.email}`,
+              req.file.buffer
+            )
+          : undefined,
       roleId: 2,
     };
 
     await UserService.createUser(attributes);
     const newUser = await UserService.findUserByEmail(attributes.email);
-    
-    if (newUser === null) throwError(httpStatus.NOT_FOUND, httpMessage.NOT_FOUND); 
+
+    if (newUser === null) throwError(httpStatus.NOT_FOUND, httpMessage.NOT_FOUND);
 
     const result = {
       ...passwordHelper.removePassword(newUser),
