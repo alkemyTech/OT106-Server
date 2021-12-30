@@ -251,7 +251,6 @@ router.put('/public/:id',
 // delete organization by id
 router.delete('/public/:id',
     adminAuthentication, // try validate admin user
-    validateSchemaOrganization,
     organizationController.delete);
 
 
@@ -296,7 +295,7 @@ router.delete('/public/:id',
 
 // update contact fields for organization by id
 router.put('/public/contact/:id',
-                // adminAuthentication, // try validate admin user
+                adminAuthentication, // try validate admin user
                 validateSchemaUrls, // array of validations for organization's urls
                 organizationController.update
             );

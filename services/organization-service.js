@@ -25,10 +25,7 @@ async function findAllOrganizations() {
 }
 
 async function updateOrganization(body, id) {
-  const organization = await findOrganizationById(id);
-  if (!organization) {
-    return throwError(status.NOT_FOUND, ORG_NOT_FOUND);
-  }
+  await findOrganizationById(id);
 
   const updatedOrganization = await organizationRepository.update(body, id);
   return updatedOrganization;
@@ -36,10 +33,8 @@ async function updateOrganization(body, id) {
 
 
 async function destroyOrganization(id) {
-  const organization = await organizationRepository.findeOne(id);
-  if (!organization) {
-    return throwError(status.NOT_FOUND, ORG_NOT_FOUND);
-  }
+  await findOrganizationById(id);
+
   const destroyed = await organizationRepository.destroy(id);
   return destroyed;
 }
