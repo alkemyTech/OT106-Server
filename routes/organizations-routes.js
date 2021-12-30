@@ -119,7 +119,7 @@ router.get('/public', organizationController.listAll);
  * @swagger
  *{
  *  "/public/{id}": {
- *    "post": {
+ *    "put": {
  *      "summary": "Update data of organization",
  *      "parameters": [{
  *        "name": "id",
@@ -155,7 +155,7 @@ router.get('/public', organizationController.listAll);
 
 
 // update organization by id
-router.post('/public/:id',
+router.put('/public/:id',
                 adminAuthentication, // try validate admin user
                 validateSchemaOrganization, // array of validations for organizations model
                 organizationController.update
@@ -166,7 +166,7 @@ router.post('/public/:id',
  * @swagger
  *{
  *  "/public/contact/{id}": {
- *    "post": {
+ *    "put": {
  *      "summary": "Update contact fields of organization",
  *      "parameters": [{
  *        "name": "id",
@@ -202,21 +202,23 @@ router.post('/public/:id',
 
 
 // update contact fields for organization by id
-router.post('/public/contact/:id',
-                adminAuthentication, // try validate admin user
+router.put('/public/contact/:id',
+                // adminAuthentication, // try validate admin user
                 validateSchemaUrls, // array of validations for organization's urls
                 organizationController.update
             );
 
 
 // create new organization
-// router.post('/public', organizationController.create);
+router.post('/public',
+    validateSchemaOrganization,
+    organizationController.create);
 
 // show organization by id
-// router.get('/public/:id', organizationController.findById);
+router.get('/public/:id', organizationController.findById);
 
 // delete organization by id
-// router.delete('/public/:id', organizationController.delete);
+router.delete('/public/:id', organizationController.delete);
 
 
 module.exports = router;

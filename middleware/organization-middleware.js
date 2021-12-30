@@ -1,18 +1,17 @@
 const { validationResult } = require('express-validator');
 const status = require('../constants/httpStatus');
-
+const message = require('../constants/message');
+const throwError = require('../functions/throw-error');
 
 // verify all previous validations
-function organizationValidator(req, res, next) {
+function validator(req, res, next) {
   const errorValidation = validationResult(req);
   if (!errorValidation.isEmpty()) {
-    return res.status(status.BAD_REQUEST).json({
-      error: errorValidation.array()
-    });
+    return throwError(status.BAD_REQUEST, message.BAD_REQUEST, errorValidation.array());
   }
   return next();
 }
 
 module.exports = {
-  organizationValidator
+  validator
 };

@@ -28,11 +28,11 @@ describe('Organization suit test', () => {
     });
   });
 
-  describe('Suite test for POST | update data for organizations', () => {
+  describe('Suite test for PUT | update data for organizations', () => {
     it('Invalid request, missing token. Should response 403.', (done) => {
       chai
           .request(app)
-          .post(`${path}/4`)
+          .put(`${path}/4`)
           .send({
             name: '',
             image: '',
@@ -51,7 +51,7 @@ describe('Organization suit test', () => {
     it('Invalid request, missing id organization to update. Should response 404.', (done) => {
       chai
             .request(app)
-            .post(`${path}/`)
+            .put(`${path}/`)
             .set('Authorization', `Bearer ${token}`)
             .send({
               name: 'test',
@@ -74,7 +74,7 @@ describe('Organization suit test', () => {
     it('Invalid request, id organization not exists. Should response 404.', (done) => {
       chai
               .request(app)
-              .post(`${path}/999`)
+              .put(`${path}/999`)
               .set('Authorization', `Bearer ${token}`)
               .send({
                 name: 'test',
@@ -97,7 +97,7 @@ describe('Organization suit test', () => {
     it('Invalid request, missing required fields. Should response 400.', (done) => {
       chai
               .request(app)
-              .post(`${path}/4`)
+              .put(`${path}/4`)
               .set('Authorization', `Bearer ${token}`)
               .send({
                 aboutUsText: 'this is a example text'
@@ -111,7 +111,7 @@ describe('Organization suit test', () => {
     it('Valid request. Should response 200.', (done) => {
       chai
                 .request(app)
-                .post(`${path}/4`)
+                .put(`${path}/4`)
                 .set('Authorization', `Bearer ${token}`)
                 .send({
                   name: 'test',
@@ -132,11 +132,11 @@ describe('Organization suit test', () => {
     });
   });
 
-  describe('Suite test for POST | update contact info for organizations', () => {
+  describe('Suite test for put | update contact info for organizations', () => {
     it('Invalid request, missing token. Should response 403.', (done) => {
       chai
           .request(app)
-          .post(`${path}/contact/1`)
+          .put(`${path}/contact/1`)
           .send({
             email: '',
             facebook: '',
@@ -152,7 +152,7 @@ describe('Organization suit test', () => {
     it('Invalid request, missing id organization to update. Should response 400.', (done) => {
       chai
             .request(app)
-            .post(`${path}/contact`)
+            .put(`${path}/contact`)
             .set('Authorization', `Bearer ${token}`)
             .send({
               email: '',
@@ -169,7 +169,7 @@ describe('Organization suit test', () => {
     it('Invalid request, id organization not exists. Should response 404.', (done) => {
       chai
               .request(app)
-              .post(`${path}/contact/999`)
+              .put(`${path}/contact/999`)
               .set('Authorization', `Bearer ${token}`)
               .send({
                 email: 'prueba@prueba.com',
@@ -186,7 +186,7 @@ describe('Organization suit test', () => {
     it('Invalid request, url format incorrect. Should response 400.', (done) => {
       chai
               .request(app)
-              .post(`${path}/contact/4`)
+              .put(`${path}/contact/4`)
               .set('Authorization', `Bearer ${token}`)
               .send({
                 email: 'prueba@prueba.com',
@@ -203,7 +203,7 @@ describe('Organization suit test', () => {
     it('Valid request. Should response 200.', (done) => {
       chai
                 .request(app)
-                .post(`${path}/contact/4`)
+                .put(`${path}/contact/4`)
                 .set('Authorization', `Bearer ${token}`)
                 .send({
                   email: 'prueba@prueba.com',
