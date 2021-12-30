@@ -9,23 +9,25 @@ const developmentErrorHandler = (err, req, res) => {
   console.error(err);
 
   //Default errors
-  if (!err.customError) {
+  if (!hasCustomError(err)) {
     errorToSend = {
       status: err.status || code.INTERNAL_SERVER_ERROR,
       message:
         err.status === code.NOT_FOUND
           ? message.NOT_FOUND
           : message.INTERNAL_SERVER_ERROR,
+      rawMessage: err.message,
       stack: err.stack,
     };
 
-    return res.status(err.status).json(errorToSend);
+    return res.status(errorToSend.status).json(errorToSend);
   }
 
   //Custom errors
   errorToSend = {
     status: err.customError.status,
     message: err.customError.message,
+    rawMessage: err.message,
     stack: err.stack,
   };
   return res.status(errorToSend.status).json(errorToSend);
@@ -40,16 +42,15 @@ const testErrorHandler = (err, req, res) => {
         err.status === code.NOT_FOUND
           ? message.NOT_FOUND
           : message.INTERNAL_SERVER_ERROR,
-      rawMessage: err.message,
-      stack: err.stack,
     };
+
+    return res.status(errorToSend.status).json(errorToSend);
   }
 
   //Custom error
   errorToSend = {
     status: err.customError.status,
     message: err.customError.message,
-    stack: err.stack,
   };
   return res.status(errorToSend.status).json(errorToSend);
 };
@@ -64,7 +65,7 @@ const productionErrorHandler = (err, req, res) => {
           ? message.NOT_FOUND
           : message.INTERNAL_SERVER_ERROR,
     };
-    return res.status(err.status).json(errorToSend);
+    return res.status(errorToSend.status).json(errorToSend);
   }
 
   //Custom error
@@ -85,7 +86,7 @@ const defaultErrorHandler = (err, req, res) => {
     message: message.INTERNAL_SERVER_ERROR,
   };
 
-  return res.status(code.INTERNAL_SERVER_ERROR).json(errorToSend);
+  return res.status(errorToSend.status).json(errorToSend);
 };
 
 module.exports = {

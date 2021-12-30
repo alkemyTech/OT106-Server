@@ -3,7 +3,7 @@ const chaiHttp = require('chai-http');
 
 const server = require('../app');
 const status = require('../constants/httpStatus');
-const { generateAccesToken } = require('../functions/jsonwebtoken');
+const { generateAccessToken } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
 
@@ -17,9 +17,9 @@ const updateUserWithoutPassword = (firstName, lastName, email) => {
   return Object.assign({}, { firstName, lastName, email });
 };
 
-const adminUserToken = generateAccesToken({ id: 1, email: 'test1@test.com', roleId: 1 });
-const standardUserToken = generateAccesToken({ id: 19, email: 'test2@test.com', roleId: 2 });
-const thisIsNotMe = generateAccesToken({ id: 3, email: 'test3@test.com', roleId: 2 });
+const adminUserToken = generateAccessToken({ id: 1, email: 'test1@test.com', roleId: 1 });
+const standardUserToken = generateAccessToken({ id: 19, email: 'test2@test.com', roleId: 2 });
+const thisIsNotMe = generateAccessToken({ id: 3, email: 'test3@test.com', roleId: 2 });
 
 chai.use(chaiHttp);
 
