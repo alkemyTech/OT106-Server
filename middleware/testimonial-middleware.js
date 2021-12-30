@@ -5,9 +5,11 @@ const {
 } = require("../constants/testimonial-constants");
 const throwError = require("../functions/throw-error");
 
+const isUndefined = (prop) => typeof prop == "undefined";
+
 const validateCreateTestimonial = (req, res, next) => {
-  let { name, image, content } = req.body;
-  if (![name, image, content].every(Boolean)) {
+  let { name, content } = req.body;
+  if (![name, req.file, content].every(Boolean)) {
     return throwError(code.BAD_REQUEST, BAD_CREATE_TESTIMONIAL_REQUEST);
   }
 
@@ -15,8 +17,8 @@ const validateCreateTestimonial = (req, res, next) => {
 };
 
 const validateUpdateTestimonial = (req, res, next) => {
-  let { name, image, content } = req.body;
-  if (![name, image, content].some(Boolean)) {
+  let { name, content } = req.body;
+  if (![name, req.file, content].some(Boolean)) {
     return throwError(code.BAD_REQUEST, BAD_UPDATE_TESTIMONIAL_REQUEST);
   }
 

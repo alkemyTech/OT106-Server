@@ -10,23 +10,13 @@ const imagen =  path.join(__dirname, '/imgTest/member-test.png');
 
 const URL = `${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}`;
 
+const { generateAccessToken } = require("../functions/jsonwebtoken");
+const token = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });
 
-let token;
 
 describe('Suite de peticiones GET a members',()=>{
 
-    it('Deberia generar el token del usuario',(done) => {
-        chai.request(URL)
-            .get('/auth/login ')
-           .set({email:process.env.USER_TEST,password:process.env.PASSWORD_TEST})
-            .end((error, res) => {
-               expect(res.body).to.have.property('token');
-                token = res.body.token;
-                expect(res).to.have.status(200);// tener estado "200"
-                done();
-              });
-    })
-
+   
     it('Deberia traer todos los miembros en un array',(done) => {
         chai.request(URL)
             .get('/members?page=1')

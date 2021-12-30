@@ -7,8 +7,16 @@ const assert = chai.assert;
 chai.use(chaiHttp);
 
 //TOKEN
-const { generateAccessToken } = require("../functions/jsonwebtoken");
+const {
+  generateAccessToken,
+  generateAccessTokenExpired,
+} = require("../functions/jsonwebtoken");
 const TOKEN = generateAccessToken({ id: 1, email: "test@test.com", roleId: 1 });
+const EXPIRED_TOKEN = generateAccessTokenExpired({
+  id: 1,
+  email: "test@test.com",
+  roleId: 1,
+});
 
 //Constants files
 const code = require("../constants/httpStatus");
@@ -29,18 +37,12 @@ const ENDPOINT = {
 const returnBody = (res) => res.body.body;
 const goodRequest = {
   name: "New Testimonial",
-  image:
-    "https://www.soyisabelromero.com/wp-content/uploads/2014/07/testimonios.jpg",
   content: "Content for a New Testimonial",
-  createdAt: new Date(),
-  updatedAt: new Date(),
 };
 
 //Request missing data
 const badRequest = {
   name: "New Testimonial",
-  image:
-    "https://www.soyisabelromero.com/wp-content/uploads/2014/07/testimonios.jpg",
 };
 
 describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
@@ -50,7 +52,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         .request(server)
         .post(ENDPOINT.PATH)
         .set("Authorization", `Bearer ${TOKEN}`)
-        .send(goodRequest)
+        .field("name", JSON.stringify(goodRequest.name))
+        .field("content", JSON.stringify(goodRequest.content))
+        .attach(
+          "image",
+          "./test/imgTest/testimonials-test.png",
+          "testimonials-test.png"
+        )
         .end((err, res) => {
           const body = returnBody(res);
           assert.isNull(err);
@@ -73,7 +81,13 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
       chai
         .request(server)
         .post(ENDPOINT.PATH)
-        .send(goodRequest)
+        .field("name", JSON.stringify(goodRequest.name))
+        .field("content", JSON.stringify(goodRequest.content))
+        .attach(
+          "image",
+          "./test/imgTest/testimonials-test.png",
+          "testimonials-test.png"
+        )
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.FORBIDDEN);
@@ -83,28 +97,39 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
         });
     });
 
-    // TODO: Generate expired Token
-    // it("token (expired)", (done) => {
-    //   chai
-    //     .request(server)
-    //     .post(ENDPOINT.PATH)
-    //     .set("Authorization", `Bearer ${EXPIRED_TOKEN}`)
-    //     .send(goodRequest)
-    //     .end((err, res) => {
-    //       assert.isNull(err);
-    //       assert.equal(res.status, code.FORBIDDEN);
-    //       assert.equal(res.body.message, message.FORBIDDEN)
+    it("token (expired)", (done) => {
+      chai
+        .request(server)
+        .post(ENDPOINT.PATH)
+        .set("Authorization", `Bearer ${EXPIRED_TOKEN}`)
+        .field("name", JSON.stringify(goodRequest.name))
+        .field("content", JSON.stringify(goodRequest.content))
+        .attach(
+          "image",
+          "./test/imgTest/testimonials-test.png",
+          "testimonials-test.png"
+        )
+        .end((err, res) => {
+          assert.isNull(err);
+          assert.equal(res.status, code.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
 
-    //       done();
-    //     });
-    // });
+          done();
+        });
+    });
 
     it("token (invalid)", (done) => {
       chai
         .request(server)
         .post(ENDPOINT.PATH)
         .set("Authorization", "Bearer abcdefghijklmnop")
-        .send(goodRequest)
+        .field("name", JSON.stringify(goodRequest.name))
+        .field("content", JSON.stringify(goodRequest.content))
+        .attach(
+          "image",
+          "./test/imgTest/testimonials-test.png",
+          "testimonials-test.png"
+        )
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, code.FORBIDDEN);
