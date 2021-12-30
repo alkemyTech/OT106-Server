@@ -14,13 +14,39 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@test.com\",\r\n    \"password\": \"87654321\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"contentType": "",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "firstName",
+									"value": "John",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Doe",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john.doe@test.com",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"contentType": "application/json",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "localhost:3000/auth/register",
