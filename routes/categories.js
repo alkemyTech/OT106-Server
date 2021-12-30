@@ -76,7 +76,7 @@ const upload = require("../middleware/upload");
  *  }
  *}
  */
-router.get("/", adminPermission,pagination.validate, categoryController.list);
+router.get("/",adminPermission,pagination.validate, categoryController.list);
 
 
 /**
@@ -105,7 +105,7 @@ router.get("/", adminPermission,pagination.validate, categoryController.list);
  *  }
  *}
  */
-router.get("/:id", adminPermission,adminPermission, categoryController.detail);
+router.get("/:id", adminPermission,categoryController.detail);
 
 
 
