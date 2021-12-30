@@ -1,5 +1,7 @@
 const membersRepository = require('../repositories/members-repository');
 const paginate = require('../services/paginate');
+const { MEMBER_EXISTS } = require('../constants/member-constants');
+const throwError = require("../functions/throw-error");
 
 const limit = 10;
 
@@ -27,6 +29,20 @@ module.exports = {
     },
 
     getMemberById: id => membersRepository.getMemberById(id),
-    updateMember: (id, body) => membersRepository.updateMember(id, body),
-    deleteMember: id => membersRepository.deleteMember(id)
+
+    updateMember: async (id, body) => {
+        const memberExists = await memberService.getMemberById(req.params.id);
+        if (!memberExists) {
+            return throwError(code.NOT_FOUND, MEMBER_EXISTS);
+        }
+
+        membersRepository.updateMember(id, body);
+    },
+    deleteMember: async (id) => {
+        const memberExists = await memberService.getMemberById(req.params.id);
+        if (!memberExists) {
+            return throwError(code.NOT_FOUND, MEMBER_EXISTS);
+        }
+        membersRepository.deleteMember(id);
+    }
 };
