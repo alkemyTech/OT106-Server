@@ -2,8 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const { uploadFileToAmazonS3Bucket } = require("../services/amazon-s3-service");
 const Constants = require("../constants/httpStatus");
 const Message = require("../constants/message");
-const paginate = require('../services/paginate');
-
+const throwError = require("../functions/throw-error");
 
 module.exports = {
   add: async function (req, res, cModel, oFields) {
@@ -14,14 +13,11 @@ module.exports = {
     cModel
       .create(oFields)
       .then(() => {
-        res.status(Constants.CREATED).json(Message.CREATED);
+        res.status(Constants.CREATED).json({message: Message.CREATED});
       })
       .catch((e) => {
         console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
-      });
+      return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)})
   },
   get: function (req, res, cModel) {
     cModel
@@ -31,23 +27,18 @@ module.exports = {
       })
       .catch((e) => {
         console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
-      });
+      })
   },
   getAll: function async(req, res, cModel) {
     cModel
       .findAll()
       .then((oResult) => {
-        res.status(Constants.OK).res.json(oResult);
+        res.status(Constants.OK).res.json({message: Message.OK, body: oResult});
       })
       .catch((e) => {
         console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
-      });
+        return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
+      })
   },
   getAllWithPagination: async function (req,res,cModel,sEntity,nLimit=10){
     try{
@@ -60,11 +51,11 @@ module.exports = {
 
     if (nPage < model.totalPages - 1) model.nextPage = `${req.protocol}://${req.get('host')}/${sEntity}/?page=${nPage + 1}`;
     
-    res.status(Constants.OK).json(model);
+    res.status(Constants.OK).json({message: "", body: model});
   }
   catch(e){
-    res.status(Constants.INTERNAL_SERVER_ERROR).json(Message.INTERNAL_SERVER_ERROR);
-    throw new Error({ error: Message.INTERNAL_SERVER_ERROR, detail: error })
+    console.log(e)
+    return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
   }
   },
   getAllWithPaginationReq:async function(page,nLimit,cModel){
@@ -88,8 +79,8 @@ module.exports = {
       return result;
     }
     catch(e){
-      res.status(Constants.INTERNAL_SERVER_ERROR).json(Message.INTERNAL_SERVER_ERROR);
-      throw new Error({ error: Message.INTERNAL_SERVER_ERROR, detail: error })
+      console.log(e)
+      return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
     }
   
   },
@@ -99,14 +90,12 @@ module.exports = {
         where: oParams,
       })
       .then(() => {
-        res.status(Constants.OK).json(oResult);
+        res.status(Constants.OK).json({message:  Message.OK, body: oResult});
       })
       .catch((e) => {
         console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
-      });
+        return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
+      })
   },
   modify: async function (req, res, cModel) {
     if (req.file) req.body.image = await this.uploadImage(req);
@@ -117,13 +106,10 @@ module.exports = {
         },
       })
       .then(() => {
-        res.status(Constants.OK).json(Message.MODIFIED);
+        res.status(Constants.OK).json({message: Message.MODIFIED});
       })
       .catch((e) => {
-        console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
+        return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
       });
   },
 
@@ -135,13 +121,11 @@ module.exports = {
         },
       })
       .then((oResult) => {
-        res.status(Constants.OK).json(Message.DELETED);
+        res.status(Constants.OK).json({message: Message.DELETED});
       })
       .catch((e) => {
         console.log(e);
-        res
-          .status(Constants.INTERNAL_SERVER_ERROR)
-          .json({ error: Message.INTERNAL_SERVER_ERROR, detail: e });
+        return throwError(Constants.INTERNAL_SERVER_ERROR,Message.INTERNAL_SERVER_ERROR)
       });
   },
   uploadImage: async function (req, sFileName) {
