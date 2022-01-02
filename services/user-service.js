@@ -55,13 +55,7 @@ module.exports = {
     const user = await UserRepository.findUserByPk(id);
 
     // If the user is not found, a 404 error is thrown
-    // CatchAsync function catch error and send it to handleError
-    if (!user) {
-      const error = new Error();
-      error.message = NOT_FOUND_MESSAGE;
-      error.status = NOT_FOUND_CODE;
-      throw error;
-    }
+    if (!user) throwError(NOT_FOUND_CODE, NOT_FOUND_MESSAGE);
 
     const attributesToUpdate = attributes.password
       ? attributes
@@ -75,12 +69,7 @@ module.exports = {
   destroyUser: async (id) => {
     const user = await UserRepository.findUserByPk(id);
 
-    if (!user) {
-      const error = new Error();
-      error.message = NOT_FOUND_MESSAGE;
-      error.status = NOT_FOUND_CODE;
-      throw error;
-    }
+    if (!user) throwError(NOT_FOUND_CODE, NOT_FOUND_MESSAGE);
 
     await UserRepository.destroyUser(id);
   },

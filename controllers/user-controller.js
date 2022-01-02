@@ -67,32 +67,29 @@ module.exports = {
   }),
 
   updateUser: catchAsync(async (req, res, next) => {
-    // it is verified if param id matches with token id
-    if (req.tokenPayload.id !== Number(req.params.id)) {
-      return res.status(httpStatus.UNAUTHORIZED).send(httpMessage.UNAUTHORIZED);
-    }
-
     const idToUpdate = req.params.id;
     const attributes = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: await passwordHelper.hashPassword(req.body.password),
+      password: req.body.password
+      ? await passwordHelper.hashPassword(req.body.password)
+      : null,
       photo: req.body.photo,
     };
     await UserService.updateUser(idToUpdate, attributes);
 
-    // Finds the user updated and sent it as the result
+    // Finds the updated user and sent it as the result
     const result = await UserService.findUserByPk(idToUpdate);
 
-    return res.status(httpStatus.OK).send(passwordHelper.removePassword(result));
+    return res.status(httpStatus.OK).json(passwordHelper.removePassword(result));
   }),
 
   destroyUser: catchAsync(async (req, res, next) => {
     const idToDelete = req.params.id;
     await UserService.destroyUser(idToDelete);
 
-    return res.status(httpStatus.OK).send(httpMessage.OK);
+    return res.status(httpStatus.OK).json({ status: httpStatus.OK, message: httpMessage.OK });
   }),
 
   loginUser: catchAsync(async (req, res, next) => {
