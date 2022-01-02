@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { organizationValidator } = require('../middleware/organization-middleware');
+const { validator } = require('../middleware/organization-middleware');
 const msg = require('../constants/slide-constant');
 
 // array of general validation
@@ -9,7 +9,7 @@ const validateSchemaSlide = [
   check('image').notEmpty().withMessage(msg.VALIDATE_IMG),
   (req, res, next) => {
     // ////////////// ISSUE -> validations have redudants methods =>  refactorization
-    organizationValidator(req, res, next);
+    validator(req, res, next);
   }
 ];
 

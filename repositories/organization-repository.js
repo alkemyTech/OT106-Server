@@ -15,17 +15,17 @@ async function create(body) {
 
 
 async function findOne(id) {
-  const findedOrganization = await organization.findOne({ where: { id } });
+  const findedOrganization = await organization.findOne(
+    { where: { id },
+      include: 'slides',
+      order: [
+          ['slides', 'order', 'ASC'],
+      ] });
   return findedOrganization;
 }
 
 async function findAll() {
-  const allOrganizations = await organization.findAll({
-    include: 'slides',
-    order: [
-      ['slides', 'order', 'ASC'],
-    ]
-  });
+  const allOrganizations = await organization.findAll();
 
   return allOrganizations;
 }

@@ -5,6 +5,63 @@ const { validateSchemaOrganization, validateSchemaUrls } = require('../validatio
 
 const router = express.Router();
 
+/**
+ * @swagger
+ *{
+ *  "organizations/public": {
+ *    "post": {
+ *      "summary": "Create new organization",
+ *       "requestBody": {
+ *        "required": true,
+ *        "content": {
+ *           "application/json": {
+ *              "schema": {
+ *                "type": "object",
+ *                "$ref": "#/components/schemas/Organization"
+ *                }
+ *            }
+ *         }
+ *      },
+ *      "tags": [ "Organizations" ],
+ *      "security":[{"token":[]}],
+ *      "responses": {
+ *        "201": { "description": "Created" },
+ *        "400": { "description": "Bad Request" },
+ *        "403": { "description": "Invalid Token" },
+ *        "404": { "description": "Not found Organization Id" },
+ *        "500": { "description": "Internal server error" }
+ *      }
+ *    }
+ *  }
+ *}
+ */
+
+// create new organization
+router.post('/public',
+    adminAuthentication, // try validate admin user
+    validateSchemaOrganization,
+    organizationController.create);
+
+
+/**
+ * @swagger
+ *{
+ *  "/organizations/public/{id}": {
+ *    "get": {
+ *      "summary": "Find a organization by Id",
+ *      "tags": [ "Organizations" ],
+ *      "responses": {
+ *        "200": { "description": "Get details for organizations" },
+ *        "404": { "description": "Not found Organization Id" },
+ *        "500": { "description": "Internal server error" }
+ *      }
+ *    }
+ *  }
+ *}
+ */
+
+// show organization by id
+router.get('/public/:id', organizationController.findById);
 
 /**
  *@swagger
@@ -55,10 +112,13 @@ const router = express.Router();
  *             "description": "linkedin page Url"
  *           }
  *         },
- *        "required": [ "name", "image" ],
+ *        "required": [ "name", "image", "address", "email", "welcomeText" ],
  *         "example": {
- *           "name": "Isaias",
- *           "image": "http://www.imagen.com/ejemplo.jpg"
+ *           "name": "Example",
+ *           "image": "http://www.imagen.com/ejemplo.jpg",
+ *           "address": "example 21",
+ *           "email": "test@test.com",
+ *           "welcomeText": "test for text"
  *         }
  *      },
  *      "OrganizationUrls": {
@@ -118,8 +178,8 @@ router.get('/public', organizationController.listAll);
 /**
  * @swagger
  *{
- *  "/public/{id}": {
- *    "post": {
+ *  "organizations/public/{id}": {
+ *    "put": {
  *      "summary": "Update data of organization",
  *      "parameters": [{
  *        "name": "id",
@@ -155,7 +215,7 @@ router.get('/public', organizationController.listAll);
 
 
 // update organization by id
-router.post('/public/:id',
+router.put('/public/:id',
                 adminAuthentication, // try validate admin user
                 validateSchemaOrganization, // array of validations for organizations model
                 organizationController.update
@@ -165,8 +225,40 @@ router.post('/public/:id',
 /**
  * @swagger
  *{
- *  "/public/contact/{id}": {
- *    "post": {
+ *  "organizations/public/{id}": {
+ *    "delete": {
+ *      "summary": "Delete an organization",
+ *      "parameters": [{
+ *        "name": "id",
+ *        "in": "path",
+ *        "description": "organization id to delete",
+ *        "required": true,
+ *        "type": "integer"
+ *      }],
+ *      "tags": [ "Organizations" ],
+ *      "security":[{"token":[]}],
+ *      "responses": {
+ *        "200": { "description": "Deleted" },
+ *        "400": { "description": "Bad Request" },
+ *        "403": { "description": "Invalid Token" },
+ *        "500": { "description": "Internal server error" }
+ *      }
+ *    }
+ *  }
+ *}
+ */
+
+// delete organization by id
+router.delete('/public/:id',
+    adminAuthentication, // try validate admin user
+    organizationController.delete);
+
+
+/**
+ * @swagger
+ *{
+ *  "organizations/public/contact/{id}": {
+ *    "put": {
  *      "summary": "Update contact fields of organization",
  *      "parameters": [{
  *        "name": "id",
@@ -202,21 +294,11 @@ router.post('/public/:id',
 
 
 // update contact fields for organization by id
-router.post('/public/contact/:id',
+router.put('/public/contact/:id',
                 adminAuthentication, // try validate admin user
                 validateSchemaUrls, // array of validations for organization's urls
                 organizationController.update
             );
-
-
-// create new organization
-// router.post('/public', organizationController.create);
-
-// show organization by id
-// router.get('/public/:id', organizationController.findById);
-
-// delete organization by id
-// router.delete('/public/:id', organizationController.delete);
 
 
 module.exports = router;

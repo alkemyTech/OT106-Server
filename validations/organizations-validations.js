@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { organizationValidator } = require('../middleware/organization-middleware');
+const { validator } = require('../middleware/organization-middleware');
 const msg = require('../constants/organization-constant');
 
 // array of general validation
@@ -13,11 +13,8 @@ const validateSchemaOrganization = [
   check('welcomeText')
       .notEmpty()
       .trim(),
-  check('facebook').isURL().withMessage(msg.VALIDATE_URL),
-  check('instagram').isURL().withMessage(msg.VALIDATE_URL),
-  check('linkedin').isURL().withMessage(msg.VALIDATE_URL),
   (req, res, next) => {
-    organizationValidator(req, res, next);
+    validator(req, res, next);
   }
 ];
 
@@ -30,7 +27,7 @@ const validateSchemaUrls = [
   check('instagram').isURL().withMessage(msg.VALIDATE_URL),
   check('linkedin').isURL().withMessage(msg.VALIDATE_URL),
   (req, res, next) => {
-    organizationValidator(req, res, next);
+    validator(req, res, next);
   }
 ];
 
