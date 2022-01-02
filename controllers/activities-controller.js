@@ -3,12 +3,14 @@ const activityService = require('../services/activities-services')
 const catchAsync = require('../functions/catchAsync')
 const path = require('path')
 const httpStatus = require('http-status');
+const message = require('../constants/message')
+
 const {OK} = require('../constants/message')
 
 
 const createActivity = catchAsync(async (request,response)=> {
     const activity = await activityService.createActivity(request,response)
-    return response.status(httpStatus.CREATED).send(activity)
+    return response.status(httpStatus.CREATED).json({message:message.OK, body:activity})
 
 })
 
@@ -18,24 +20,24 @@ const getActivityimage = catchAsync(async (request,response)=> {
 })
 const getActivity = catchAsync(async (request,response)=> {
     const activity = await activityService.getActivity(request,response)
-    return response.status(httpStatus.OK).send(activity)
+    return response.status(httpStatus.OK).json({message:message.OK, body:activity})
 })
 
 const getActivities = catchAsync(async (request,response)=> {
     const activities = await activityService.getActivities(request,response)
-    return response.status(httpStatus.OK).send(activities)
+    return response.status(httpStatus.OK).json({message:message.OK, body:activities})
 
 })
 
 const deleteActivity = catchAsync(async (request,response)=> {
     const activity = await activityService.deleteActivity(request,response)
-    return response.status(httpStatus.OK).send(OK)
+    return response.status(httpStatus.OK).json({message:message.OK})
 
 })
 
 const editActivity = catchAsync(async (request,response)=> {
     const activity = await activityService.editActivity(request,response)
-    return response.status(httpStatus.OK).send({activity})
+    return response.status(httpStatus.OK).json({message:message.OK,body:activity})
 
 })
 
