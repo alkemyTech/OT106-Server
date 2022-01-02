@@ -1,14 +1,15 @@
-const httpStatus = require('http-status')
-const {NOT_ACCEPTABLE} = require('../constants/message')
-const checkActivity = (request,response,next) => {
-    if (!request.body.name || !request.body.content || !request.file){
-        throwError(httpStatus.NOT_FOUND, NOT_FOUND)
-        return throwError(httpStatus.NOT_ACCEPTABLE, NOT_ACCEPTABLE)
-    }
-    next()
-}
+const httpStatus = require('../constants/httpStatus');
+const { NOT_ACCEPTABLE } = require('../constants/message');
+const throwError = require('../functions/throw-error');
+
+const checkActivity = (request, response, next) => {
+  if (!request.body.name || !request.body.content || !request.file) {
+    return throwError(httpStatus.NOT_ACCEPTABLE, NOT_ACCEPTABLE);
+  }
+  next();
+};
 
 
 module.exports = {
-    checkActivity
-}
+  checkActivity
+};
