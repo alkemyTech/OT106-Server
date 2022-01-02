@@ -387,13 +387,11 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
       chai
         .request(server)
         .post(ENDPOINT.PATH)
-        .send({
-          firstName: 'testA',
-          lastName: 'testB',
-          email: 'testB@test.com',
-          password: '12345678',
-          photo: 'https://dummyimage.com/100/000/fff.jpg',
-        })
+        .field('firstName', 'testA')
+        .field('lastName', 'testB')
+        .field('email', 'testB@test.com')
+        .field('password', '12345678')
+        .attach('image', './test/imgTest/image.sample.jpg')
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, httpStatus.CREATED);
@@ -407,10 +405,7 @@ describe(`${ENDPOINT.METHOD} ${ENDPOINT.PATH}`, () => {
           assert.equal(res.body.body.firstName, 'testA');
           assert.equal(res.body.body.lastName, 'testB');
           assert.equal(res.body.body.email, 'testB@test.com');
-          assert.equal(
-            res.body.body.photo,
-            'https://dummyimage.com/100/000/fff.jpg'
-          );
+          assert.isNotNull(res.body.body.photo);
           assert.equal(res.body.body.roleId, 2);
           assert.isNotNull(res.body.body.token);
           assert.isNotNull(res.body.body.createdAt);

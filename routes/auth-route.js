@@ -2,9 +2,10 @@ const router = require('express').Router();
 const { UserController } = require('../controllers');
 const { validateCreateUser, validateLoginUser } = require('../validations/user-validation');
 const authentication = require('../middleware/authentication');
+const upload = require('../middleware/upload');
 
 router
-  .post('/register', validateCreateUser, UserController.createUser)
+  .post('/register', upload, validateCreateUser, UserController.createUser)
   .get('/me', authentication, UserController.findUserByTokenId)
   .post('/login', validateLoginUser, UserController.loginUser);
 
@@ -97,7 +98,7 @@ router
  *       description: User's information
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -115,8 +116,10 @@ router
  *                 type: string
  *                 minLength: 8
  *                 required: true
- *               photo:
+ *               image:
  *                 type: string
+ *                 format: binary
+ *                 description: user's photo
  *                 required: false
  *             example:
  *               firstName: John
@@ -265,8 +268,8 @@ router
  *                 type: string
  *                 required: true
  *             example:
- *               email: john.doe@test.com
- *               password: a1b2c3d4
+ *               email: lm10@afa.com
+ *               password: 12345678
  *     responses:
  *       200:
  *         description: Successful login
