@@ -269,7 +269,7 @@ router
  *                 required: true
  *             example:
  *               email: lm10@afa.com
- *               password: 12345678
+ *               password: "12345678"
  *     responses:
  *       200:
  *         description: Successful login
