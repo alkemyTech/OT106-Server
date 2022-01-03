@@ -62,11 +62,12 @@ const upload = require("../middleware/upload");
  *                 "name": "page",
  *                 "in": "query",
  *                 "description": "Número de página",
- *                 "type": "integer"
+ *                 "type": "integer",
+ *                   "required": true
  *               }
  *             ],
  *      "tags": [ "Category" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": {"$ref":"#/components/responses/Ok"},
  *        "403": {"$ref":"#/components/responses/Forbbiden"},
@@ -95,7 +96,7 @@ router.get("/",adminPermission,pagination.validate, categoryController.list);
  *               }
  *             ],
  *      "tags": [ "Category" ],
- *      "security":[{"token":[]}],
+ *       "security":[bearerAuth: []],
  *      "responses": {
  *        "200": {"$ref":"#/components/responses/Ok"},
  *        "403": {"$ref":"#/components/responses/Forbbiden"},
@@ -127,7 +128,7 @@ router.get("/:id", adminPermission,categoryController.detail);
  *              }
  *          },
  *      "tags": [ "Category" ],
- *      "security":[{"token":[]}],
+ *       "security":[bearerAuth: []],
  *      "responses": {
  *        "201": {"$ref":"#/components/responses/Created"},
  *        "403": {"$ref":"#/components/responses/Forbbiden"},
@@ -179,7 +180,7 @@ router.post(
  *              }
  *          },
  *      "tags": [ "Category" ],
- *      "security":[{"token":[]}],
+ *       "security":[bearerAuth: []],
  *      "responses": {
  *        "201": {"$ref":"#/components/responses/Created"},
  *        "400": {"$ref":"#/components/responses/BadRequest"},
@@ -218,7 +219,7 @@ router.put(
  *               }
  *             ],
  *      "tags": [ "Category" ],
- *      "security":[{"token":[]}],
+ *     "security":[bearerAuth: []],
  *      "responses": {
  *        "200": {"$ref":"#/components/responses/Ok"},
  *        "403": {"$ref":"#/components/responses/Forbbiden"},
