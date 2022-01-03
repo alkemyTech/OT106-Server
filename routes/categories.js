@@ -12,7 +12,6 @@ const upload = require("../middleware/upload");
  *@swagger
  *{
  *   "components": {
- *     
  *     "schemas": {
  *       "Category": {
  *         "type": "object",
@@ -23,7 +22,8 @@ const upload = require("../middleware/upload");
  *           },
  *           "image": {
  *             "type": "string",
- *             "description": "Archivo de imagen"
+ *              "format": "binary",
+ *             "description": "Imagen"
  *           },
  *           "description": {
  *             "type": "string",
@@ -119,7 +119,7 @@ router.get("/:id", adminPermission,categoryController.detail);
  *      "requestBody":{
  *         "required":true,
  *           "content":{
- *             "application/json":{
+ *             "multipart/form-data":{
  *               "schema":{
  *                  "type":"object",
  *                 "$ref":"#/components/schemas/Category"
@@ -169,13 +169,13 @@ router.post(
  *               }
  *             ],
  *      "requestBody":{
- *         "required":true,
+ *         "required":false,
  *           "content":{
- *             "application/json":{
+ *             "multipart/form-data":{
  *               "schema":{
  *                  "type":"object",
- *                 "$ref":"#/components/schemas/Category"
- *                  }
+ *                 "$ref":"#/components/schemas/Category",
+ *                  },
  *                }
  *              }
  *          },
@@ -216,7 +216,7 @@ router.put(
  *                 "description": "Número id",
  *                 "required": true,
  *                 "type": "integer"
- *               }
+ *               },
  *             ],
  *      "tags": [ "Category" ],
  *     "security":[bearerAuth: []],
