@@ -1,20 +1,21 @@
-require('dotenv').config()
-const express = require('express')
-const router = express.Router()
-const activitiesCombination = require('../combinations/activities-combination')
+require('dotenv').config();
+const express = require('express');
+
+const router = express.Router();
+const activitiesCombination = require('../combinations/activities-combination');
 
 router.route('/')
     .post(activitiesCombination.createActivity)
-    .get(activitiesCombination.getActivities)
-    
+    .get(activitiesCombination.getActivities);
+
 
 router.route('/:id')
-    .get(activitiesCombination.getActivity )
+    .get(activitiesCombination.getActivity)
     .delete(activitiesCombination.deleteActivity)
-    .patch(activitiesCombination.editActivity)
+    .patch(activitiesCombination.editActivity);
 
 router.route('/image/:id')
-    .get(activitiesCombination.getActivityimage)
+    .get(activitiesCombination.getActivityimage);
 
 
  /**
@@ -44,11 +45,11 @@ router.route('/image/:id')
  *           description: The activity name
  *         content:
  *           type: string
- *           description: The activity content   
+ *           description: The activity content
  *         image:
  *           type: string
- *           format: binary    
- *           description: File activity 
+ *           format: binary
+ *           description: File activity
  *       example:
  *         name: reparto de juguetes
  *         image: juguetes.png
@@ -120,7 +121,7 @@ router.route('/image/:id')
  *               $ref: '#/components/schemas/Activities'
  *       500:
  *         description: Some server error
- *          
+ *
  */
 
 /**
@@ -143,17 +144,17 @@ router.route('/image/:id')
  *        multipart/form-data:
  *          schema:
  *            type:
- *              object  
+ *              object
  *            properties:
  *              name:
  *                  type: string
  *                  description: The activity name
  *              content:
  *                  type: string
- *                  description: The activity content   
+ *                  description: The activity content
  *              image:
  *                  type: string
- *                  format: binary    
+ *                  format: binary
  *                  description: File activity
  *    responses:
  *      200:
@@ -174,8 +175,8 @@ router.route('/image/:id')
  *   delete:
  *     summary: Remove the activity by id
  *     patch:
- *      security:
- *          - bearerAuth: [] 
+ *     security:
+ *          - bearerAuth: []
  *     tags: [Activities]
  *     parameters:
  *       - in: path
@@ -184,11 +185,11 @@ router.route('/image/:id')
  *           type: string
  *         required: true
  *         description: The activity id
- * 
+ *
  *     responses:
  *       200:
  *         description: The activity was deleted
  *       404:
  *         description: The activity was not found
  */
-module.exports =  router
+module.exports = router;
