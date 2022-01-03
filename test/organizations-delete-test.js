@@ -1,5 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+
+// intancia del servidor
 const app = require('../app');
 const status = require('../constants/httpStatus');
 const { generateAccessToken } = require('../functions/jsonwebtoken');
@@ -12,7 +14,7 @@ const token = generateAccessToken({ id: 67, email: 'fa@afa.com', roleId: 1 });
 chai.use(chaiHttp);
 
 
-describe('Organization suit test', () => {
+describe('Organization suite test', () => {
   describe('Suite test for DELETE', () => {
     it('Delete Organization - Invalid request, missing token. Should response 403.', (done) => {
       chai
