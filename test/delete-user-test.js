@@ -3,6 +3,8 @@ const chaiHttp = require('chai-http');
 
 const server = require('../app');
 const status = require('../constants/httpStatus');
+const message = require('../constants/message');
+
 const { generateAccessToken } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
@@ -25,6 +27,8 @@ describe('Delete user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.FORBIDDEN);
+          assert.equal(res.body.status, status.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
         });
 
         done();
@@ -37,6 +41,8 @@ describe('Delete user', () => {
           .end((err, res) => {
             assert.isNull(err);
             assert.equal(res.status, status.FORBIDDEN);
+            assert.equal(res.body.status, status.FORBIDDEN);
+            assert.equal(res.body.message, message.FORBIDDEN);
           });
   
           done();
@@ -50,6 +56,8 @@ describe('Delete user', () => {
           .end((err, res) => {
             assert.isNull(err);
             assert.equal(res.status, status.FORBIDDEN);
+            assert.equal(res.body.status, status.FORBIDDEN);
+            assert.equal(res.body.message, message.FORBIDDEN);
           });
   
           done();
@@ -65,6 +73,8 @@ describe('Delete user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.OK);
+          assert.equal(res.body.status, status.OK);
+          assert.equal(res.body.message, message.OK);
         });
 
         done();
@@ -78,6 +88,8 @@ describe('Delete user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.OK);
+          assert.equal(res.body.status, status.OK);
+          assert.equal(res.body.message, message.OK);
         });
 
         done();

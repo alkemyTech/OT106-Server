@@ -3,6 +3,7 @@ const chaiHttp = require('chai-http');
 
 const server = require('../app');
 const status = require('../constants/httpStatus');
+const message = require('../constants/message');
 const { generateAccessToken } = require('../functions/jsonwebtoken');
 
 const assert = chai.assert;
@@ -26,7 +27,7 @@ chai.use(chaiHttp);
 describe('Update user', () => {
   describe('succesfully', () => {
     it('when user format is valid', done => {
-      const user = updateUserWithoutPassword('testFirst', 'testLast', 'email@gmail.com');
+      const user = updateUserWithoutPassword('testfirst', 'testlast', 'email1@gmail.com');
 
       chai
           .request(server)
@@ -44,11 +45,11 @@ describe('Update user', () => {
             assert.notProperty(userInBody, 'password');
           });
 
-        done();
+      done();
     });
 
     it('when user format is valid and contains password', done => {
-      const user = updateUserWithPassword('testFirst', 'testLast', 'email@gmail.com', 'password1234');
+      const user = updateUserWithPassword('testfirst', 'testlast', 'email@gmail.com', 'password1234');
 
       chai
         .request(server)
@@ -70,7 +71,7 @@ describe('Update user', () => {
     });
 
     it('when the request is made by an admin', done => {
-        const user = updateUserWithoutPassword('testFirst', 'testLast', 'email@gmail.com');
+        const user = updateUserWithoutPassword('testfirst', 'testlast', 'email@gmail.com');
 
         chai
             .request(server)
@@ -104,8 +105,9 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.BAD_REQUEST);
-          assert.property(res.body, 'errors');
-          assert.isArray(res.body.errors);
+          assert.property(res.body, 'body');
+          assert.isArray(res.body.body);
+          console.log(res.body);
         });
 
       done();
@@ -122,8 +124,8 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.BAD_REQUEST);
-          assert.property(res.body, 'errors');
-          assert.isArray(res.body.errors);
+          assert.property(res.body, 'body');
+          assert.isArray(res.body.body);
         });
 
       done();
@@ -140,8 +142,8 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.BAD_REQUEST);
-          assert.property(res.body, 'errors');
-          assert.isArray(res.body.errors);
+          assert.property(res.body, 'body');
+          assert.isArray(res.body.body);
         });
 
       done();
@@ -158,8 +160,8 @@ describe('Update user', () => {
       .end((err, res) => {
         assert.isNull(err);
         assert.equal(res.status, status.BAD_REQUEST);
-        assert.property(res.body, 'errors');
-        assert.isArray(res.body.errors);
+        assert.property(res.body, 'body');
+        assert.isArray(res.body.body);
       });
 
     done();
@@ -176,8 +178,8 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.BAD_REQUEST);
-          assert.property(res.body, 'errors');
-          assert.isArray(res.body.errors);
+          assert.property(res.body, 'body');
+          assert.isArray(res.body.body);
         });
 
       done();
@@ -194,15 +196,15 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.BAD_REQUEST);
-          assert.property(res.body, 'errors');
-          assert.isArray(res.body.errors);
+          assert.property(res.body, 'body');
+          assert.isArray(res.body.body);
         });
 
       done();
     });
 
     it('when user is invalid', done => {
-      const user = updateUserWithoutPassword('testFirst', 'testLast', 'email@gmail.com');
+      const user = updateUserWithoutPassword('testfirst', 'testlast', 'email@gmail.com');
 
       chai
         .request(server)
@@ -212,6 +214,8 @@ describe('Update user', () => {
         .end((err, res) => {
           assert.isNull(err);
           assert.equal(res.status, status.FORBIDDEN);
+          assert.equal(res.body.status, status.FORBIDDEN);
+          assert.equal(res.body.message, message.FORBIDDEN);
         });
 
       done();
