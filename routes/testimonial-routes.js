@@ -1,37 +1,38 @@
-const express = require("express");
+const express = require('express');
+
 const router = express.Router();
-const testimonialController = require("../controllers/testimonial-controller");
-const adminAuthentication = require("../middleware/admin-authentication");
+const testimonialController = require('../controllers/testimonial-controller');
+const adminAuthentication = require('../middleware/admin-authentication');
 const {
   validateCreateTestimonial,
   validateUpdateTestimonial,
-} = require("../middleware/testimonial-middleware");
-const upload = require("../middleware/upload");
+} = require('../middleware/testimonial-middleware');
+const upload = require('../middleware/upload');
 
-//GET
-router.get("/:id", testimonialController.find);
-router.get("/", testimonialController.list);
+// GET
+router.get('/:id', testimonialController.find);
+router.get('/', testimonialController.list);
 
-//POST
+// POST
 router.post(
-  "/",
+  '/',
   adminAuthentication,
   upload,
   validateCreateTestimonial,
   testimonialController.create
 );
 
-//PATCH
+// PATCH
 router.patch(
-  "/:id",
+  '/:id',
   adminAuthentication,
   upload,
   validateUpdateTestimonial,
   testimonialController.update
 );
 
-//DELETE
-router.delete("/:id", adminAuthentication, testimonialController.delete);
+// DELETE
+router.delete('/:id', adminAuthentication, testimonialController.delete);
 
 /**
  * @swagger
@@ -136,7 +137,7 @@ router.delete("/:id", adminAuthentication, testimonialController.delete);
  *                       type: integer
  *                       description: the number of total pages for the testimonials list
  *                     rows:
- *                       $ref: #/components/schemas/Testimonial
+ *                       $ref: '#/components/schemas/Testimonial'
  *                     previousPage:
  *                       type: integer
  *                       description: the number of the previous page

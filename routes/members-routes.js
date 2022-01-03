@@ -1,9 +1,14 @@
 const express = require('express');
 const memberValidate = require('../validations/members-validators');
 const pagination = require('../middleware/pagination');
+
 const router = express.Router();
 
+const authentication = require('../middleware/authentication');
+
+
 const { create, getMembersAll, updateMember, deleteMember } = require('../controllers/members-controller');
+const adminAuthentication = require('../middleware/admin-authentication');
 
 /**
  *@swagger
@@ -71,7 +76,7 @@ const { create, getMembersAll, updateMember, deleteMember } = require('../contro
  *         }
  *      },
  *      "tags": [ "Members" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "Created" },
  *        "500": { "description": "Internal server error" }
@@ -81,7 +86,7 @@ const { create, getMembersAll, updateMember, deleteMember } = require('../contro
  *}
  */
 
-router.post('/', memberValidate.memberIsValid, create);
+router.post('/', authentication, memberValidate.memberIsValid, create);
 
 /**
  * @swagger
@@ -94,11 +99,12 @@ router.post('/', memberValidate.memberIsValid, create);
  *                 "name": "page",
  *                 "in": "query",
  *                 "description": "Page number",
- *                 "type": "integer"
+ *                 "type": "integer",
+ *                 "required": true
  *               }
  *             ],
  *      "tags": [ "Members" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "All Members listed" }
  *      }
@@ -106,7 +112,7 @@ router.post('/', memberValidate.memberIsValid, create);
  *  }
  *}
  */
-router.get('/', pagination.validate, getMembersAll);
+router.get('/', adminAuthentication, pagination.validate, getMembersAll);
 
 /**
  * @swagger
@@ -133,7 +139,7 @@ router.get('/', pagination.validate, getMembersAll);
  *         }
  *      },
  *      "tags": [ "Members" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "OK" },
  *        "404": { "description": "Member not found" },
@@ -144,7 +150,7 @@ router.get('/', pagination.validate, getMembersAll);
  *}
  */
 
-router.put('/:id', updateMember);
+router.put('/:id', authentication, updateMember);
 
 /**
  * @swagger
@@ -160,7 +166,7 @@ router.put('/:id', updateMember);
  *        "type": "integer"
  *      }],
  *      "tags": [ "Members" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "Member delete" },
  *        "404": { "description": "Not found" },
@@ -171,6 +177,6 @@ router.put('/:id', updateMember);
  *}
  */
 
-router.delete('/:id', deleteMember);
+router.delete('/:id', authentication, deleteMember);
 
 module.exports = router;
