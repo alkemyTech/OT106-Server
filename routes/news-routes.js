@@ -1,18 +1,20 @@
 require('dotenv').config();
 const express = require('express');
+
 const router = express.Router();
-const {addNews,deleteNews,modifyNews,getNews,getAllNews} = require('../controllers/news-controller')
-const {validateCreate}= require("../validations/news-validations")
-const upload= require("../middleware/upload");
-const adminAuthentication = require("../middleware/admin-authentication");
+const { addNews, deleteNews, modifyNews, getNews, getAllNews } = require('../controllers/news-controller');
+const { validateCreate } = require('../validations/news-validations');
+const upload = require('../middleware/upload');
+const adminAuthentication = require('../middleware/admin-authentication');
+
 router.route('/')
-    .post(adminAuthentication,upload,validateCreate,addNews)
-    .get(adminAuthentication,getAllNews);// /?page=NUMBER
+    .post(adminAuthentication, upload, validateCreate, addNews)
+    .get(adminAuthentication, getAllNews);// /?page=NUMBER
 
 router.route('/:id')
-    .get(adminAuthentication,getNews)
-    .delete(adminAuthentication,deleteNews)
-    .patch(adminAuthentication, upload,modifyNews)
+    .get(adminAuthentication, getNews)
+    .delete(adminAuthentication, deleteNews)
+    .patch(adminAuthentication, upload, modifyNews);
 
 
 /**
@@ -42,11 +44,11 @@ router.route('/:id')
  *           description: News name
  *         content:
  *           type: string
- *           description: News content   
+ *           description: News content
  *         image:
  *           type: string
- *           format: binary    
- *           description: File News 
+ *           format: binary
+ *           description: File News
  *       example:
  *         name: test title
  *         image: image.png
@@ -60,6 +62,14 @@ router.route('/:id')
  *   get:
  *     summary: Returns all news
  *     tags: [News]
+ *     parameters:
+ *     - in: query
+ *       name: page
+ *       schema:
+ *         type: integer
+ *       description: The page in the list of news
+ *     security:
+ *          - bearerAuth: []
  *     responses:
  *       200:
  *         description: The news list
@@ -77,6 +87,8 @@ router.route('/:id')
  *   get:
  *     summary: Get the news by id
  *     tags: [News]
+ *     security:
+ *          - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -118,7 +130,7 @@ router.route('/:id')
  *               $ref: '#/components/schemas/News'
  *       500:
  *         description: Some server error
- *          
+ *
  */
 
 /**
@@ -141,17 +153,17 @@ router.route('/:id')
  *        multipart/form-data:
  *          schema:
  *            type:
- *              object  
+ *              object
  *            properties:
  *              name:
  *                  type: string
  *                  description: The news name
  *              content:
  *                  type: string
- *                  description: The news content   
+ *                  description: The news content
  *              image:
  *                  type: string
- *                  format: binary    
+ *                  format: binary
  *                  description: File news
  *    responses:
  *      200:
@@ -172,9 +184,9 @@ router.route('/:id')
  *   delete:
  *     summary: Remove the news by id
  *     patch:
- *      security:
- *          - bearerAuth: [] 
  *     tags: [News]
+ *     security:
+ *          - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -182,7 +194,7 @@ router.route('/:id')
  *           type: string
  *         required: true
  *         description: The news id
- * 
+ *
  *     responses:
  *       200:
  *         description: The news was deleted
@@ -191,4 +203,4 @@ router.route('/:id')
  */
 
 
-module.exports =  router 
+module.exports = router;

@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @swagger
  *{
- *  "organizations/public": {
+ *  "/organizations/public": {
  *    "post": {
  *      "summary": "Create new organization",
  *       "requestBody": {
@@ -23,7 +23,7 @@ const router = express.Router();
  *         }
  *      },
  *      "tags": [ "Organizations" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "201": { "description": "Created" },
  *        "400": { "description": "Bad Request" },
@@ -49,6 +49,13 @@ router.post('/public',
  *  "/organizations/public/{id}": {
  *    "get": {
  *      "summary": "Find a organization by Id",
+ *      "parameters": [{
+ *        "name": "id",
+ *        "in": "path",
+ *        "description": "id for search organization",
+ *        "required": true,
+ *        "type": "integer"
+ *      }],
  *      "tags": [ "Organizations" ],
  *      "responses": {
  *        "200": { "description": "Get details for organizations" },
@@ -178,7 +185,7 @@ router.get('/public', organizationController.listAll);
 /**
  * @swagger
  *{
- *  "organizations/public/{id}": {
+ *  "/organizations/public/{id}": {
  *    "put": {
  *      "summary": "Update data of organization",
  *      "parameters": [{
@@ -200,7 +207,7 @@ router.get('/public', organizationController.listAll);
  *         }
  *      },
  *      "tags": [ "Organizations" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "Updated" },
  *        "400": { "description": "Bad Request" },
@@ -236,7 +243,7 @@ router.put('/public/:id',
  *        "type": "integer"
  *      }],
  *      "tags": [ "Organizations" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "Deleted" },
  *        "400": { "description": "Bad Request" },
@@ -279,7 +286,7 @@ router.delete('/public/:id',
  *         }
  *      },
  *      "tags": [ "Organizations" ],
- *      "security":[{"token":[]}],
+ *      "security":[bearerAuth: []],
  *      "responses": {
  *        "200": { "description": "Updated" },
  *        "400": { "description": "Bad Request" },
