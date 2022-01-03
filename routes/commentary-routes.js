@@ -1,19 +1,21 @@
 require('dotenv').config();
 const express = require('express');
+
 const router = express.Router();
-const {addCommentary,deleteCommentary,modifyCommentary,getCommentary,getAllCommentaries} = require('../controllers/commentary-controller')
-const {validateCreate}= require("../validations/commentary-validations")
-const upload= require("../middleware/upload");
-const adminAuthentication = require("../middleware/admin-authentication");
+const { addCommentary, deleteCommentary, modifyCommentary, getCommentary, getAllCommentaries } = require('../controllers/commentary-controller');
+const { validateCreate } = require('../validations/commentary-validations');
+const upload = require('../middleware/upload');
+const adminAuthentication = require('../middleware/admin-authentication');
 const authentication = require('../middleware/authentication');
+
 router.route('/')
-    .post(authentication,upload,validateCreate,addCommentary)
-    .get(adminAuthentication,getAllCommentaries);
+    .post(authentication, upload, validateCreate, addCommentary)
+    .get(adminAuthentication, getAllCommentaries);
 
 router.route('/:id')
     .get(authentication, getCommentary)
-    .delete(authentication,deleteCommentary)
-    .patch( authentication,upload,modifyCommentary)
+    .delete(authentication, deleteCommentary)
+    .patch(authentication, upload, modifyCommentary);
 
  /**
   * @swagger
@@ -41,10 +43,10 @@ router.route('/:id')
  *           description: The id relationship with news
  *         UserId:
  *           type: integer
- *           description: The id relationship with user 
+ *           description: The id relationship with user
  *         body:
  *           type: string
- *           description: the body of commentary      
+ *           description: the body of commentary
  *       example:
  *         NewsId: 3
  *         UserId: 6
@@ -55,6 +57,8 @@ router.route('/:id')
  * /commentary:
  *   get:
  *     summary: Returns all commentaries
+ *     security:
+ *          - bearerAuth: []
  *     tags: [Commentary]
  *     responses:
  *       200:
@@ -72,6 +76,8 @@ router.route('/:id')
  *   get:
  *     summary: Get the commentary by id
  *     tags: [Commentary]
+ *     security:
+ *          - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -95,6 +101,8 @@ router.route('/:id')
  *   post:
  *     summary: Create a new comentary
  *     tags: [Commentary]
+ *     security:
+ *          - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -110,7 +118,7 @@ router.route('/:id')
  *               $ref: '#/components/schemas/Commentary'
  *       500:
  *         description: Some server error
- *          
+ *
  */
 /**
  * @swagger
@@ -118,6 +126,8 @@ router.route('/:id')
  *  patch:
  *    summary: update activity
  *    tags: [Commentary]
+ *     security:
+ *          - bearerAuth: []
  *    parameters:
  *      - in: path
  *        name: id
@@ -149,6 +159,8 @@ router.route('/:id')
  *   delete:
  *     summary: Remove the commentary by id
  *     patch:
+ *     security:
+ *          - bearerAuth: []
  *     tags: [Commentary]
  *     parameters:
  *       - in: path
@@ -157,7 +169,7 @@ router.route('/:id')
  *           type: string
  *         required: true
  *         description: The activity id
- * 
+ *
  *     responses:
  *       200:
  *         description: The activity was deleted
@@ -166,4 +178,4 @@ router.route('/:id')
  */
 
 
-module.exports =  router 
+module.exports = router;
