@@ -126,8 +126,8 @@ router.route('/:id')
  *  patch:
  *    summary: update activity
  *    tags: [Commentary]
- *     security:
- *          - bearerAuth: []
+ *    security:
+ *      - bearerAuth: []
  *    parameters:
  *      - in: path
  *        name: id

@@ -5,6 +5,5 @@ module.exports = [
   
  check("name")
  .notEmpty().bail()
- .isAlpha()
-
+ .isAlpha('es-ES', {ignore: ' '})
 ];
