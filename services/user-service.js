@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { UserRepository } = require("../repositories");
 const {
   BAD_REQUEST: BAD_REQUEST_CODE,
